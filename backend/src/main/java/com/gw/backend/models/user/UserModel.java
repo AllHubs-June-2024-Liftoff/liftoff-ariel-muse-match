@@ -1,0 +1,74 @@
+package org.launchcode.TheGitWits.MuseMatch.models.user;
+
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import org.launchcode.TheGitWits.MuseMatch.models.abstraction.AbstractIdentifiableModel;
+import org.launchcode.TheGitWits.MuseMatch.models.user.image.ProfilePicture;
+
+@Entity
+@Table(name="users")
+public class UserModel extends AbstractIdentifiableModel {
+
+    @Column
+    private String username;
+
+    @Column
+    private String password;
+
+    @OneToOne
+    private ProfilePicture profilePicture;
+
+    @Column
+    private String email;
+
+    //Once methods are created for uploading profile photos, this will ensure there's a relational database that keeps
+    //track of their uploaded photo.  If another image is uploaded,  it overwrites the previous image.
+    //TODO: add logic for overwriting profile picture
+
+    public UserModel() {
+    }
+
+    public UserModel(String username, String password, ProfilePicture profilePicture, String email) {
+        this.username = username;
+        this.password = password;
+        this.profilePicture = profilePicture;
+        this.email = email;
+    }
+
+    //Getters and Setters
+
+    public String getUserName() {
+        return username;
+    }
+
+    public void setUserName(String userName) {
+        this.username = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public ProfilePicture getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(ProfilePicture profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
