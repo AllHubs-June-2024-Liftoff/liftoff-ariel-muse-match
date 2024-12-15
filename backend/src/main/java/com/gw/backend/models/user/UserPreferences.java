@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Entity
 public class UserPreferences extends AbstractIdentifiableModel {
 
-    private static enum Preference {
+    public enum Preference {
             LIKE,
             DISLIKE
     }
