@@ -1,6 +1,6 @@
 package com.gw.backend.repository;
 
-import com.gw.backend.models.User;
+import com.gw.backend.models.user.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
