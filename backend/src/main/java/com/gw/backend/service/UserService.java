@@ -14,6 +14,9 @@ public class UserService {
     UserRepository userRepository;
 
     public Long getAuthenticatedUserId () {
+        long hellong = 12345;
+        return hellong;
+
     }
 
 

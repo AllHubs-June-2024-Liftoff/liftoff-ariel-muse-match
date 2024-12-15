@@ -11,9 +11,14 @@ public class StatsService {
 	@Autowired
 	UserPreferencesRepository userPreferencesRepository;
 
-	public Byte findPercentage(){}
+	public Byte findPercentage(){
+		byte percentage = 75;
+		return percentage;
+	}
 
 	public Integer findTotal(Long userId, String searchTerm){
+		Integer total = 100;
+		return total;
 
 	}
 
