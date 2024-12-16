@@ -1,21 +1,22 @@
 import React from "react";
 
-
 const getImage = async(imageId) => {
 
 try {
    const response = await fetch(`https://www.artic.edu/iiif/2/${imageId}/full/843,/0/default.jpg`)
     if (!response.ok) {
-        throw new Error("YO NO IMAGES");
+        throw new Error("No image for the artwork ID");
     }
-    const imageData = response.json();
-    return imageData;
+    //returns binary data, must construct object via URL
+    const imageData = await response.blob();
+    //Here's where the URL is constructed into an object, now ImageSrc
+    const imageSrc = URL.createObjectURL(imageData);
+    
+    return imageSrc;
 } catch(e) {
-   console.error("OO BABY NO IMAGES FO U");
-   throw error;
+   console.error("No images available");
+   throw e;
 }
 }
-
-
 
 export default getImage;

@@ -1,6 +1,6 @@
-package org.launchcode.TheGitWits.MuseMatch.controllers.api.fetch;
+package com.gw.backend.controller.api.fetch;
 
-import org.launchcode.TheGitWits.MuseMatch.repository.user.UserRepository;
+import com.gw.backend.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ public class FetchInitialMatchSet {
 
     //Create Snapshot of User repository whenever users interact with Matching
     @Autowired
-    public FetchInitialMatchSet (UserRepository userRepository) {
+    public FetchInitialMatchSet(UserRepository userRepository) {
         this.userRepository = userRepository;
 
         //TODO: Check user Match set, check disliked array

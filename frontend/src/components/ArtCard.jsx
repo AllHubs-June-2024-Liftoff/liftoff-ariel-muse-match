@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import fetchArtworks from './components/match/FetchArtworks' 
-import getImage from './components/image/GetImageId.jsx' 
+import React from "react";
+import { useState } from "react";
+import TinderCard from "react-tinder-card";
 
-function App() {
-  const [artworks, setArtworks]= useState([]);
+
+
+const [artworks, setArtworks]= useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [imageSources, setImageSources] = useState({});
@@ -52,6 +52,12 @@ if (error) {
   return <p>Error: {error}</p>;
 }
 
+// const handleSwipe = (direction) => {
+//     console.log("you swiped:" + direction)
+
+
+// }
+
   return (
     <>
       <div>
@@ -74,7 +80,3 @@ if (error) {
       </div>
     </>
   )
-}
-
-export default App
-

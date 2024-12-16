@@ -1,6 +1,6 @@
-package org.launchcode.TheGitWits.MuseMatch.repository.user;
+package com.gw.backend.repository.user;
 
-import org.launchcode.TheGitWits.MuseMatch.models.user.UserModel;
+import com.gw.backend.models.user.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

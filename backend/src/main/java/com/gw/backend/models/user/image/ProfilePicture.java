@@ -1,9 +1,10 @@
-package org.launchcode.TheGitWits.MuseMatch.models.user.image;
+package com.gw.backend.models.user.image;
 
 
-import jakarta.persistence.*;
-import org.launchcode.TheGitWits.MuseMatch.models.abstraction.AbstractIdentifiableModel;
-
+import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
 
 @Entity
 public class ProfilePicture extends AbstractIdentifiableModel {

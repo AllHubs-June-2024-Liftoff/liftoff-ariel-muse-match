@@ -1,11 +1,5 @@
-package org.launchcode.TheGitWits.MuseMatch.service.userdetail;
+package com.gw.backend.service.userdetail;
 
-
-import org.launchcode.TheGitWits.MuseMatch.models.user.UserModel;
-import org.launchcode.TheGitWits.MuseMatch.repository.user.UserRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 //Loads user by username, grants usernames in database the authority of 'user'
 

@@ -1,4 +1,4 @@
-package org.launchcode.TheGitWits.MuseMatch.models.abstraction;
+package com.gw.backend.models.abstraction;
 
 
 import jakarta.persistence.GeneratedValue;

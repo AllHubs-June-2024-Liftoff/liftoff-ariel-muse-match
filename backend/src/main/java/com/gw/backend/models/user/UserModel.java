@@ -1,12 +1,12 @@
-package org.launchcode.TheGitWits.MuseMatch.models.user;
+package com.gw.backend.models.user;
 
 
+import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
+import com.gw.backend.models.user.image.ProfilePicture;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import org.launchcode.TheGitWits.MuseMatch.models.abstraction.AbstractIdentifiableModel;
-import org.launchcode.TheGitWits.MuseMatch.models.user.image.ProfilePicture;
 
 @Entity
 @Table(name="users")

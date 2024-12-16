@@ -1,4 +1,4 @@
-package org.launchcode.TheGitWits.MuseMatch.models;
+package com.gw.backend.models;
 
 public class Artwork {
     int ArtworkId;

@@ -1,4 +1,4 @@
-package org.launchcode.TheGitWits.MuseMatch.dto;
+package com.gw.backend.dto;
 
 public class UserDto {
 

@@ -1,11 +1,9 @@
-package org.launchcode.TheGitWits.MuseMatch.repository.images;
+package com.gw.backend.repository.images;
 
 
-import org.launchcode.TheGitWits.MuseMatch.models.user.image.ProfilePicture;
+import com.gw.backend.models.user.image.ProfilePicture;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.awt.*;
 
 
 @Repository
