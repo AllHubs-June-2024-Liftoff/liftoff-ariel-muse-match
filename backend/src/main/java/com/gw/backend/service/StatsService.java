@@ -11,20 +11,9 @@ public class StatsService {
 	@Autowired
 	UserPreferencesRepository userPreferencesRepository;
 
-	public Byte findPercentage(Long userId, Object filter) {
-		Long likes;
-		Long dislikes;
-        if (filter == "artMovement") {
-			likes = userPreferencesRepository.countArtMovementByUserId(userId, (String) filter, UserPreferences.Preference.LIKE);
-			dislikes = userPreferencesRepository.countArtMovementByUserId(userId, (String) filter, UserPreferences.Preference.DISLIKE);
-		}
-		if(filter == "artYearFinished"){
-			likes = userPreferencesRepository.countArtYearFinishedByUserId(userId, (String))
-		}
-    }
-
-	public Integer findTotal(Long userId, String searchTerm){
-
+	public Byte findPercentage(Double liked, Double total) {
+		return (byte) Math.round((liked / total) * 100);
 	}
+
 
 }
