@@ -2,13 +2,13 @@ package com.gw.backend.repository;
 
 import com.gw.backend.models.user.UserPreferences;
 import com.gw.backend.models.user.UserPreferences.Preference;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface UserPreferencesRepository extends CrudRepository<UserPreferences, Long> {
+public interface UserPreferencesRepository extends JpaRepository<UserPreferences, Long> {
 
 	@Query
 	List<String> getDistinctArtMovementByUserId(Long userId);
