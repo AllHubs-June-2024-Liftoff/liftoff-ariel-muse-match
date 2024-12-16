@@ -24,7 +24,7 @@ public interface UserPreferencesRepository extends JpaRepository<UserPreferences
 
 	@Query("select count(p) from user_preference " +
 			"where p.userId = :userId and p.artMovement = :artMovement and p.preference = :preference")
-	Integer countLikedArtMovementByUserIdAndPreference(@Param("userId") Long userId, @Param("artMovement") String artMovement, @Param("preference") Preference preference);
+	Integer countArtMovementByUserIdAndPreference(@Param("userId") Long userId, @Param("artMovement") String artMovement, @Param("preference") Preference preference);
 
 	@Query("select count(p) from user_preference " +
 			"where p.userId = :userId and p.artYearFinished = :artYearFinished and p.preference = :preference")
@@ -40,7 +40,7 @@ public interface UserPreferencesRepository extends JpaRepository<UserPreferences
 
 	@Query("select count(p) from user_preference " +
 			"where p.userId = :userId and p.artMovement = :artMovement")
-	Integer countLikedArtMovementByUserI(@Param("userId") Long userId, @Param("artMovement") String artMovement);
+	Integer countArtMovementByUserId(@Param("userId") Long userId, @Param("artMovement") String artMovement);
 
 	@Query("select count(p) from user_preference " +
 			"where p.userId = :userId and p.artYearFinished = :artYearFinished")

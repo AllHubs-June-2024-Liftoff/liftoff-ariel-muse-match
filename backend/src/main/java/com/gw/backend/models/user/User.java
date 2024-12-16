@@ -14,7 +14,7 @@ public class User extends AbstractIdentifiableModel {
 
     public User() {}
 
-    public User(Integer userId, String username, String email, String hashPass) {
+    public User(String username, String email, String hashPass) {
         this.username = username;
         this.email = email;
         this.hashPass = hashPass;
