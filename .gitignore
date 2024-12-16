@@ -3,6 +3,7 @@
 *.class
 *.jar
 *.war
+application.properties
 
 # Node.js
 /node_modules
