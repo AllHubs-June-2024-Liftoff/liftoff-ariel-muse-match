@@ -14,7 +14,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public Long getAuthenticatedUserId () {
+    public Integer getAuthenticatedUserId () {
 
     }
 
