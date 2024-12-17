@@ -7,12 +7,13 @@ try {
     if (!response.ok) {
         throw new Error("No image for the artwork ID");
     }
-    //returns binary data, must construct object via URL
+    //This returns the image in the body
+    //as binary data, must construct URL for source
     const imageData = await response.blob();
     //Here's where the URL is constructed into an object, now ImageSrc
     const imageSrc = URL.createObjectURL(imageData);
-    
-    return imageSrc;
+    //Creates URL to access object
+    return imageSrc; //<--returns url
 } catch(e) {
    console.error("No images available");
    throw e;

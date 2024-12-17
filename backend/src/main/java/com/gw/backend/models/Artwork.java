@@ -10,8 +10,6 @@ public class Artwork {
     String styleTitles;
 
 
-
-
     //Getters and Setters
 
     public int getArtworkId() {
