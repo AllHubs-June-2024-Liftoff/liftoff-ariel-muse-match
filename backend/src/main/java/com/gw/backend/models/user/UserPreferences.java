@@ -11,7 +11,7 @@ public class UserPreferences extends AbstractIdentifiableModel {
             DISLIKE
     }
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     private Preference preference;
 
 //    style_title in api
@@ -22,18 +22,19 @@ public class UserPreferences extends AbstractIdentifiableModel {
 //    classification_title in api
     private String artType;
 
-    private Long artistId;
+    private Long artistName;
 
     private Long userId;
 
     public UserPreferences() {}
 
-    public UserPreferences(Preference preference, String artMovement, String artType, Long artistId, Integer artYearFinished) {
+    public UserPreferences(Preference preference, String artMovement, String artType, Long artistName, Integer artYearFinished, Long userId) {
         this.preference = preference;
         this.artMovement = artMovement;
         this.artType = artType;
-        this.artistId = artistId;
+        this.artistName = artistName;
         this.artYearFinished = artYearFinished;
+        this.userId = userId;
     }
 
     public Preference getPreference() {
@@ -68,12 +69,19 @@ public class UserPreferences extends AbstractIdentifiableModel {
         this.artType = artType;
     }
 
-    public Long getArtistId() {
-        return artistId;
+    public Long getArtistName() {
+        return artistName;
     }
 
-    public void setArtistId(Long artistId) {
-        this.artistId = artistId;
+    public void setArtistName(Long artistId) {
+        this.artistName = artistId;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

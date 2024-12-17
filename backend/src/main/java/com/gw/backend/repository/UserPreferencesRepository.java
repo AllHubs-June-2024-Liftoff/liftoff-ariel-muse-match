@@ -20,39 +20,39 @@ public interface UserPreferencesRepository extends JpaRepository<UserPreferences
 	List<String> getDistinctArtTypeByUserId(Long userId);
 
 	@Query
-	List<String> getDistinctArtistIdByUserId(Long userId);
+	List<String> getDistinctArtistNameByUserId(Long userId);
 
-	@Query("select count(p) from user_preference " +
+	@Query("select count(p) from UserPreferences p " +
 			"where p.userId = :userId and p.artMovement = :artMovement and p.preference = :preference")
 	Integer countArtMovementByUserIdAndPreference(@Param("userId") Long userId, @Param("artMovement") String artMovement, @Param("preference") Preference preference);
 
-	@Query("select count(p) from user_preference " +
+	@Query("select count(p) from UserPreferences p " +
 			"where p.userId = :userId and p.artYearFinished = :artYearFinished and p.preference = :preference")
 	Integer countArtYearFinishedByUserIdAndPreference(@Param("userId") Long userId, @Param("artYearFinished") Integer artYearFinished, @Param("preference") Preference preference);
 
-	@Query("select count(p) from user_preference " +
+	@Query("select count(p) from UserPreferences p " +
 			"where p.userId = :userId and p.artType = :artType and p.preference = :preference")
 	Integer countArtTypeByUserIdAndPreference(@Param("userId") Long userId, @Param("artType") String artType, @Param("preference") Preference preference);
 
-	@Query("select count(p) from user_preference " +
-			"where p.userId = :userId and p.artistId = :artMovement and p.preference = :preference")
-	Integer countArtistIdByUserIdAndPreference(@Param("userId") Long userId, @Param("artistId") Long artistId, @Param("preference") Preference preference);
+	@Query("select count(p) from UserPreferences p " +
+			"where p.userId = :userId and p.artistName = :artistName and p.preference = :preference")
+	Integer countArtistNameByUserIdAndPreference(@Param("userId") Long userId, @Param("artistName") Long artistId, @Param("preference") Preference preference);
 
-	@Query("select count(p) from user_preference " +
+	@Query("select count(p) from UserPreferences p " +
 			"where p.userId = :userId and p.artMovement = :artMovement")
 	Integer countArtMovementByUserId(@Param("userId") Long userId, @Param("artMovement") String artMovement);
 
-	@Query("select count(p) from user_preference " +
+	@Query("select count(p) from UserPreferences p " +
 			"where p.userId = :userId and p.artYearFinished = :artYearFinished")
 	Integer countArtYearFinishedByUserId(@Param("userId") Long userId, @Param("artYearFinished") Integer artYearFinished);
 
-	@Query("select count(p) from user_preference " +
+	@Query("select count(p) from UserPreferences p " +
 			"where p.userId = :userId and p.artType = :artType")
 	Integer countArtTypeByUserId(@Param("userId") Long userId, @Param("artType") String artType);
 
-	@Query("select count(p) from user_preference " +
-			"where p.userId = :userId and p.artistId = :artistId")
-	Integer countArtistIdByUserId(@Param("userId") Long userId, @Param("artistId") Long artistId);
+	@Query("select count(p) from UserPreferences p " +
+			"where p.userId = :userId and p.artistName = :artistName")
+	Integer countArtistNameByUserId(@Param("userId") Long userId, @Param("artistName") Long artistName);
 
 
 

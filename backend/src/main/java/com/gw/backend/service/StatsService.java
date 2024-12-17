@@ -26,7 +26,7 @@ public class StatsService {
 			Integer total = userPreferencesRepository.countArtMovementByUserId(userId, key);
 			stats.put("likes", likes);
 			stats.put("total", total);
-			stats.put("percentage", findPercentage(likes, total));
+			stats.put("percent", findPercentage(likes, total));
 			pack.put(key,stats);
 		}
 		return pack;
