@@ -1,6 +1,8 @@
 package com.gw.backend.controller;
 
 import com.gw.backend.repository.UserPreferencesRepository;
+import com.gw.backend.service.StatsService;
+import com.gw.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +17,15 @@ public class ProfileController {
     @Autowired
     UserPreferencesRepository userPreferencesRepository;
 
-    @GetMapping("stats/general")
-    public ResponseEntity<Map<String, Integer>> deliverGeneralStats(){
-        Map<String, Integer> stats = new HashMap<>();
+    @Autowired
+    UserService userService;
 
-        return ResponseEntity.ok(stats);
+    @Autowired
+    StatsService statsService;
+
+    @GetMapping("stats/movement")
+    public HashMap<String, HashMap<String, Integer>> deliverGeneralStats(){
+        return statsService.createMapOfStatsByUserIdAndQuery(userService.getAuthenticatedUsername(), userPreferencesRepository.getDistinctArtMovementByUserId())
     }
 
 }

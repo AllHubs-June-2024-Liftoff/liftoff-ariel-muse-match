@@ -15,7 +15,7 @@ public class StatsService {
 	UserPreferencesRepository userPreferencesRepository;
 
 	public Integer findPercentage(Integer liked, Integer total) {
-		return (int) Math.round(((float) liked / total) * 100);
+		return Math.round(((float) liked / total) * 100);
 	}
 
 	public HashMap<String, HashMap<String, Integer>> createMapOfStatsByUserIdAndQuery(Long userId, List<String> distinctQuery){
