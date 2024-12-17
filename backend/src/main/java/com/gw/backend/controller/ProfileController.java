@@ -24,8 +24,13 @@ public class ProfileController {
     StatsService statsService;
 
     @GetMapping("stats/movement")
-    public HashMap<String, HashMap<String, Integer>> deliverGeneralStats(){
-        return statsService.createMapOfStatsByUserIdAndQuery(userService.getAuthenticatedUsername(), userPreferencesRepository.getDistinctArtMovementByUserId())
+    public HashMap<String, HashMap<String, Integer>> deliverMovementStats(){
+        return statsService.createMapOfStatsByUserIdAndQuery(userService.getAuthenticatedUsername(), userPreferencesRepository.getDistinctArtMovementByUserId(userId));
+    }
+
+    @GetMapping("stats/movement")
+    public HashMap<String, HashMap<String, Integer>> deliverYearStats(){
+        return statsService.createMapOfStatsByUserIdAndQuery(userService.getAuthenticatedUsername(), userPreferencesRepository.getDistinctArtYearFinishedByUserId())
     }
 
 }
