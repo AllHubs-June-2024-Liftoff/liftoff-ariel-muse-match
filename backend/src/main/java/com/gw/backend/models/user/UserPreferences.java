@@ -1,6 +1,11 @@
 package com.gw.backend.models.user;
 
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
+import com.gw.backend.models.abstraction.StatsCategory;
+import com.gw.backend.models.stats.ArtMovement;
+import com.gw.backend.models.stats.ArtType;
+import com.gw.backend.models.stats.ArtYearFinished;
+import com.gw.backend.models.stats.ArtistName;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,24 +16,24 @@ public class UserPreferences extends AbstractIdentifiableModel {
             DISLIKE
     }
 
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Preference preference;
 
 //    style_title in api
-    private String artMovement;
+    private ArtMovement artMovement;
 
-    private Integer artYearFinished;
+    private ArtYearFinished artYearFinished;
 
 //    classification_title in api
-    private String artType;
+    private ArtType artType;
 
-    private Long artistName;
+    private ArtistName artistName;
 
     private Long userId;
 
     public UserPreferences() {}
 
-    public UserPreferences(Preference preference, String artMovement, String artType, Long artistName, Integer artYearFinished, Long userId) {
+    public UserPreferences(Preference preference, ArtMovement artMovement, ArtType artType, ArtistName artistName, ArtYearFinished artYearFinished, Long userId) {
         this.preference = preference;
         this.artMovement = artMovement;
         this.artType = artType;
@@ -45,36 +50,36 @@ public class UserPreferences extends AbstractIdentifiableModel {
         this.preference = preference;
     }
 
-    public String getArtMovement() {
+    public ArtMovement getArtMovement() {
         return artMovement;
     }
 
-    public void setArtMovement(String artMovement) {
+    public void setArtMovement(ArtMovement artMovement) {
         this.artMovement = artMovement;
     }
 
-    public Integer getArtYearFinished() {
+    public ArtYearFinished getArtYearFinished() {
         return artYearFinished;
     }
 
-    public void setArtYearFinished(Integer artYearFinished) {
+    public void setArtYearFinished(ArtYearFinished artYearFinished) {
         this.artYearFinished = artYearFinished;
     }
 
-    public String getArtType() {
+    public ArtType getArtType() {
         return artType;
     }
 
-    public void setArtType(String artType) {
+    public void setArtType(ArtType artType) {
         this.artType = artType;
     }
 
-    public Long getArtistName() {
+    public ArtistName getArtistName() {
         return artistName;
     }
 
-    public void setArtistName(Long artistId) {
-        this.artistName = artistId;
+    public void setArtistName(ArtistName artistName) {
+        this.artistName = artistName;
     }
 
     public Long getUserId() {
