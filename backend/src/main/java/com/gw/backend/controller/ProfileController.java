@@ -1,9 +1,9 @@
 package com.gw.backend.controller;
 
 import com.gw.backend.models.abstraction.StatsCategory;
-import com.gw.backend.repository.UserPreferencesRepository;
-import com.gw.backend.service.StatsService;
-import com.gw.backend.service.UserService;
+import com.gw.backend.repository.user.UserPreferencesRepository;
+import com.gw.backend.service.userdetail.StatsService;
+import com.gw.backend.service.userdetail.ExistingUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +20,7 @@ public class ProfileController {
     StatsService statsService;
 
     @Autowired
-    UserService userService;
+    ExistingUserDetailsService userService;
 
     Long userId = userService.getAuthenticatedUsername();
 

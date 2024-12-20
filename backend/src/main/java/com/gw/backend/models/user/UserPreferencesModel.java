@@ -1,7 +1,6 @@
 package com.gw.backend.models.user;
 
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
-import com.gw.backend.models.abstraction.StatsCategory;
 import com.gw.backend.models.stats.ArtMovement;
 import com.gw.backend.models.stats.ArtType;
 import com.gw.backend.models.stats.ArtYearFinished;
@@ -9,7 +8,7 @@ import com.gw.backend.models.stats.ArtistName;
 import jakarta.persistence.*;
 
 @Entity
-public class UserPreferences extends AbstractIdentifiableModel {
+public class UserPreferencesModel extends AbstractIdentifiableModel {
 
     public enum Preference {
             LIKE,
@@ -31,9 +30,9 @@ public class UserPreferences extends AbstractIdentifiableModel {
 
     private Long userId;
 
-    public UserPreferences() {}
+    public UserPreferencesModel() {}
 
-    public UserPreferences(Preference preference, ArtMovement artMovement, ArtType artType, ArtistName artistName, ArtYearFinished artYearFinished, Long userId) {
+    public UserPreferencesModel(Preference preference, ArtMovement artMovement, ArtType artType, ArtistName artistName, ArtYearFinished artYearFinished, Long userId) {
         this.preference = preference;
         this.artMovement = artMovement;
         this.artType = artType;

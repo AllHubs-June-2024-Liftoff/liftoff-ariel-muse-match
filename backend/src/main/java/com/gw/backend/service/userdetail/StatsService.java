@@ -1,12 +1,12 @@
-package com.gw.backend.service;
+package com.gw.backend.service.userdetail;
 
 import com.gw.backend.models.abstraction.StatsCategory;
 import com.gw.backend.models.stats.ArtMovement;
 import com.gw.backend.models.stats.ArtType;
 import com.gw.backend.models.stats.ArtYearFinished;
 import com.gw.backend.models.stats.ArtistName;
-import com.gw.backend.models.user.UserPreferences;
-import com.gw.backend.repository.UserPreferencesRepository;
+import com.gw.backend.models.user.UserPreferencesModel;
+import com.gw.backend.repository.user.UserPreferencesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,19 +30,19 @@ public class StatsService {
 		HashMap<StatsCategory, HashMap<String, Integer>> pack = new HashMap<>();
         for (StatsCategory key : distinctQuery){
 			if (key.getClass() == ArtMovement.class){
-				likes = userPreferencesRepository.countArtMovementByUserIdAndPreference(userId, key, UserPreferences.Preference.LIKE);
+				likes = userPreferencesRepository.countArtMovementByUserIdAndPreference(userId, key, UserPreferencesModel.Preference.LIKE);
 				total = userPreferencesRepository.countArtMovementByUserId(userId, key);
 			}
 			if (key.getClass() == ArtYearFinished.class){
-				likes = userPreferencesRepository.countArtYearFinishedByUserIdAndPreference(userId, key, UserPreferences.Preference.LIKE);
+				likes = userPreferencesRepository.countArtYearFinishedByUserIdAndPreference(userId, key, UserPreferencesModel.Preference.LIKE);
 				total = userPreferencesRepository.countArtYearFinishedByUserId(userId, key);
 			}
 			if (key.getClass() == ArtType.class){
-				likes = userPreferencesRepository.countArtTypeByUserIdAndPreference(userId, key, UserPreferences.Preference.LIKE);
+				likes = userPreferencesRepository.countArtTypeByUserIdAndPreference(userId, key, UserPreferencesModel.Preference.LIKE);
 				total = userPreferencesRepository.countArtTypeByUserId(userId, key);
 			}
 			if (key.getClass() == ArtistName.class){
-				likes = userPreferencesRepository.countArtistNameByUserIdAndPreference(userId, key, UserPreferences.Preference.LIKE);
+				likes = userPreferencesRepository.countArtistNameByUserIdAndPreference(userId, key, UserPreferencesModel.Preference.LIKE);
 				total = userPreferencesRepository.countArtistNameByUserId(userId, key);
 			}
 			stats.put("likes", likes);
