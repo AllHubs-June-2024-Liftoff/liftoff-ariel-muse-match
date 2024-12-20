@@ -5,6 +5,10 @@ function Stats() {
   const [loading, setLoading] = useState(true);
   const [uri, setUri] = useState("general");
 
+  const changeUri = (endPath) => {
+    setUri(endPath);
+  };
+
   useEffect(() => {
     fetch(`http://localhost:8080/profile/stats/${uri}`)
       .then((response) => response.json())
@@ -22,19 +26,29 @@ function Stats() {
     return <p>Loading...</p>;
   }
 
-  data.map((datum) => {
-    const liked = data[datum].likes;
-    const total = data[datum].total;
-    const percent = data[datum].percent;
-    return (
+  return (
+    <>
       <div>
-        <h3>{datum}</h3>
-        <p>
-          Liked: {percent}% {`(${liked}/${total})`}
-        </p>
+        <button onClick={changeUri("type")}>By Art Type</button>
+        <button onClick={changeUri("movement")}>By Art Movement</button>
+        <button onClick={changeUri("artist")}>By Artist</button>
+        <button onClick={changeUri("year")}>By Year</button>
       </div>
-    );
-  });
+      {data.map((datum) => {
+        const liked = data[datum].likes;
+        const total = data[datum].total;
+        const percent = data[datum].percent;
+        return (
+          <>
+            <h3>{datum}</h3>
+            <p>
+              Liked: {percent}% {`(${liked}/${total})`}
+            </p>
+          </>
+        );
+      })}
+    </>
+  );
 }
 
 export default Stats;
