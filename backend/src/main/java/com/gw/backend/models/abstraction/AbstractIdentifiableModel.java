@@ -7,7 +7,7 @@ import jakarta.persistence.MappedSuperclass;
 import java.util.Objects;
 
 @MappedSuperclass
-public class AbstractIdentifiableModel {
+public abstract class AbstractIdentifiableModel {
 
     @Id
     @GeneratedValue

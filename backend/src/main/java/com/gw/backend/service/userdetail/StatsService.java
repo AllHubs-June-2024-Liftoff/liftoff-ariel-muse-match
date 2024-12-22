@@ -10,8 +10,7 @@ import com.gw.backend.repository.user.UserPreferencesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class StatsService {
@@ -23,9 +22,10 @@ public class StatsService {
 		return Math.round(((float) liked / total) * 100);
 	}
 
-	public HashMap<StatsCategory, HashMap<String, Integer>> createMapOfStatsByUserIdAndQuery(Long userId, List<StatsCategory> distinctQuery){
+	public HashMap<StatsCategory, HashMap<String, Integer>> createSortedMapOfStatsByUserIdAndQuery(Long userId, List<StatsCategory> distinctQuery){
 		Integer likes = null;
 		Integer total = null;
+		String sortKey = "percent";
 		HashMap<String, Integer> stats = new HashMap<>();
 		HashMap<StatsCategory, HashMap<String, Integer>> pack = new HashMap<>();
         for (StatsCategory key : distinctQuery){
@@ -50,7 +50,21 @@ public class StatsService {
 			stats.put("percent", findPercentage(likes, total));
 			pack.put(key,stats);
 		}
-		return pack;
+
+		List<Map.Entry<StatsCategory, HashMap<String, Integer>>> entryList = new ArrayList<>(pack.entrySet());
+
+		entryList.sort((e1, e2) -> {
+			Integer val1 = e1.getValue().get(sortKey);
+			Integer val2 = e2.getValue().get(sortKey);
+			return val1.compareTo(val2);
+		});
+
+		LinkedHashMap<StatsCategory, HashMap<String, Integer>> sortedMap = new LinkedHashMap<>();
+		for (Map.Entry<StatsCategory, HashMap<String, Integer>> entry : entryList) {
+			sortedMap.put(entry.getKey(), entry.getValue());
+		}
+
+		return sortedMap;
 	}
 
 }

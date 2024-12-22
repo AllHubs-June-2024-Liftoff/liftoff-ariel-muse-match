@@ -24,24 +24,26 @@ public class ProfileController {
 
     Long userId = userService.getAuthenticatedUsername();
 
+
+
     @GetMapping("stats/movement")
     public HashMap<StatsCategory, HashMap<String, Integer>> deliverMovementStats(){
-        return statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtMovementByUserId(userId));
+        return statsService.createSortedMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtMovementByUserId(userId));
     }
 
     @GetMapping("stats/year")
     public HashMap<StatsCategory, HashMap<String, Integer>> deliverYearStats(){
-        return statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtYearFinishedByUserId(userId));
+        return statsService.createSortedMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtYearFinishedByUserId(userId));
     }
 
     @GetMapping("stats/type")
     public HashMap<StatsCategory, HashMap<String, Integer>> deliverTypeStats(){
-        return statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtTypeByUserId(userId));
+        return statsService.createSortedMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtTypeByUserId(userId));
     }
 
     @GetMapping("stats/artist")
     public HashMap<StatsCategory, HashMap<String, Integer>> deliverArtistStats(){
-        return statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtistNameByUserId(userId));
+        return statsService.createSortedMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtistNameByUserId(userId));
     }
 
 }
