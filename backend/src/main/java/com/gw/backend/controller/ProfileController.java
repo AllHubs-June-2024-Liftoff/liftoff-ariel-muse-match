@@ -24,26 +24,30 @@ public class ProfileController {
 
     Long userId = userService.getAuthenticatedUsername();
 
-
+    private final String sortKey = "percent";
 
     @GetMapping("stats/movement")
     public HashMap<StatsCategory, HashMap<String, Integer>> deliverMovementStats(){
-        return statsService.createSortedMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtMovementByUserId(userId));
+        HashMap<StatsCategory, HashMap<String, Integer>> pack =  statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtMovementByUserId(userId));
+        return statsService.getSortedLinkedHashMap(pack, sortKey);
     }
 
     @GetMapping("stats/year")
     public HashMap<StatsCategory, HashMap<String, Integer>> deliverYearStats(){
-        return statsService.createSortedMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtYearFinishedByUserId(userId));
+        HashMap<StatsCategory, HashMap<String, Integer>> pack =  statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtYearFinishedByUserId(userId));
+        return statsService.getSortedLinkedHashMap(pack, sortKey);
     }
 
     @GetMapping("stats/type")
     public HashMap<StatsCategory, HashMap<String, Integer>> deliverTypeStats(){
-        return statsService.createSortedMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtTypeByUserId(userId));
+        HashMap<StatsCategory, HashMap<String, Integer>> pack =  statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtTypeByUserId(userId));
+        return statsService.getSortedLinkedHashMap(pack, sortKey);
     }
 
     @GetMapping("stats/artist")
     public HashMap<StatsCategory, HashMap<String, Integer>> deliverArtistStats(){
-        return statsService.createSortedMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtistNameByUserId(userId));
+        HashMap<StatsCategory, HashMap<String, Integer>> pack =  statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtistNameByUserId(userId));
+        return statsService.getSortedLinkedHashMap(pack, sortKey);
     }
 
 }

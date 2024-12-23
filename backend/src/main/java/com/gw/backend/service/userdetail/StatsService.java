@@ -22,13 +22,12 @@ public class StatsService {
 		return Math.round(((float) liked / total) * 100);
 	}
 
-	public HashMap<StatsCategory, HashMap<String, Integer>> createSortedMapOfStatsByUserIdAndQuery(Long userId, List<StatsCategory> distinctQuery){
+	public HashMap<StatsCategory, HashMap<String, Integer>> createMapOfStatsByUserIdAndQuery(Long userId, List<StatsCategory> distinctQuery){
 		Integer likes = null;
 		Integer total = null;
-		String sortKey = "percent";
 		HashMap<String, Integer> stats = new HashMap<>();
 		HashMap<StatsCategory, HashMap<String, Integer>> pack = new HashMap<>();
-        for (StatsCategory key : distinctQuery){
+		for (StatsCategory key : distinctQuery){
 			if (key.getClass() == ArtMovement.class){
 				likes = userPreferencesRepository.countArtMovementByUserIdAndPreference(userId, key, UserPreferencesModel.Preference.LIKE);
 				total = userPreferencesRepository.countArtMovementByUserId(userId, key);
@@ -50,6 +49,11 @@ public class StatsService {
 			stats.put("percent", findPercentage(likes, total));
 			pack.put(key,stats);
 		}
+
+		return pack;
+	}
+
+	public LinkedHashMap<StatsCategory, HashMap<String, Integer>> getSortedLinkedHashMap(HashMap<StatsCategory, HashMap<String, Integer>> pack, String sortKey) {
 
 		List<Map.Entry<StatsCategory, HashMap<String, Integer>>> entryList = new ArrayList<>(pack.entrySet());
 
