@@ -8,6 +8,7 @@ import com.gw.backend.service.userdetail.ExistingUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public  class ArtistNameHandler implements StatsCategoryHandler {
@@ -15,11 +16,11 @@ public  class ArtistNameHandler implements StatsCategoryHandler {
 	@Autowired
 	UserPreferencesRepository userPreferencesRepository;
 
+	@Override
+	public List<StatsCategory> sortList(SortingCriteria sortingCriteria) {
+		return
 
-	@Autowired
-	ExistingUserDetailsService user;
-
-
+	}
 
 	@Override
 	public List<StatsCategory> createList(Long userId) {
@@ -30,7 +31,6 @@ public  class ArtistNameHandler implements StatsCategoryHandler {
 		}
 		return statsPkg;
 	}
-
 
 	@Override
 	public Statistics calculateStatistics(Long userId, String searchTerm) {
