@@ -15,18 +15,11 @@ import java.util.*;
 @Service
 public class StatsService {
 
-	@Autowired
-	UserPreferencesRepository userPreferencesRepository;
-
 	public Integer findPercentage(Integer liked, Integer total) {
 		return Math.round(((float) liked / total) * 100);
 	}
 
-	public HashMap<StatsCategory, HashMap<String, Integer>> createMapOfStatsByUserIdAndQuery(Long userId, List<StatsCategory> distinctQuery){
 
-
-
-	}
 
 	public LinkedHashMap<StatsCategory, HashMap<String, Integer>> getSortedLinkedHashMap(HashMap<StatsCategory, HashMap<String, Integer>> pack, String sortKey) {
 
