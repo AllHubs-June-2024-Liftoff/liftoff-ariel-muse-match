@@ -3,14 +3,19 @@ import React, { useEffect, useState } from "react";
 function Stats() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [uri, setUri] = useState("general");
+  const [uri, setUri] = useState(["artist", "percentage"]);
 
-  const changeUri = (endPath) => {
-    setUri(endPath);
+  const changeCategoryUri = (path) => {
+    setUri[0](path);
+  };
+
+  const changeSortUri = (path) => {
+    setUri[1](path);
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8080/profile/stats/${uri}`)
+    setLoading(true);
+    fetch(`http://localhost:8080/profile/stats/${uri[0]}/${uri[1]}`)
       .then((response) => response.json())
       .then((data) => {
         setData(data);
@@ -29,15 +34,20 @@ function Stats() {
   return (
     <>
       <div>
-        <button onClick={changeUri("type")}>By Art Type</button>
-        <button onClick={changeUri("movement")}>By Art Movement</button>
-        <button onClick={changeUri("artist")}>By Artist</button>
-        <button onClick={changeUri("year")}>By Year</button>
+        <Button onClick={changeCategoryUri("type")}>By Art Type</Button>
+        <Button onClick={changeCategoryUri("movement")}>By Art Movement</Button>
+        <Button onClick={changeCategoryUri("artist")}>By Artist</Button>
+        <Button onClick={changeCategoryUri("year")}>By Year</Button>
+      </div>
+      <div>
+        <Button onClick={changeSortUri("percentage")}>By Percentage</Button>
+        <Button onClick={changeSortUri("total")}>By Total</Button>
+        <Button onClick={changeSortUri("Likes")}>By Likes</Button>
       </div>
       {data.map((datum) => {
-        const liked = data[datum].likes;
-        const total = data[datum].total;
-        const percent = data[datum].percent;
+        const liked = data[datum].statistics.likes;
+        const total = data[datum].statistics.total;
+        const percent = data[datum].statistics.percent;
         return (
           <>
             <h3>{datum}</h3>
