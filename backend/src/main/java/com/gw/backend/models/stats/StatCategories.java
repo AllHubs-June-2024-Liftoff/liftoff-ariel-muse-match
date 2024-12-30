@@ -1,6 +1,6 @@
 package com.gw.backend.models.stats;
 
-import com.gw.backend.service.userdetail.*;
+import com.gw.backend.service.userdetail.stats.*;
 
 public enum StatCategories {
 	MOVEMENT {

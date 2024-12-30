@@ -1,6 +1,6 @@
-package com.gw.backend.service.userdetail;
+package com.gw.backend.service.userdetail.stats;
 
-import com.gw.backend.models.abstraction.StatsCategory;
+import com.gw.backend.models.stats.StatsCategory;
 import com.gw.backend.models.stats.SortingCriteria;
 import org.springframework.stereotype.Service;
 

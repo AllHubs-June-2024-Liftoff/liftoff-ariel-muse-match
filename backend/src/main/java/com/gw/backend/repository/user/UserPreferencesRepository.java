@@ -1,6 +1,5 @@
 package com.gw.backend.repository.user;
 
-import com.gw.backend.models.abstraction.StatsCategory;
 import com.gw.backend.models.user.UserPreferencesModel;
 import com.gw.backend.models.user.UserPreferencesModel.Preference;
 import org.springframework.data.jpa.repository.JpaRepository;

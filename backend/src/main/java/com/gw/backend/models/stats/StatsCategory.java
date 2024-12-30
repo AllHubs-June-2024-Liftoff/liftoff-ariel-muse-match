@@ -1,8 +1,4 @@
-package com.gw.backend.models.abstraction;
-
-import com.gw.backend.models.stats.Statistics;
-
-import java.util.List;
+package com.gw.backend.models.stats;
 
 public abstract class StatsCategory {
 

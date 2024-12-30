@@ -19,25 +19,25 @@ public class UserPreferencesModel extends AbstractIdentifiableModel {
     private Preference preference;
 
 //    style_title in api
-    private ArtMovement artMovement;
+    private String artMovement;
 
-    private ArtYearFinished artYearFinished;
+    private String artYearFinished;
 
 //    classification_title in api
-    private ArtType artType;
+    private String artType;
 
-    private ArtistName artistName;
+    private String artistName;
 
     private Long userId;
 
     public UserPreferencesModel() {}
 
-    public UserPreferencesModel(Preference preference, ArtMovement artMovement, ArtType artType, ArtistName artistName, ArtYearFinished artYearFinished, Long userId) {
+    public UserPreferencesModel(Preference preference, String artMovement, String artYearFinished, String artType, String artistName, Long userId) {
         this.preference = preference;
         this.artMovement = artMovement;
+        this.artYearFinished = artYearFinished;
         this.artType = artType;
         this.artistName = artistName;
-        this.artYearFinished = artYearFinished;
         this.userId = userId;
     }
 
