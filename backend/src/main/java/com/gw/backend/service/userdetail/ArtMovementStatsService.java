@@ -13,22 +13,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ArtMovementStatsService {
+public class ArtMovementStatsService extends StatsService{
 
 	private final UserPreferencesRepository repository;
-
-	private final StatsService statsService;
 
 	private final Long userId;
 
 	@Autowired
-	public ArtMovementStatsService(UserPreferencesRepository repository, StatsService statsService, ExistingUserDetailsService user) {
+	public ArtMovementStatsService(UserPreferencesRepository repository, ExistingUserDetailsService user) {
 		this.repository = repository;
-		this.statsService = statsService;
 		this.userId = user.getAuthenticatedUsername();
 	}
 
-	public List<StatsCategory> getMovementStats(SortingCriteria sortBy) {
+	public List<ArtMovement> getMovementStats(SortingCriteria sortBy) {
 		return repository.getDistinctArtMovementByUserId(userId).stream()
 				.map(this::createArtMovementStats)
 				.sorted(sortBy.getComparator())
@@ -39,7 +36,7 @@ public class ArtMovementStatsService {
 		Integer likes = repository.countArtistNameByUserIdAndPreference(
 				userId, value, UserPreferencesModel.Preference.LIKE);
 		Integer total = repository.countArtMovementByUserId(userId, value);
-		Integer percentage = statsService.findPercentage(likes, total);
+		Integer percentage = this.findPercentage(likes, total);
 
 		return new ArtMovement(value, new Statistics(likes, total, percentage));
 	}

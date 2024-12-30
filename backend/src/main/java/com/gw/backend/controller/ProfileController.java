@@ -21,19 +21,27 @@ import java.util.List;
 @RestController
 public class ProfileController {
 
+	private final ExistingUserDetailsService existingUserDetailsService;
+
     private final StatsService statsService;
 
     @Autowired
-	public ProfileController(StatsService statsService) {
-		this.statsService = statsService;
+	public ProfileController(ExistingUserDetailsService existingUserDetailsService, StatsService statsService) {
+	    this.existingUserDetailsService = existingUserDetailsService;
+	    this.statsService = statsService;
 	}
 
 
-	@GetMapping("stats/movement/{sortBy}")
-    public List<ArtMovement> deliverSortedStats(@PathVariable SortingCriteria sortBy) {
-        statsService = new ArtMovementStatsService()
-
-    }
+	@GetMapping("stats/{category}/{sortBy}")
+    public List<ArtMovement> deliverSortedStats(@PathVariable String category, @PathVariable String sortBy) {
+		switch (category) {
+			case "movement":
+			    return ((ArtMovementStatsService) statsService).getMovementStats(SortingCriteria.valueOf(sortBy.toUpperCase()));
+				break;
+			case "stats":
+				return ((Stat))
+		}
+	}
 
 
     @GetMapping("stats/year")
