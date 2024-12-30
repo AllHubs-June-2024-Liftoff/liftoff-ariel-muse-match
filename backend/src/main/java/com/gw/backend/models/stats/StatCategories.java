@@ -1,19 +1,30 @@
 package com.gw.backend.models.stats;
 
-import com.gw.backend.service.userdetail.ArtMovementStatsService;
-import com.gw.backend.service.userdetail.StatsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gw.backend.service.userdetail.*;
 
 public enum StatCategories {
-	MOVEMENT(movement.getMovementStats()),
-	ARTIST,
-	TYPE,
-	YEAR, ;
+	MOVEMENT {
+		public ArtMovementStatsService convert(StatsService statsService){
+			return (ArtMovementStatsService) statsService;
+		}
+	},
+	ARTIST{
+		public ArtistNameStatsService convert(StatsService statsService) {
+			return (ArtistNameStatsService) statsService;
+		}
+	},
+	TYPE{
+		public ArtTypeStatsService convert(StatsService statsService) {
+			return (ArtTypeStatsService) statsService;
+		}
+	},
+	YEAR{
+		public ArtYearFinishedStatsService convert(StatsService statsService) {
+			return (ArtYearFinishedStatsService) statsService;
+		}
+	};
 
-	private StatsService statsService;
+	public abstract StatsService convert(StatsService statsService);
 
 
-	StatCategories(StatsService statsService) {
-		this.statsService = statsService;
-	}
 }
