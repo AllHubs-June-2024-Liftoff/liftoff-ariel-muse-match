@@ -15,10 +15,6 @@ public abstract class StatsCategory {
 		this.statistics = statistics;
 	}
 
-	public List<StatsCategory> createListOfUniqueCategoryValues() {
-
-	}
-
 	public Statistics getStatistics() {
 		return statistics;
 	}
