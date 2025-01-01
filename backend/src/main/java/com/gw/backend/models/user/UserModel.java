@@ -3,12 +3,16 @@ package com.gw.backend.models.user;
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import org.hibernate.annotations.NotFound;
+import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class UserModel extends AbstractIdentifiableModel {
+
+
 
     private String username;
 
@@ -19,7 +23,6 @@ public class UserModel extends AbstractIdentifiableModel {
     @OneToMany(mappedBy = "userId")
     private List<UserPreferencesModel> preferences = new ArrayList<>();
 
-    public UserModel() {}
 
     public UserModel(String username, String email, String hashPass, List<UserPreferencesModel> preferences) {
         this.username = username;
