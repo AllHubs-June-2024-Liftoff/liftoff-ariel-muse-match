@@ -17,13 +17,11 @@ import java.util.List;
 @RequestMapping("profile")
 public class ProfileController {
 
-	private final ExistingUserDetailsService existingUserDetailsService;
 
 	private final StatsService statsService;
 
 	@Autowired
-	public ProfileController(ExistingUserDetailsService existingUserDetailsService, StatsService statsService) {
-		this.existingUserDetailsService = existingUserDetailsService;
+	public ProfileController(StatsService statsService) {
 		this.statsService = statsService;
 	}
 

@@ -1,6 +1,7 @@
 package com.gw.backend.models.abstraction;
 
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
 public abstract class AbstractIdentifiableModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(GenerationType.IDENTITY)
     private Long id;
 
     public Long getId() {

@@ -1,10 +1,6 @@
 package com.gw.backend.models.user;
 
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
-import com.gw.backend.models.stats.ArtMovement;
-import com.gw.backend.models.stats.ArtType;
-import com.gw.backend.models.stats.ArtYearFinished;
-import com.gw.backend.models.stats.ArtistName;
 import jakarta.persistence.*;
 
 @Entity
@@ -28,6 +24,8 @@ public class UserPreferencesModel extends AbstractIdentifiableModel {
 
     private String artistName;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private Long userId;
 
     public UserPreferencesModel() {}
@@ -49,35 +47,35 @@ public class UserPreferencesModel extends AbstractIdentifiableModel {
         this.preference = preference;
     }
 
-    public ArtMovement getArtMovement() {
+    public String getArtMovement() {
         return artMovement;
     }
 
-    public void setArtMovement(ArtMovement artMovement) {
+    public void setArtMovement(String artMovement) {
         this.artMovement = artMovement;
     }
 
-    public ArtYearFinished getArtYearFinished() {
+    public String getArtYearFinished() {
         return artYearFinished;
     }
 
-    public void setArtYearFinished(ArtYearFinished artYearFinished) {
+    public void setArtYearFinished(String artYearFinished) {
         this.artYearFinished = artYearFinished;
     }
 
-    public ArtType getArtType() {
+    public String getArtType() {
         return artType;
     }
 
-    public void setArtType(ArtType artType) {
+    public void setArtType(String artType) {
         this.artType = artType;
     }
 
-    public ArtistName getArtistName() {
+    public String getArtistName() {
         return artistName;
     }
 
-    public void setArtistName(ArtistName artistName) {
+    public void setArtistName(String artistName) {
         this.artistName = artistName;
     }
 
@@ -87,5 +85,17 @@ public class UserPreferencesModel extends AbstractIdentifiableModel {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "UserPreferencesModel{" +
+                "preference=" + preference +
+                ", artMovement='" + artMovement + '\'' +
+                ", artYearFinished='" + artYearFinished + '\'' +
+                ", artType='" + artType + '\'' +
+                ", artistName='" + artistName + '\'' +
+                ", userId=" + userId +
+                '}';
     }
 }
