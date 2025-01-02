@@ -3,14 +3,17 @@ import React, { useEffect, useState } from "react";
 function Stats() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [uri, setUri] = useState(["artist", "percentage"]);
+  const [uri, setUri] = useState(["type", "percentage"]);
+  const [activeButton, setActiveButton] = useState(["button1", "button1"]);
 
-  const changeCategoryUri = (path) => {
+  const changeCategoryPathAndActive = (path, activeButton) => {
     setUri[0](path);
+    setActiveButton[0](activeButton);
   };
 
-  const changeSortUri = (path) => {
+  const changeSortPathAndActive = (path, activeButton) => {
     setUri[1](path);
+    setActiveButton[1](activeButton);
   };
 
   useEffect(() => {
@@ -34,15 +37,50 @@ function Stats() {
   return (
     <>
       <div>
-        <Button onClick={changeCategoryUri("type")}>By Art Type</Button>
-        <Button onClick={changeCategoryUri("movement")}>By Art Movement</Button>
-        <Button onClick={changeCategoryUri("artist")}>By Artist</Button>
-        <Button onClick={changeCategoryUri("year")}>By Year</Button>
+        <Button
+          onClick={() => changeCategoryPathAndActive("type", "button1")}
+          className={activeButton[0] === "button1" ? "active" : ""}
+        >
+          By Art Type
+        </Button>
+        <Button
+          onClick={() => changeCategoryPathAndActive("movement", "button2")}
+          className={activeButton[0] === "button2" ? "active" : ""}
+        >
+          By Art Movement
+        </Button>
+        <Button
+          onClick={() => changeCategoryPathAndActive("artist", "button3")}
+          className={activeButton[0] === "button3" ? "active" : ""}
+        >
+          By Artist
+        </Button>
+        <Button
+          onClick={() => changeCategoryPathAndActive("year", "button4")}
+          className={activeButton[0] === "button4" ? "active" : ""}
+        >
+          By Year
+        </Button>
       </div>
       <div>
-        <Button onClick={changeSortUri("percentage")}>By Percentage</Button>
-        <Button onClick={changeSortUri("total")}>By Total</Button>
-        <Button onClick={changeSortUri("Likes")}>By Likes</Button>
+        <Button
+          onClick={() => changeSortPathAndActive("percentage", "button1")}
+          className={activeButton[1] === "button1" ? "active" : ""}
+        >
+          By Percentage
+        </Button>
+        <Button
+          onClick={() => changeSortPathAndActive("total", "button2")}
+          className={activeButton[1] === "button2" ? "active" : ""}
+        >
+          By Total
+        </Button>
+        <Button
+          onClick={() => changeSortPathAndActive("Likes", "button3")}
+          className={activeButton[1] === "button3" ? "active" : ""}
+        >
+          By Likes
+        </Button>
       </div>
       {data.map((datum) => {
         const liked = data[datum].statistics.likes;
