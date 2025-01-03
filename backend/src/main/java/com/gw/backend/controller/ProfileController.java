@@ -1,53 +1,34 @@
 package com.gw.backend.controller;
 
-import com.gw.backend.models.abstraction.StatsCategory;
-import com.gw.backend.repository.user.UserPreferencesRepository;
-import com.gw.backend.service.userdetail.StatsService;
+import com.gw.backend.models.stats.StatsCategory;
+import com.gw.backend.models.stats.SortingCriteria;
+import com.gw.backend.models.stats.StatCategories;
 import com.gw.backend.service.userdetail.ExistingUserDetailsService;
+import com.gw.backend.service.userdetail.stats.StatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
+import java.util.List;
 
 @RestController
+@RequestMapping("profile")
 public class ProfileController {
 
-    @Autowired
-    UserPreferencesRepository userPreferencesRepository;
+
+	private final StatsService statsService;
 
 	@Autowired
-    StatsService statsService;
+	public ProfileController(StatsService statsService) {
+		this.statsService = statsService;
+	}
 
-    @Autowired
-    ExistingUserDetailsService userService;
 
-    Long userId = userService.getAuthenticatedUsername();
-
-    private final String sortKey = "percent";
-
-    @GetMapping("stats/movement")
-    public HashMap<StatsCategory, HashMap<String, Integer>> deliverMovementStats(){
-        HashMap<StatsCategory, HashMap<String, Integer>> pack =  statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtMovementByUserId(userId));
-        return statsService.getSortedLinkedHashMap(pack, sortKey);
-    }
-
-    @GetMapping("stats/year")
-    public HashMap<StatsCategory, HashMap<String, Integer>> deliverYearStats(){
-        HashMap<StatsCategory, HashMap<String, Integer>> pack =  statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtYearFinishedByUserId(userId));
-        return statsService.getSortedLinkedHashMap(pack, sortKey);
-    }
-
-    @GetMapping("stats/type")
-    public HashMap<StatsCategory, HashMap<String, Integer>> deliverTypeStats(){
-        HashMap<StatsCategory, HashMap<String, Integer>> pack =  statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtTypeByUserId(userId));
-        return statsService.getSortedLinkedHashMap(pack, sortKey);
-    }
-
-    @GetMapping("stats/artist")
-    public HashMap<StatsCategory, HashMap<String, Integer>> deliverArtistStats(){
-        HashMap<StatsCategory, HashMap<String, Integer>> pack =  statsService.createMapOfStatsByUserIdAndQuery(userId, userPreferencesRepository.getDistinctArtistNameByUserId(userId));
-        return statsService.getSortedLinkedHashMap(pack, sortKey);
-    }
+	@GetMapping("/stats/{category}/{sortBy}")
+	public List<StatsCategory> deliverSortedStats(@PathVariable String category, @PathVariable String sortBy) {
+		return (StatCategories.valueOf(category.toUpperCase()).convert(statsService).getStats(SortingCriteria.valueOf(sortBy.toUpperCase())));
+	}
 
 }
