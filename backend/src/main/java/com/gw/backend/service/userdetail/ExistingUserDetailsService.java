@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExistingUserDetailsService {
 
-    public static Long getAuthenticatedUsername() {
+    public static String getAuthenticatedUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();

@@ -17,7 +17,7 @@ public class StatsService {
 
 	public List<StatsCategory> returnSortedList() {
 		return artistNameHandler.createList(userId).sort((e1, e2) -> {
-			int value1 = e1.getStatistics().
+			int value1 = e1.getStatistics();
 		});
 	}
 

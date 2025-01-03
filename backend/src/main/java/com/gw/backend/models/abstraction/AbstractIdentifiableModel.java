@@ -12,7 +12,7 @@ public class AbstractIdentifiableModel {
     //Used to autogenerate a unique ID for any object created by a class
 
     @Id
-    @GeneratedValue(GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     public Long getId() {

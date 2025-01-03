@@ -19,8 +19,6 @@ import java.util.List;
 public class UserModel extends AbstractIdentifiableModel {
 
     @Column
-
-
     private String username;
 
     @Column
@@ -43,8 +41,7 @@ public class UserModel extends AbstractIdentifiableModel {
     }
 
 
-    public UserModel(String username, String email, String hashPass, List<UserPreferencesModel> preferences) {
-    public UserModel(String username, String password, ProfilePicture profilePicture, String email) {
+    public UserModel(String username, String password, ProfilePicture profilePicture, String email, String hashPass, List <UserPreferencesModel> preferences) {
         this.username = username;
         this.password = password;
         this.profilePicture = profilePicture;

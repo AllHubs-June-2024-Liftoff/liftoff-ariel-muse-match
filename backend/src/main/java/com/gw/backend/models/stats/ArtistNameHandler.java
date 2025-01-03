@@ -18,10 +18,8 @@ public  class ArtistNameHandler implements StatsCategoryHandler {
 
 	@Override
 	public List<StatsCategory> sortList(SortingCriteria sortingCriteria) {
-		return
-
+		return 0;
 	}
-
 	@Override
 	public List<StatsCategory> createList(Long userId) {
 		List<StatsCategory> statsPkg = new ArrayList<>();

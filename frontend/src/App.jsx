@@ -10,6 +10,7 @@ function App() {
       <div>
         <h1>MuseMatch: Now completely Bug free</h1>
         <LoadArtworks />
+        <Stats />
       </div>
     </>
   );
