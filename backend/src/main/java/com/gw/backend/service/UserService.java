@@ -1,6 +1,6 @@
 package com.gw.backend.service;
 
-import com.gw.backend.repository.UserRepository;
+import com.gw.backend.repository.user.UserRepository;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;

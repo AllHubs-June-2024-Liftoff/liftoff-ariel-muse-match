@@ -8,10 +8,11 @@ import java.util.List;
 
 public interface UserPreferencesRepository extends CrudRepository<UserPreferences, Long> {
 
-	@Query
-	List<String> getDistinctArtMovementByUserId(Long userId);
+    // JPQL query to get distinct art movements by userId
+    @Query("SELECT DISTINCT up.artMovement FROM UserPreferences up WHERE up.user.id = :userId")
+    List<String> getDistinctArtMovementByUserId(Long userId);
 
-	@Query
-	Long getCountArtMovementByUserId(Long userId, String artMovement);
-
+    // JPQL query to get count of a specific art movement by userId
+    @Query("SELECT COUNT(up) FROM UserPreferences up WHERE up.user.id = :userId AND up.artMovement = :artMovement")
+    Long getCountArtMovementByUserId(Long userId, String artMovement);
 }

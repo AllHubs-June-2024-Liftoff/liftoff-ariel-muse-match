@@ -24,7 +24,9 @@ public class UserPreferences extends AbstractIdentifiableModel {
 
     private Long artistId;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public UserPreferences() {}
 
