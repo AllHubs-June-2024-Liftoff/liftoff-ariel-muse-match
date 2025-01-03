@@ -8,7 +8,8 @@ import jakarta.persistence.MappedSuperclass;
 import java.util.Objects;
 
 @MappedSuperclass
-public abstract class AbstractIdentifiableModel {
+public class AbstractIdentifiableModel {
+    //Used to autogenerate a unique ID for any object created by a class
 
     @Id
     @GeneratedValue(GenerationType.IDENTITY)
@@ -18,11 +19,16 @@ public abstract class AbstractIdentifiableModel {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractIdentifiableModel that = (AbstractIdentifiableModel) o;
-        return Objects.equals(id, that.id);
+        return id == that.id;
     }
 
     @Override
