@@ -1,4 +1,4 @@
 package com.gw.backend.models.stats;
 
-public record Statistics(Integer likes, Integer total, Integer percentage) {
+public record Statistics(int likes, int total, int percentage) {
 }
