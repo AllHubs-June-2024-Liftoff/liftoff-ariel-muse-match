@@ -18,69 +18,74 @@ function Stats() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:8080/profile/stats/${uri[0]}/${uri[1]}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error Fetching Data: ", error);
-        setLoading(false);
-      });
+    setLoading(false);
+    // fetch(`http://localhost:8080/profile/stats/${uri[0]}/${uri[1]}`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setData(data);
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error Fetching Data: ", error);
+    //     setLoading(false);
+    //   });
   }, [uri]);
 
   if (loading) {
     return <p>Loading...</p>;
   }
 
+  if (data == null) {
+    return <p>No data to report</p>;
+  }
+
   return (
     <>
       <div>
-        <Button
+        <button
           onClick={() => changeCategoryPathAndActive("type", "button1")}
           className={activeButton[0] === "button1" ? "active" : ""}
         >
           By Art Type
-        </Button>
-        <Button
+        </button>
+        <button
           onClick={() => changeCategoryPathAndActive("movement", "button2")}
           className={activeButton[0] === "button2" ? "active" : ""}
         >
           By Art Movement
-        </Button>
-        <Button
+        </button>
+        <button
           onClick={() => changeCategoryPathAndActive("artist", "button3")}
           className={activeButton[0] === "button3" ? "active" : ""}
         >
           By Artist
-        </Button>
-        <Button
+        </button>
+        <button
           onClick={() => changeCategoryPathAndActive("year", "button4")}
           className={activeButton[0] === "button4" ? "active" : ""}
         >
           By Year
-        </Button>
+        </button>
       </div>
       <div>
-        <Button
+        <button
           onClick={() => changeSortPathAndActive("percentage", "button1")}
           className={activeButton[1] === "button1" ? "active" : ""}
         >
           By Percentage
-        </Button>
-        <Button
+        </button>
+        <button
           onClick={() => changeSortPathAndActive("total", "button2")}
           className={activeButton[1] === "button2" ? "active" : ""}
         >
           By Total
-        </Button>
-        <Button
-          onClick={() => changeSortPathAndActive("Likes", "button3")}
+        </button>
+        <button
+          onClick={() => changeSortPathAndActive("likes", "button3")}
           className={activeButton[1] === "button3" ? "active" : ""}
         >
           By Likes
-        </Button>
+        </button>
       </div>
       {data.map((datum) => {
         const liked = data[datum].statistics.likes;
