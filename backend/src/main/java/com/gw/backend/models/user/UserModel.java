@@ -4,7 +4,7 @@ import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import jakarta.persistence.Entity;
 
 @Entity
-public class User extends AbstractIdentifiableModel {
+public class UserModel extends AbstractIdentifiableModel {
 
     private String username;
 
@@ -12,10 +12,9 @@ public class User extends AbstractIdentifiableModel {
 
     private String hashPass;
 
-    public User() {}
+    public UserModel() {}
 
-
-    public User(Integer userId, String username, String email, String hashPass) {
+    public UserModel(String username, String email, String hashPass) {
         this.username = username;
         this.email = email;
         this.hashPass = hashPass;
