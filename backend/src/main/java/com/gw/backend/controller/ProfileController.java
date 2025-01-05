@@ -3,7 +3,6 @@ package com.gw.backend.controller;
 import com.gw.backend.models.stats.StatsCategory;
 import com.gw.backend.models.stats.SortingCriteria;
 import com.gw.backend.models.stats.StatCategories;
-import com.gw.backend.service.userdetail.ExistingUserDetailsService;
 import com.gw.backend.service.userdetail.stats.StatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
