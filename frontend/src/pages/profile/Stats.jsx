@@ -3,32 +3,35 @@ import React, { useEffect, useState } from "react";
 function Stats() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [uri, setUri] = useState(["type", "percentage"]);
-  const [activeButton, setActiveButton] = useState(["button1", "button1"]);
+  const [uri, setUri] = useState({ category: "type", sort: "percentage" });
+  const [activeButton, setActiveButton] = useState({
+    set1: "button1",
+    set2: "button1",
+  });
 
-  const changeCategoryPathAndActive = (path, activeButton) => {
-    setUri[0](path);
-    setActiveButton[0](activeButton);
+  const changeCategoryPathAndActive = (path, active) => {
+    setUri({ ...uri, category: path });
+    setActiveButton({ ...activeButton, set1: active });
   };
 
-  const changeSortPathAndActive = (path, activeButton) => {
-    setUri[1](path);
-    setActiveButton[1](activeButton);
+  const changeSortPathAndActive = (path, active) => {
+    setUri({ ...uri, sort: path });
+    setActiveButton({ ...activeButton, set2: active });
   };
 
   useEffect(() => {
     setLoading(true);
     setLoading(false);
-    // fetch(`http://localhost:8080/profile/stats/${uri[0]}/${uri[1]}`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setData(data);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error Fetching Data: ", error);
-    //     setLoading(false);
-    //   });
+    fetch(`http://localhost:8080/profile/stats/${uri.category}/${uri.sort}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error Fetching Data: ", error);
+        setLoading(false);
+      });
   }, [uri]);
 
   if (loading) {
@@ -36,7 +39,57 @@ function Stats() {
   }
 
   if (data == null) {
-    return <p>No data to report</p>;
+    return (
+      <>
+        <div>
+          <button
+            onClick={() => changeCategoryPathAndActive("type", "button1")}
+            class={activeButton.set1 === "button1" ? "active" : ""}
+          >
+            By Art Type
+          </button>
+          <button
+            onClick={() => changeCategoryPathAndActive("movement", "button2")}
+            class={activeButton.set1 === "button2" ? "active" : ""}
+          >
+            By Art Movement
+          </button>
+          <button
+            onClick={() => changeCategoryPathAndActive("artist", "button3")}
+            class={activeButton.set1 === "button3" ? "active" : ""}
+          >
+            By Artist
+          </button>
+          <button
+            onClick={() => changeCategoryPathAndActive("year", "button4")}
+            class={activeButton.set1 === "button4" ? "active" : ""}
+          >
+            By Year
+          </button>
+        </div>
+        <div>
+          <button
+            onClick={() => changeSortPathAndActive("percentage", "button1")}
+            class={activeButton.set2 === "button1" ? "active" : ""}
+          >
+            By Percentage
+          </button>
+          <button
+            onClick={() => changeSortPathAndActive("total", "button2")}
+            class={activeButton.set2 === "button2" ? "active" : ""}
+          >
+            By Total
+          </button>
+          <button
+            onClick={() => changeSortPathAndActive("likes", "button3")}
+            class={activeButton.set2 === "button3" ? "active" : ""}
+          >
+            By Likes
+          </button>
+        </div>{" "}
+        <p> No data to report</p>
+      </>
+    );
   }
 
   return (
@@ -44,25 +97,25 @@ function Stats() {
       <div>
         <button
           onClick={() => changeCategoryPathAndActive("type", "button1")}
-          className={activeButton[0] === "button1" ? "active" : ""}
+          className={activeButton.set1 === "button1" ? "active" : ""}
         >
           By Art Type
         </button>
         <button
           onClick={() => changeCategoryPathAndActive("movement", "button2")}
-          className={activeButton[0] === "button2" ? "active" : ""}
+          className={activeButton.set1 === "button2" ? "active" : ""}
         >
           By Art Movement
         </button>
         <button
           onClick={() => changeCategoryPathAndActive("artist", "button3")}
-          className={activeButton[0] === "button3" ? "active" : ""}
+          className={activeButton.set1 === "button3" ? "active" : ""}
         >
           By Artist
         </button>
         <button
           onClick={() => changeCategoryPathAndActive("year", "button4")}
-          className={activeButton[0] === "button4" ? "active" : ""}
+          className={activeButton.set1 === "button4" ? "active" : ""}
         >
           By Year
         </button>
@@ -70,19 +123,19 @@ function Stats() {
       <div>
         <button
           onClick={() => changeSortPathAndActive("percentage", "button1")}
-          className={activeButton[1] === "button1" ? "active" : ""}
+          className={activeButton.set2 === "button1" ? "active" : ""}
         >
           By Percentage
         </button>
         <button
           onClick={() => changeSortPathAndActive("total", "button2")}
-          className={activeButton[1] === "button2" ? "active" : ""}
+          className={activeButton.set2 === "button2" ? "active" : ""}
         >
           By Total
         </button>
         <button
           onClick={() => changeSortPathAndActive("likes", "button3")}
-          className={activeButton[1] === "button3" ? "active" : ""}
+          className={activeButton.set2 === "button3" ? "active" : ""}
         >
           By Likes
         </button>
