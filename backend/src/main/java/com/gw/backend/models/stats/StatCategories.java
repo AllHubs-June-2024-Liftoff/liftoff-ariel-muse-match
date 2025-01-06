@@ -2,29 +2,53 @@ package com.gw.backend.models.stats;
 
 import com.gw.backend.service.userdetail.stats.*;
 
+import java.util.List;
+
 public enum StatCategories {
 	MOVEMENT {
-		public ArtMovementStatsService convert(StatsService statsService){
-			return (ArtMovementStatsService) statsService;
+		public ArtMovementStatsService convert(List<StatsService> statsService){
+			for (StatsService statService : statsService){
+				if (statService.getClass() == ArtMovementStatsService.class){
+					return (ArtMovementStatsService) statService;
+				}
+			}
+			return null;
 		}
 	},
 	ARTIST{
-		public ArtistNameStatsService convert(StatsService statsService) {
-			return (ArtistNameStatsService) statsService;
+		public ArtistNameStatsService convert(List<StatsService> statsService) {
+			for (StatsService statService : statsService){
+				if (statService.getClass() == ArtistNameStatsService.class){
+					return (ArtistNameStatsService) statService;
+				}
+			}
+			return null;
 		}
 	},
 	TYPE{
-		public ArtTypeStatsService convert(StatsService statsService) {
-			return (ArtTypeStatsService) statsService;
+		public ArtTypeStatsService convert(List<StatsService>  statsService) {
+			for (StatsService statService : statsService){
+				if (statService.getClass() == ArtTypeStatsService.class){
+					return (ArtTypeStatsService) statService;
+				}
+			}
+			return null;
 		}
+
 	},
 	YEAR{
-		public ArtYearFinishedStatsService convert(StatsService statsService) {
-			return (ArtYearFinishedStatsService) statsService;
+		public ArtYearFinishedStatsService convert(List<StatsService> statsService) {
+			for (StatsService statService : statsService){
+				if (statService.getClass() == ArtYearFinishedStatsService.class){
+					return (ArtYearFinishedStatsService) statService;
+				}
+			}
+			return null;
 		}
-	};
 
-	public abstract StatsService convert(StatsService statsService);
+	}, ;
+
+	public abstract StatsService convert(List<StatsService> statsService);
 
 
 }

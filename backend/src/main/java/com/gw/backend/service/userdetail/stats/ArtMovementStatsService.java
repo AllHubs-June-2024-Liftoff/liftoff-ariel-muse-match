@@ -1,6 +1,7 @@
 package com.gw.backend.service.userdetail.stats;
 
 import com.gw.backend.models.stats.*;
+import com.gw.backend.models.user.UserModel;
 import com.gw.backend.models.user.UserPreferencesModel;
 import com.gw.backend.repository.user.UserPreferencesRepository;
 import com.gw.backend.service.UserService;
@@ -11,16 +12,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ArtMovementStatsService extends StatsService<ArtMovement>{
+public class ArtMovementStatsService extends StatsService{
 
 	private final UserPreferencesRepository repository;
+
+	private final UserModel user;
 
 	private final Long userId;
 
 	@Autowired
-	public ArtMovementStatsService(UserPreferencesRepository repository, UserService user) {
+	public ArtMovementStatsService(UserPreferencesRepository repository, UserModel user) {
 		this.repository = repository;
-		this.userId = user.getAuthenticatedUserId();
+		this.user = user;
+		this.userId = user.getId();
 	}
 
 	@Override

@@ -1,9 +1,9 @@
 package com.gw.backend.service.userdetail.stats;
 
 import com.gw.backend.models.stats.*;
+import com.gw.backend.models.user.UserModel;
 import com.gw.backend.models.user.UserPreferencesModel;
 import com.gw.backend.repository.user.UserPreferencesRepository;
-import com.gw.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,16 +11,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ArtistNameStatsService extends StatsService<ArtistName>{
+public class ArtistNameStatsService extends StatsService{
 
 	private final UserPreferencesRepository repository;
+
+	private final UserModel user;
 
 	private final Long userId;
 
 	@Autowired
-	public ArtistNameStatsService(UserPreferencesRepository repository, UserService user) {
+	public ArtistNameStatsService(UserPreferencesRepository repository, UserModel user) {
 		this.repository = repository;
-		this.userId = user.getAuthenticatedUserId();
+		this.user = user;
+		this.userId = user.getId();
 	}
 
 	@Override

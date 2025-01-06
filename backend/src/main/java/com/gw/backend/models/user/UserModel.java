@@ -8,14 +8,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
-import org.hibernate.annotations.NotFound;
-import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+
 public class UserModel extends AbstractIdentifiableModel {
 
     @Column
@@ -35,8 +33,9 @@ public class UserModel extends AbstractIdentifiableModel {
     //track of their uploaded photo.  If another image is uploaded,  it overwrites the previous image.
     //TODO: add logic for overwriting profile picture
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user")
     private List<UserPreferencesModel> preferences = new ArrayList<>();
+
     public UserModel() {
     }
 

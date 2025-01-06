@@ -26,17 +26,17 @@ public class UserPreferencesModel extends AbstractIdentifiableModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Long userId;
+    private UserModel user;
 
     public UserPreferencesModel() {}
 
-    public UserPreferencesModel(Preference preference, String artMovement, String artYearFinished, String artType, String artistName, Long userId) {
+    public UserPreferencesModel(Preference preference, String artMovement, String artYearFinished, String artType, String artistName, UserModel user) {
         this.preference = preference;
         this.artMovement = artMovement;
         this.artYearFinished = artYearFinished;
         this.artType = artType;
         this.artistName = artistName;
-        this.userId = userId;
+        this.user = user;
     }
 
     public Preference getPreference() {
@@ -79,12 +79,12 @@ public class UserPreferencesModel extends AbstractIdentifiableModel {
         this.artistName = artistName;
     }
 
-    public Long getUserId() {
-        return userId;
+    public UserModel getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class UserPreferencesModel extends AbstractIdentifiableModel {
                 ", artYearFinished='" + artYearFinished + '\'' +
                 ", artType='" + artType + '\'' +
                 ", artistName='" + artistName + '\'' +
-                ", userId=" + userId +
+                ", user=" + user +
                 '}';
     }
 }

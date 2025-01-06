@@ -17,17 +17,22 @@ import java.util.List;
 public class ProfileController {
 
 
-	private final StatsService statsService;
+	private final List<StatsService> statsService;
 
 	@Autowired
-	public ProfileController(StatsService statsService) {
+	public ProfileController(List<StatsService> statsService) {
 		this.statsService = statsService;
 	}
 
 
 	@GetMapping("/stats/{category}/{sortBy}")
-	public List<StatsCategory> deliverSortedStats(@PathVariable String category, @PathVariable String sortBy) {
-		return (StatCategories.valueOf(category.toUpperCase()).convert(statsService).getStats(SortingCriteria.valueOf(sortBy.toUpperCase())));
+	public List<? extends StatsCategory> deliverSortedStats(@PathVariable String category, @PathVariable String sortBy) {
+		return (
+				StatCategories.valueOf(category.toUpperCase())
+				.convert(statsService)
+				.getStats(SortingCriteria
+						.valueOf(sortBy.toUpperCase()))
+		);
 	}
 
 }
