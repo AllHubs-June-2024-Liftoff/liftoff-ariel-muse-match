@@ -3,13 +3,7 @@ package com.gw.backend.models.user;
 
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.image.ProfilePicture;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.OneToMany;
-import org.hibernate.annotations.NotFound;
-import org.springframework.lang.NonNull;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;

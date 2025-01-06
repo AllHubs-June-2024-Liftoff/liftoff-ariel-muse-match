@@ -1,4 +1,8 @@
 package com.gw.backend.repository;
 
-public interface MatchesRepository {
+import com.gw.backend.models.user.UserModel;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MatchesRepository extends JpaRepository<UserModel, Long> {
+
 }
