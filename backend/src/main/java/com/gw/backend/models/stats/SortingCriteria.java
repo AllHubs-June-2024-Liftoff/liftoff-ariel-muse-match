@@ -1,7 +1,5 @@
 package com.gw.backend.models.stats;
 
-import com.gw.backend.models.abstraction.StatsCategory;
-
 import java.util.Comparator;
 
 public enum SortingCriteria {
@@ -15,7 +13,7 @@ public enum SortingCriteria {
 		this.comparator = comparator;
 	}
 
-	public Comparator<StatsCategory> getComparator() {
+	public Comparator<? super StatsCategory> getComparator() {
 		return comparator;
 	}
 }
