@@ -1,16 +1,16 @@
 package com.gw.backend.models.user;
 
-
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.image.ProfilePicture;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.HashMap;
 
 @Entity
 @Table(name="users")
-public class UserModel extends AbstractIdentifiableModel {
+public class User extends AbstractIdentifiableModel {
 
     @Column
     private String username;
@@ -24,14 +24,17 @@ public class UserModel extends AbstractIdentifiableModel {
     @Column
     private String email;
 
-    //Once methods are created for uploading profile photos, this will ensure there's a relational database that keeps
-    //track of their uploaded photo.  If another image is uploaded,  it overwrites the previous image.
-    //TODO: add logic for overwriting profile picture
+    @Column
+    private HashMap userLikes;
 
-    public UserModel() {
+    @Column
+    private HashMap userDislikes;
+
+
+    public User() {
     }
 
-    public UserModel(String username, String password, ProfilePicture profilePicture, String email) {
+    public User(String username, String password, ProfilePicture profilePicture, String email) {
         this.username = username;
         this.password = password;
         this.profilePicture = profilePicture;
@@ -70,5 +73,29 @@ public class UserModel extends AbstractIdentifiableModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public HashMap getUserLikes() {
+        return userLikes;
+    }
+
+    public void setUserLikes(HashMap userLikes) {
+        this.userLikes = userLikes;
+    }
+
+    public HashMap getUserDislikes() {
+        return userDislikes;
+    }
+
+    public void setUserDislikes(HashMap userDislikes) {
+        this.userDislikes = userDislikes;
     }
 }

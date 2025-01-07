@@ -1,23 +1,55 @@
 package com.gw.backend.models;
 
-public class Artwork {
-    int ArtworkId;
-    String title;
-    String lqip;
-    String artistTitle;
-    String shortDescription;
-    String artworkTypeTitle;
-    String styleTitles;
+import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "artworks")
+public class Artwork extends AbstractIdentifiableModel {
+    @Column(name = "artwork_id")
+    private String artworkId;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "thumbnail")
+    private String thumbnailUrl;
+
+    @Column(name = "alt_text")
+    private String altText;
+
+    @Column(name = "place_of_origin")
+    private String placeOfOrigin;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "artwork_type_title")
+    private String artworkTypeTitle;
+
+    @Column(name = "artwork_type_id")
+    private int artworkTypeId;
+
+    @Column(name = "artist_title")
+    private String artistTitle;
+
+    @Column(name = "artist_ids")
+    private Long artistIds;
+
+    @Column(name = "style_title")
+    private String styleTitle;
 
     //Getters and Setters
 
-    public int getArtworkId() {
-        return ArtworkId;
+
+    public String getArtworkId() {
+        return artworkId;
     }
 
-    public void setArtworkId(int artworkId) {
-        ArtworkId = artworkId;
+    public void setArtworkId(String artworkId) {
+        this.artworkId = artworkId;
     }
 
     public String getTitle() {
@@ -28,12 +60,44 @@ public class Artwork {
         this.title = title;
     }
 
-    public String getLqip() {
-        return lqip;
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
     }
 
-    public void setLqip(String lqip) {
-        this.lqip = lqip;
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
+    }
+
+    public String getAltText() {
+        return altText;
+    }
+
+    public void setAltText(String altText) {
+        this.altText = altText;
+    }
+
+    public String getPlaceOfOrigin() {
+        return placeOfOrigin;
+    }
+
+    public void setPlaceOfOrigin(String placeOfOrigin) {
+        this.placeOfOrigin = placeOfOrigin;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getArtworkTypeId() {
+        return artworkTypeId;
+    }
+
+    public void setArtworkTypeId(int artworkTypeId) {
+        this.artworkTypeId = artworkTypeId;
     }
 
     public String getArtistTitle() {
@@ -44,12 +108,12 @@ public class Artwork {
         this.artistTitle = artistTitle;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
+    public Long getArtistIds() {
+        return artistIds;
     }
 
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+    public void setArtistIds(Long artistIds) {
+        this.artistIds = artistIds;
     }
 
     public String getArtworkTypeTitle() {
@@ -60,17 +124,11 @@ public class Artwork {
         this.artworkTypeTitle = artworkTypeTitle;
     }
 
-    public String getStyleTitles() {
-        return styleTitles;
+    public String getStyleTitle() {
+        return styleTitle;
     }
 
-    public void setStyleTitles(String styleTitles) {
-        this.styleTitles = styleTitles;
+    public void setStyleTitle(String styleTitle) {
+        this.styleTitle = styleTitle;
     }
-
-
-//If liked, PUT req to the backend with the ID and contents to be added.
-    //Back end catches, creates new artwork object, adds as object to the User's likedArtork HashMap
-    //If it's disliked, no need to save extra info (besides ID)
-    //in db, linked table to liked artworks, within that table, the created HashMap data
 }
