@@ -26,7 +26,7 @@ public class UserPreferences extends AbstractIdentifiableModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserModel user;
 
     public UserPreferences() {}
 
