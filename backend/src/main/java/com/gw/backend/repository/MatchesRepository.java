@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MatchesRepository extends JpaRepository<Matches, Integer> {
-
+    //probably will not need this because you can can use existing queries inside of user preferences repo
 }

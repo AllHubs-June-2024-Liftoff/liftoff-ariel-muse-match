@@ -2,7 +2,7 @@ package com.gw.backend.models.user;
 
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import jakarta.persistence.*;
-
+//do need both userpreferencesmodel and userPreferences? <-- reference this for query
 @Entity
 public class UserPreferencesModel extends AbstractIdentifiableModel {
 

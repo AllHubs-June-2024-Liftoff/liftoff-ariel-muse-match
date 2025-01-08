@@ -55,6 +55,14 @@ public interface UserPreferencesRepository extends JpaRepository<UserPreferences
 			"where p.userId = :userId and p.artistName = :artistName")
 	Integer countArtistNameByUserId(@Param("userId") Long userId, @Param("artistName") String artistName);
 
+	@Query("SELECT p.artistName FROM UserPreferencesModel p " +
+			"WHERE p.userId = :userId AND p.preference = :preference " +
+			"GROUP BY p.artistName " +
+			"HAVING COUNT(p) >= 3")
+	List<String> getArtistListWithAtleast3LikesOrDislikes(@Param("userId") Long userId,
+												 @Param("preference") UserPreferencesModel.Preference preference);
+
+
 
 
 }

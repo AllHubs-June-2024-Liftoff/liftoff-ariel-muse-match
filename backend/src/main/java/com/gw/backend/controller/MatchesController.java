@@ -11,23 +11,22 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("profile")
+@RequestMapping("matches")
 public class MatchesController {
 
     @Autowired
     private MatchesRepository matchesRepository;
 
-    @GetMapping("/matches")//how to get list to react
+    @GetMapping("")//how to get list to react
     public List<Matches> displayAllMatches() {
         return matchesRepository.findAll();
     }
 
-
-    public String displayMatchesByTerm(){
+    @GetMapping("matches/{name}")
+    public String displayMatchesByArtistName(){
     }
-    //figure out searchByName or searchByPattern
 
-    public String displayMatchesByCategory(){
+    public String displayMatchesByArtistCategory(){
     }
 }
 
