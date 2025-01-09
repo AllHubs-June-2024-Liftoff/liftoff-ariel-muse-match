@@ -1,35 +1,54 @@
+import React, { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Layout from './components/layout/Layout'
+import Home from './components/pages/Home'
+import './styles/App.css'
+import UserProfile from './components/pages/UserProfile'
+import MySettings from './components/pages/MySettings'
+import SignUp from './components/pages/Signup'
+import Login from './components/pages/Login'
+import ProtectedRoute from './components/auth/ProtectedRoute'
+import { AuthProvider, useAuth } from './components/auth/AuthContext'
+import Match from './components/pages/Match'
+import Contact from './components/pages/Contact'
+import Give from './components/pages/Give'
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Router>
+      <AuthProvider>
+        <Layout>
+          <Routes>
+            <Route path='/' element={<Home/>}/>
+            <Route path='my-profile'
+            element={
+              <ProtectedRoute>
+                <UserProfile/>
+              </ProtectedRoute>}
+            />
+            {/* <Route path='my-profile' element={<UserProfile/>}/> */}
+            <Route path='settings'
+            element={
+              <ProtectedRoute>
+                <MySettings/>
+              </ProtectedRoute>}
+            />
+            {/* <Route path='settings' element={<MySettings/>}/> */}
+            <Route path='sign-up' element={<SignUp/>}/>
+            <Route path='login' element={<Login/>} />
+            <Route path='match' element={<Match/>} />
+            <Route path='contacts' element={<Contact/>} />
+            <Route path='give' element={<Give/>} />
+
+          </Routes>
+        </Layout>
+      </AuthProvider>
+    </Router>
   )
 }
 
-export default App
+export default App;
+
