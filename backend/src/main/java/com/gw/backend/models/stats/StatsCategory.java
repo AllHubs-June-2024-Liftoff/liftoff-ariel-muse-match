@@ -4,6 +4,7 @@
 
 		private String info;
 
+
 	    private Statistics statistics;
 
 		public StatsCategory(String info, Statistics statistics) {
@@ -12,7 +13,7 @@
 		}
 
 		public Statistics getStatistics() {
-			return statistics;
+			return this.statistics;
 		}
 
 		public void setStatistics(Statistics statistics) {

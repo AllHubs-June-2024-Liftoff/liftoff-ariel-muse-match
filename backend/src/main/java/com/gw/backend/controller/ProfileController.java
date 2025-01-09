@@ -30,4 +30,6 @@ public class ProfileController {
 		return (StatCategories.valueOf(category.toUpperCase()).convert(statsService).getStats(SortingCriteria.valueOf(sortBy.toUpperCase())));
 	}
 
+
+
 }
