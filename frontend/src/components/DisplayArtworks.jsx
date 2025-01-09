@@ -18,14 +18,16 @@ function DisplayArtworks() {
         try {
           const data = await fetchArtworks(); //This is the data from the fetchArtworks function
           if (data && data.data) {
-            setArtworks(data.data);
+            setArtworks(data.data); //This sets the artworks to the data from the fetchArtworks function
     
             const sources = {}; //Key is artwork ID, Value is the returned URL from the getImage() function (link to image source)
-            await Promise.all( 
+            await Promise.all(  //Must execute all of the promises before setting the image sources
               data.data.map(async (artwork) => {
                 if (artwork.image_id) {
                   try {
-                    sources[artwork.id] = await getImage(artwork.image_id);
+                    sources[artwork.id] = await getImage(artwork.image_id); //This is creating an object where every artwork Id is the key and the value is the image source (Link)
+                    //{
+                    //  123: "https://www.artic.edu/iiif/2/123/full/843,/0/default.jpg",} <---Creates this with each artwork ID
                   } catch (e) {
                     console.error(`Failed to fetch image for ${artwork.id}`, e); //If there is an error, the image source will be null
                     sources[artwork.id] = null;
@@ -58,8 +60,6 @@ function DisplayArtworks() {
 
      const swiped = (direction, swipedArtwork) => {
         console.log("You swiped: " + direction + " on " + swipedArtwork.id);
-        const artwork = artworks.find(art => art.id === swipedArtwork.id);
-
         
         if (direction === "right" && swipedArtwork) {
           console.log("You liked the artwork");
@@ -99,7 +99,7 @@ function DisplayArtworks() {
             "Content-Type": "application/json",
           },
           credentials: "include", 
-          body: JSON.stringify(likedArtwork), 
+          body: JSON.stringify(likedArtwork), //better to serialize on the front end rather than the backend (more efficient)
         })
           .then((response) => {
             if (!response.ok) {
@@ -179,7 +179,7 @@ function DisplayArtworks() {
                   <h2>{artwork.classification_title}</h2>
                   <p>Title: {artwork.title}</p>
                   <img
-                    src={imageSources[artwork.id]}
+                    src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
                     alt={artwork.thumbnail?.alt_text} //Optional chaining to prevent undefined error
                   />
                 </div>
