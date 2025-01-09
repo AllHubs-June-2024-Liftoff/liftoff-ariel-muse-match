@@ -20,7 +20,8 @@ public class SwipeController {
 	}
 
 	@PostMapping()
-	public void acceptLike(@RequestBody UserPreferencesModel userPreferencesModel) {
+	public void acceptSwipe(@RequestBody UserPreferencesModel userPreferencesModel) {
+
 		repository.save(userPreferencesModel);
 	}
 }

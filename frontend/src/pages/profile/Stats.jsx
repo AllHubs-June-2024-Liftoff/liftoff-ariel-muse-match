@@ -44,25 +44,25 @@ function Stats() {
         <div>
           <button
             onClick={() => changeCategoryPathAndActive("type", "button1")}
-            class={activeButton.set1 === "button1" ? "active" : ""}
+            className={activeButton.set1 === "button1" ? "active" : ""}
           >
             By Art Type
           </button>
           <button
             onClick={() => changeCategoryPathAndActive("movement", "button2")}
-            class={activeButton.set1 === "button2" ? "active" : ""}
+            className={activeButton.set1 === "button2" ? "active" : ""}
           >
             By Art Movement
           </button>
           <button
             onClick={() => changeCategoryPathAndActive("artist", "button3")}
-            class={activeButton.set1 === "button3" ? "active" : ""}
+            className={activeButton.set1 === "button3" ? "active" : ""}
           >
             By Artist
           </button>
           <button
             onClick={() => changeCategoryPathAndActive("year", "button4")}
-            class={activeButton.set1 === "button4" ? "active" : ""}
+            className={activeButton.set1 === "button4" ? "active" : ""}
           >
             By Year
           </button>
@@ -70,23 +70,23 @@ function Stats() {
         <div>
           <button
             onClick={() => changeSortPathAndActive("percentage", "button1")}
-            class={activeButton.set2 === "button1" ? "active" : ""}
+            className={activeButton.set2 === "button1" ? "active" : ""}
           >
             By Percentage
           </button>
           <button
             onClick={() => changeSortPathAndActive("total", "button2")}
-            class={activeButton.set2 === "button2" ? "active" : ""}
+            className={activeButton.set2 === "button2" ? "active" : ""}
           >
             By Total
           </button>
           <button
             onClick={() => changeSortPathAndActive("likes", "button3")}
-            class={activeButton.set2 === "button3" ? "active" : ""}
+            className={activeButton.set2 === "button3" ? "active" : ""}
           >
             By Likes
           </button>
-        </div>{" "}
+        </div>
         <p> No data to report</p>
       </>
     );
