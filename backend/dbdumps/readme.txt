@@ -22,7 +22,7 @@ Update the spring.datasource.url to match your local MySQL:
 
 -- Update the spring.datasource.username and spring.datasource.password with your MySQL credentials.
 
--- When we start getting some good dummy info, we can update the repo with a new sql dump, which is a different mysql command 
+-- When we start getting some good dummy info, we can update the repo with a new sql dump, which is a different mysql command (mysqldump -u username -p database_name > currentFolder/path/to.current.musedatabase_dump.sql)
 
 
 December 15th, 2024, My app is not running as it seems some of the methods havent been fully built out, however i can see that
