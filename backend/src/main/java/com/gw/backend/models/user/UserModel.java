@@ -29,13 +29,13 @@ public class UserModel extends AbstractIdentifiableModel {
     //track of their uploaded photo.  If another image is uploaded,  it overwrites the previous image.
     //TODO: add logic for overwriting profile picture
 
-    @OneToMany(mappedBy = "userId")
-    private List<UserPreferencesModel> preferences = new ArrayList<>();
+    @OneToMany
+    private List<UserPreferences> preferences = new ArrayList<>();
     public UserModel() {
     }
 
 
-    public UserModel(String username, String password, ProfilePicture profilePicture, String email, String hashPass, List <UserPreferencesModel> preferences) {
+    public UserModel(String username, String password, ProfilePicture profilePicture, String email, String hashPass, List <UserPreferences> preferences) {
         this.username = username;
         this.password = password;
         this.profilePicture = profilePicture;
@@ -84,11 +84,11 @@ public class UserModel extends AbstractIdentifiableModel {
         this.hashPass = hashPass;
     }
 
-    public List<UserPreferencesModel> getPreferences() {
+    public List<UserPreferences> getPreferences() {
         return preferences;
     }
 
-    public void setPreferences(List<UserPreferencesModel> preferences) {
+    public void setPreferences(List<UserPreferences> preferences) {
         this.preferences = preferences;
     }
 }

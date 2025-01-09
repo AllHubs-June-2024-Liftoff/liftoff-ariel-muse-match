@@ -3,7 +3,6 @@ package com.gw.backend.controller;
 import com.gw.backend.models.Matches;
 import com.gw.backend.repository.MatchesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,12 +21,12 @@ public class MatchesController {
         return matchesRepository.findAll();
     }
 
-    @GetMapping("matches/{name}")
-    public String displayMatchesByArtistName(){
-    }
-
-    public String displayMatchesByArtistCategory(){
-    }
+//    @GetMapping("matches/{name}")
+//    public String displayMatchesByArtistName(){
+//    }
+//
+//    public String displayMatchesByArtistCategory(){
+//    }
 }
 
 

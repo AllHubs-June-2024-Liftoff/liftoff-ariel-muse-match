@@ -1,7 +1,8 @@
 package com.gw.backend.service.userdetail.stats;
 
-import com.gw.backend.models.stats.*;
-import com.gw.backend.models.user.UserPreferencesModel;
+import com.gw.backend.models.stats.ArtMovement;
+import com.gw.backend.models.stats.SortingCriteria;
+import com.gw.backend.models.stats.Statistics;
 import com.gw.backend.repository.user.UserPreferencesRepository;
 import com.gw.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class ArtMovementStatsService extends StatsService<ArtMovement>{
 
 	@Override
 	public ArtMovement createStats(String value) {
-		Integer likes = repository.countArtMovementByUserIdAndPreference(userId, value, UserPreferencesModel.Preference.LIKE);
+		Integer likes = repository.countArtMovementByUserIdAndPreference(userId, value, "LIKE");
 		Integer total = repository.countArtMovementByUserId(userId, value);
 		Integer percentage = this.findPercentage(likes, total);
 

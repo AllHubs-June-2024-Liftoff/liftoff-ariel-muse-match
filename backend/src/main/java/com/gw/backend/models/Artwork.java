@@ -1,6 +1,10 @@
 package com.gw.backend.models;
 
-public class Artwork {
+import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
+import jakarta.persistence.Entity;
+
+@Entity
+public class Artwork extends AbstractIdentifiableModel {
     int ArtworkId;
     String title;
     String lqip;

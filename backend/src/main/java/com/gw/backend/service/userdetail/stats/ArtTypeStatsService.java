@@ -1,7 +1,8 @@
 package com.gw.backend.service.userdetail.stats;
 
-import com.gw.backend.models.stats.*;
-import com.gw.backend.models.user.UserPreferencesModel;
+import com.gw.backend.models.stats.ArtType;
+import com.gw.backend.models.stats.SortingCriteria;
+import com.gw.backend.models.stats.Statistics;
 import com.gw.backend.repository.user.UserPreferencesRepository;
 import com.gw.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class ArtTypeStatsService extends StatsService<ArtType>{
 
 	@Override
 	public ArtType createStats(String value) {
-		Integer likes = repository.countArtTypeByUserIdAndPreference(userId, value, UserPreferencesModel.Preference.LIKE);
+		Integer likes = repository.countArtTypeByUserIdAndPreference(userId, value, "LIKE");
 		Integer total = repository.countArtTypeByUserId(userId, value);
 		Integer percentage = this.findPercentage(likes, total);
 

@@ -1,6 +1,6 @@
 package com.gw.backend.controller;
 
-import com.gw.backend.models.user.UserPreferencesModel;
+import com.gw.backend.models.user.UserPreferences;
 import com.gw.backend.repository.user.UserPreferencesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ public class SwipeController {
 	}
 
 	@PostMapping()
-	public void acceptLike(@RequestBody UserPreferencesModel userPreferencesModel) {
+	public void acceptLike(@RequestBody UserPreferences userPreferencesModel) {
 		repository.save(userPreferencesModel);
 	}
 }

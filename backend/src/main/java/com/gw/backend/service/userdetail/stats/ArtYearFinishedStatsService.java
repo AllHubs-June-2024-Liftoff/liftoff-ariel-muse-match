@@ -1,7 +1,8 @@
 package com.gw.backend.service.userdetail.stats;
 
-import com.gw.backend.models.stats.*;
-import com.gw.backend.models.user.UserPreferencesModel;
+import com.gw.backend.models.stats.ArtYearFinished;
+import com.gw.backend.models.stats.SortingCriteria;
+import com.gw.backend.models.stats.Statistics;
 import com.gw.backend.repository.user.UserPreferencesRepository;
 import com.gw.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class ArtYearFinishedStatsService extends StatsService<ArtYearFinished>{
 
 	@Override
 	public ArtYearFinished createStats(String value) {
-		Integer likes = repository.countArtYearFinishedByUserIdAndPreference(userId, value, UserPreferencesModel.Preference.LIKE);
+		Integer likes = repository.countArtYearFinishedByUserIdAndPreference(userId, value, "LIKE");
 		Integer total = repository.countArtYearFinishedByUserId(userId, value);
 		Integer percentage = this.findPercentage(likes, total);
 
