@@ -11,6 +11,8 @@ function DisplayArtworks() {
   const [imageSources, setImageSources] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const artwork = artworks[currentIndex];
+
   useEffect(() => {
     const loadArtwork = async () => {
       try {
@@ -115,29 +117,23 @@ function DisplayArtworks() {
       <div>
         <h1>Test Artworks</h1>
         <div className="artwork-container">
-          {artworks.map((artwork, index) => (
-            <TinderCard
-              key={artwork.id}
-              onSwipe={(dir) => swiped(dir, artwork)}
-              onCardLeftScreen={() => outOfFrame(artwork.id)}
-              preventSwipe={["up", "down"]}
-              swipeRequirementType="position"
-              swipeThreshold={10}
-            >
-              <div
-                className={`card ${
-                  index === currentIndex ? "active" : "inactive"
-                }`}
-              >
-                <h2>{artwork.classification_title}</h2>
-                <p>Title: {artwork.title}</p>
-                <img
-                  src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
-                  alt={artwork.thumbnail?.alt_text} //Optional chaining to prevent undefined error
-                />
-              </div>
-            </TinderCard>
-          ))}
+          <TinderCard
+            key={artwork.id}
+            onSwipe={(dir) => swiped(dir, artwork)}
+            onCardLeftScreen={() => outOfFrame(artwork.id)}
+            preventSwipe={["up", "down"]}
+            swipeRequirementType="position"
+            swipeThreshold={10}
+          >
+            <div className="card">
+              <h2>{artwork.classification_title}</h2>
+              <p>Title: {artwork.title}</p>
+              <img
+                src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
+                alt={artwork.thumbnail?.alt_text} //Optional chaining to prevent undefined error
+              />
+            </div>
+          </TinderCard>
         </div>
       </div>
     </>

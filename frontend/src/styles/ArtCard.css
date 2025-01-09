@@ -1,7 +1,7 @@
 .artwork-container {
   position: relative;
-  width: 300px; /* Adjust as needed */
-  height: auto; /* Adjust as needed */
+  width: auto; /* Adjust as needed */
+  height: 75%; /* Adjust as needed */
   margin: auto;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .card img {
-  width: 100%;
+  width: 50%; /* Adjust as needed */
   border-radius: 8px;
 }
 

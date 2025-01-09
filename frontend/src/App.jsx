@@ -8,12 +8,9 @@ function App() {
     <>
       <div>
         <h1>MuseMatch: Now completely Bug free</h1>
-        <div>
-          <LoadArtworks />
-        </div>
-        <div>
-          <Stats />
-        </div>
+
+        <LoadArtworks />
+        <Stats />
       </div>
     </>
   );
