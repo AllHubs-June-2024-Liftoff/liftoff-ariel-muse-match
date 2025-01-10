@@ -14,17 +14,9 @@ import java.util.stream.Collectors;
 @Service
 public class ArtMovementStatsService extends StatsService{
 
-	private final UserPreferencesRepository repository;
-
-	private final UserModel user;
-
-	private final Long userId;
-
 	@Autowired
 	public ArtMovementStatsService(UserPreferencesRepository repository, UserModel user) {
-		this.repository = repository;
-		this.user = user;
-		this.userId = user.getId();
+		super(repository, user);
 	}
 
 	@Override

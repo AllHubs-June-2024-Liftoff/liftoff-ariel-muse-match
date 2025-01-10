@@ -8,7 +8,7 @@ public enum StatCategories {
 	MOVEMENT {
 		public ArtMovementStatsService convert(List<StatsService> statsService){
 			for (StatsService statService : statsService){
-				if (statService.getClass() == ArtMovementStatsService.class){
+				if (statService instanceof ArtMovementStatsService){
 					return (ArtMovementStatsService) statService;
 				}
 			}
@@ -18,7 +18,7 @@ public enum StatCategories {
 	ARTIST{
 		public ArtistNameStatsService convert(List<StatsService> statsService) {
 			for (StatsService statService : statsService){
-				if (statService.getClass() == ArtistNameStatsService.class){
+				if (statService instanceof ArtistNameStatsService){
 					return (ArtistNameStatsService) statService;
 				}
 			}
@@ -28,7 +28,7 @@ public enum StatCategories {
 	TYPE{
 		public ArtTypeStatsService convert(List<StatsService>  statsService) {
 			for (StatsService statService : statsService){
-				if (statService.getClass() == ArtTypeStatsService.class){
+				if (statService instanceof ArtTypeStatsService){
 					return (ArtTypeStatsService) statService;
 				}
 			}
@@ -39,7 +39,7 @@ public enum StatCategories {
 	YEAR{
 		public ArtYearFinishedStatsService convert(List<StatsService> statsService) {
 			for (StatsService statService : statsService){
-				if (statService.getClass() == ArtYearFinishedStatsService.class){
+				if (statService instanceof ArtYearFinishedStatsService){
 					return (ArtYearFinishedStatsService) statService;
 				}
 			}

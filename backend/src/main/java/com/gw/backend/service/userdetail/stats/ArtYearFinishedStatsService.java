@@ -15,17 +15,9 @@ import java.util.stream.Collectors;
 @Service
 public class ArtYearFinishedStatsService extends StatsService{
 
-	private final UserPreferencesRepository repository;
-
-	private final UserModel user;
-
-	private final Long userId;
-
 	@Autowired
 	public ArtYearFinishedStatsService(UserPreferencesRepository repository, UserModel user) {
-		this.repository = repository;
-		this.user = user;
-		this.userId = user.getId();
+		super(repository, user);
 	}
 
 
