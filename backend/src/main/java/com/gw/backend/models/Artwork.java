@@ -1,13 +1,13 @@
 package com.gw.backend.models;
 
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "artworks")
-public class Artwork extends AbstractIdentifiableModel {
+public class Artwork {
+
+    @Id
     @Column(name = "artwork_id")
     private String artworkId;
 
@@ -40,6 +40,12 @@ public class Artwork extends AbstractIdentifiableModel {
 
     @Column(name = "style_title")
     private String styleTitle;
+
+    @OneToMany(mappedBy = "artwork")
+    private DislikedArtwork dislikedArtwork;
+
+    @OneToMany(mappedBy = "artwork")
+    private LikedArtwork likedArtwork;
 
     //Getters and Setters
 

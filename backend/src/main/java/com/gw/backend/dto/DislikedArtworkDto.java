@@ -5,7 +5,7 @@ import com.gw.backend.models.user.User;
 import java.util.List;
 
 public class DislikedArtworkDto {
-    private User owner;
+    private User user;
     private String artworkId;
     private String artworkTitle;
     private String artworkThumbnail;
@@ -22,8 +22,8 @@ public class DislikedArtworkDto {
     public DislikedArtworkDto() {
     }
 
-    public DislikedArtworkDto(User owner, String artworkId, String artworkTitle, String artworkThumbnail, String altText, String placeOfOrigin, String description, String artworkTypeTitle, Long artworkTypeId, String artistTitle, List<Long> artistIds, String styleTitle, String imageId) {
-        this.owner = owner;
+    public DislikedArtworkDto(User user, String artworkId, String artworkTitle, String artworkThumbnail, String altText, String placeOfOrigin, String description, String artworkTypeTitle, Long artworkTypeId, String artistTitle, List<Long> artistIds, String styleTitle, String imageId) {
+        this.user = user;
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;
         this.artworkThumbnail = artworkThumbnail;
@@ -38,12 +38,12 @@ public class DislikedArtworkDto {
         this.imageId = imageId;
     };
 
-    public User getOwner() {
-        return owner;
+    public User getUser() {
+        return user;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getArtworkId() {
