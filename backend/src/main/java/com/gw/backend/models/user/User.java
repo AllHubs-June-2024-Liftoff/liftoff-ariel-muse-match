@@ -7,14 +7,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.OneToMany;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-
-public class UserModel extends AbstractIdentifiableModel {
+@Table(name="users")
+public class User extends AbstractIdentifiableModel {
 
     @Column
     private String username;
@@ -28,28 +24,26 @@ public class UserModel extends AbstractIdentifiableModel {
     @Column
     private String email;
 
-    private String hashPass;
-    //Once methods are created for uploading profile photos, this will ensure there's a relational database that keeps
-    //track of their uploaded photo.  If another image is uploaded,  it overwrites the previous image.
-    //TODO: add logic for overwriting profile picture
+    @Column
+    private HashMap userLikes;
 
-    @OneToMany(mappedBy = "user")
-    private List<UserPreferencesModel> preferences = new ArrayList<>();
+    @Column
+    private HashMap userDislikes;
 
-    public UserModel() {
+
+    public User() {
     }
 
-
-    public UserModel(String username, String password, ProfilePicture profilePicture, String email, String hashPass, List <UserPreferencesModel> preferences) {
+    public User(String username, String password, ProfilePicture profilePicture, String email) {
         this.username = username;
         this.password = password;
         this.profilePicture = profilePicture;
         this.email = email;
-        this.hashPass = hashPass;
-        this.preferences = preferences;
     }
 
-    public String getUsername() {
+    //Getters and Setters
+
+    public String getUserName() {
         return username;
     }
 
@@ -79,21 +73,5 @@ public class UserModel extends AbstractIdentifiableModel {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getHashPass() {
-        return hashPass;
-    }
-
-    public void setHashPass(String hashPass) {
-        this.hashPass = hashPass;
-    }
-
-    public List<UserPreferencesModel> getPreferences() {
-        return preferences;
-    }
-
-    public void setPreferences(List<UserPreferencesModel> preferences) {
-        this.preferences = preferences;
     }
 }
