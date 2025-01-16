@@ -4,7 +4,7 @@ import com.gw.backend.models.user.User;
 
 import java.util.List;
 
-public class LikedArtworkDto {
+public class ArtworkDto {
     private User user;
     private String artworkId;
     private String artworkTitle;
@@ -19,10 +19,10 @@ public class LikedArtworkDto {
     private String styleTitle;
     private String imageId;
 
-    public LikedArtworkDto() {
+    public ArtworkDto() {
     }
 
-    public LikedArtworkDto(User user, String artworkId, String artworkTitle, String artworkThumbnail, String altText, String placeOfOrigin, String description, String artworkTypeTitle, Long artworkTypeId, String artistTitle, List<Long> artistIds, String styleTitle, String imageId) {
+    public ArtworkDto(User user, String artworkId, String artworkTitle, String artworkThumbnail, String altText, String placeOfOrigin, String description, String artworkTypeTitle, Long artworkTypeId, String artistTitle, List<Long> artistIds, String styleTitle, String imageId) {
         this.user = user;
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;

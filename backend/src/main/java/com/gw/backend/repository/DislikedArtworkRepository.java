@@ -18,9 +18,28 @@ public interface DislikedArtworkRepository extends JpaRepository<DislikedArtwork
 
     boolean existsByUserAndArtworkId(User user, String artworkId);
 
-    @Query("SELECT DISTINCT artistName" +
+    @Query("SELECT DISTINCT a.artistName" +
             "FROM DislikedArtwork d" +
-            "FULL JOIN Artwork a ON a.artworkId = d.artworkId" +
-            "WHERE d.user = :user") 
+            "INNER JOIN Artwork a ON a.artworkId = d.artworkId" +
+            "WHERE d.user = :user AND a.artistName IS NOT NULL")
     Set<String> findDistinctArtistNameByUser(@Param("user") User user);
+
+    @Query("SELECT DISTINCT a.artMovement" +
+            "FROM DislikedArtwork d" +
+            "INNER JOIN Artwork a ON a.artworkId = d.artworkId" +
+            "WHERE d.user = :user AND a.artMovement IS NOT NULL")
+    Set<String> findDistinctArtMovementByUser(@Param("user") User user);
+
+    @Query("SELECT DISTINCT a.artType" +
+            "FROM DislikedArtwork d" +
+            "INNER JOIN Artwork a ON a.artworkId = d.artworkId" +
+            "WHERE d.user = :user AND a.artType IS NOT NULL")
+    Set<String> findDistinctArtTypeByUser(@Param("user") User user);
+
+    @Query("SELECT DISTINCT a.artYearFinished" +
+            "FROM DislikedArtwork d" +
+            "INNER JOIN Artwork a ON a.artworkId = d.artworkId" +
+            "WHERE d.user = :user AND a.artYearFinished IS NOT NULL")
+    Set<String> findDistinctArtYearFinishedByUser(@Param("user") User user);
+
 }

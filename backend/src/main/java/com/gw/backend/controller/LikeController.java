@@ -1,6 +1,6 @@
 package com.gw.backend.controller;
 
-import com.gw.backend.dto.LikedArtworkDto;
+import com.gw.backend.dto.ArtworkDto;
 import com.gw.backend.models.LikedArtwork;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.LikedArtworkRepository;
@@ -45,16 +45,16 @@ public class LikeController {
 		return user.get();
 	}
 	@PutMapping("/save")
-	public ResponseEntity<?> saveLike (@RequestBody LikedArtworkDto likedArtworkDto, Errors errors, HttpSession session) {
+	public ResponseEntity<?> saveLike (@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
 		if (errors.hasErrors()) {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 
 		//TEST VALUE
-		User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
+		User user = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
 
 		//User owner = getUserFromSession(session);
-		if (owner == null) {
+		if (user == null) {
 			return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
 		}
 
