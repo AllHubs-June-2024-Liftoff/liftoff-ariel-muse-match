@@ -161,24 +161,30 @@ function DisplayArtworks() {
 
       const outOfFrame = (artworkId) => {
         console.log(`${artworkId} left the screen`);
+        setCurrentIndex((prevIndex) => prevIndex + 1);
       };
     
-      
+    
+      //TODO: Fix issue with scrolling causing art to change sometimes (wrap Tinder card component in a div with overflow:hidden, height: 100vh or something)
+      //TODO: Createt artwrok-wrapper .CSS, and perhaps a .page-content css class for everything else (?)
       return (
         <>
           <div>
             <h1>Test Artworks</h1>
             <div className="artwork-container">
               {artworks.map((artwork, index) => (
+                <div
+                  key={artwork.id}
+                  style={{ display: index === currentIndex ? "block" : "none" }}
+                  >
                 <TinderCard 
-                key={artwork.id}
                 onSwipe={(dir) => swiped(dir, artwork)}
                 onCardLeftScreen={() => outOfFrame(artwork.id)}
-              preventSwipe={["up", "down"]}
-              swipeRequirementType="position"
-              swipeThreshold={10}
+                preventSwipe={["up", "down"]}
+                swipeRequirementType="position"
+                swipeThreshold={20}
             >
-                 <div className={`card ${index === currentIndex ? "active" : "inactive"}`}>
+                 <div className="card">
                   <h2>{artwork.classification_title}</h2>
                   <p>Title: {artwork.title}</p>
                   <img
@@ -187,11 +193,12 @@ function DisplayArtworks() {
                   />
                 </div>
                 </TinderCard>
+                </div>
               ))}
             </div>
           </div>
         </>
-      )
-      };
+      );
+      }
     
       export default DisplayArtworks;

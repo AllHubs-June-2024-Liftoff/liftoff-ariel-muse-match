@@ -16,20 +16,6 @@
     cursor: grab;
   }
 
-  .card:active{
-    cursor: grabbing; /* Changes the cursor when the card is being dragged */
-  }
-
-  .card.active {
-    opacity: 1;
-    z-index: 1;
-  }
-
-  .card.inactive {
-    opacity: 0;
-    z-index: 0;
-  }
-  
   .card img {
     width: 100%;
     border-radius: 8px;

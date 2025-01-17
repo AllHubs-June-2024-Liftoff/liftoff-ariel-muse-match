@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "artworks")
-public class Artwork extends AbstractIdentifiableModel {
+public class Artwork {
     @Column(name = "artwork_id", columnDefinition = "VARCHAR(255)", nullable = false)
     private String artworkId;
 

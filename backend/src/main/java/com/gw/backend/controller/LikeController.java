@@ -2,6 +2,7 @@ package com.gw.backend.controller;
 
 import com.gw.backend.dto.LikedArtworkDto;
 import com.gw.backend.models.LikedArtwork;
+import com.gw.backend.models.Match;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
@@ -13,8 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -82,12 +84,57 @@ public class LikeController {
 
             try {
                 likedArtworkRepository.save(likedArtwork);
+
+                //Check for matching artist IDs
+                List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
+
+                //Create new matches for the matching artist IDs
+                for (String artistId : matchingArtistIds) {
+                    createMatch(owner, artistId);
+                }
+
                 return new ResponseEntity<>(likedArtwork, HttpStatus.OK);
             } catch (Exception e) {
                 System.out.println(e);
                 return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
             }
+    }
 
+    private void createMatch(User owner, String artistId) {
+        //Check if match exists already for thtat user/artist ID
+        if (!matchRepository.existsByUserAndAArtistId(owner, artistId)) {
+            Match match = new Match();
+            match.setOwner(owner);
+            match.setArtistId(artistId);
+            matchRepository.save(match);
+
+            //TODO: notify user of the new match
+        }
+    }
+
+
+
+            private List<String> checkForMatchingArtistIds(User owner) {
+        List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
+
+        //This HashMap stores the counts of artist IDs
+                Map<String, Integer> artistIdCounts = new HashMap<>();
+
+        //Loop through artworks, iterating the counts in the HashMap
+        for (LikedArtwork artwork : likedArtworks) {
+            String artistId = artwork.getArtistId();
+            artistIdCounts.put(artistId, artistIdCounts.getOrDefault(artistId, 0) + 1);
+        }
+
+        //Filter down to just the artist IDs with 3+
+                List<String> matchingArtistIds = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
+            if (entry.getValue() >= 3) {
+                matchingArtistIds.add(entry.getKey());
+            }
+        }
+
+        return matchingArtistIds;
     }
 
 };

@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "matches")
-public class Matches extends AbstractIdentifiableModel {
+public class Match extends AbstractIdentifiableModel {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
