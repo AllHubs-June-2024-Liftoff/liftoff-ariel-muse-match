@@ -1,6 +1,5 @@
 package com.gw.backend.models;
 
-import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -127,11 +126,11 @@ public class Artwork {
         this.artistTitle = artistTitle;
     }
 
-    public Long getArtistIds() {
+    public List<Long> getArtistIds() {
         return artistIds;
     }
 
-    public void setArtistIds(Long artistIds) {
+    public void setArtistIds(List<Long> artistIds) {
         this.artistIds = artistIds;
     }
 
@@ -149,5 +148,21 @@ public class Artwork {
 
     public void setStyleTitle(String styleTitle) {
         this.styleTitle = styleTitle;
+    }
+
+    public DislikedArtwork getDislikedArtwork() {
+        return dislikedArtwork;
+    }
+
+    public void setDislikedArtwork(DislikedArtwork dislikedArtwork) {
+        this.dislikedArtwork = dislikedArtwork;
+    }
+
+    public LikedArtwork getLikedArtwork() {
+        return likedArtwork;
+    }
+
+    public void setLikedArtwork(LikedArtwork likedArtwork) {
+        this.likedArtwork = likedArtwork;
     }
 }

@@ -42,7 +42,7 @@ public class ArtworkDto {
 
     public User getUser() {
         return user;
-    //Getters and Setters
+    }
 
     public void setUser(User user) {
         this.user = user;
@@ -55,8 +55,6 @@ public class ArtworkDto {
     public void setArtistId(String artistId) {
         this.artistId = artistId;
     }
-
-
 
     public String getArtworkId() {
         return artworkId;

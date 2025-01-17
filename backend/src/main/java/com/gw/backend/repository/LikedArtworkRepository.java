@@ -20,25 +20,26 @@ public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long
             "FROM LikedArtwork d" +
             "INNER JOIN Artwork a ON a.artworkId = d.artworkId" +
             "WHERE d.user = :user AND a.artistName IS NOT NULL")
-    Set<String> findDistinctArtistNameByUser(@Param("user") User user);
+    Set<String> findDistinctArtistNameByUser(@Param("user") Long user);
 
     @Query("SELECT DISTINCT a.artMovement" +
             "FROM LikedArtwork d" +
             "INNER JOIN Artwork a ON a.artworkId = d.artworkId" +
             "WHERE d.user = :user AND a.artMovement IS NOT NULL")
-    Set<String> findDistinctArtMovementByUser(@Param("user") User user);
+    Set<String> findDistinctArtMovementByUser(@Param("user") Long user);
 
     @Query("SELECT DISTINCT a.artType" +
             "FROM LikedArtwork d" +
             "INNER JOIN Artwork a ON a.artworkId = d.artworkId" +
             "WHERE d.user = :user AND a.artType IS NOT NULL")
-    Set<String> findDistinctArtTypeByUser(@Param("user") User user);
+    Set<String> findDistinctArtTypeByUser(@Param("user") Long user);
 
     @Query("SELECT DISTINCT a.artYearFinished" +
             "FROM LikedArtwork d" +
             "INNER JOIN Artwork a ON a.artworkId = d.artworkId" +
             "WHERE d.user = :user AND a.artYearFinished IS NOT NULL")
-    Set<String> findDistinctArtYearFinishedByUser(@Param("user") User user);
+    Set<String> findDistinctArtYearFinishedByUser(@Param("user") Long user);
 
+    long countByValueByUser(String value, User user);
 
 }
