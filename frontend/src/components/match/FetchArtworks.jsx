@@ -16,4 +16,6 @@ const fetchArtworks = async () => {
         }
     }
 
+    //TODO: Data.pagination.next_url <--- call more random artworks (see current page, next page portions of API Doc)
+
     export default fetchArtworks;

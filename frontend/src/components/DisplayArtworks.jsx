@@ -21,7 +21,7 @@ function DisplayArtworks() {
             setArtworks(data.data); //This sets the artworks to the data from the fetchArtworks function
     
             const sources = {}; //Key is artwork ID, Value is the returned URL from the getImage() function (link to image source)
-            await Promise.all(  //Must execute all of the promises before setting the image sources
+            await Promise.all(
               data.data.map(async (artwork) => {
                 if (artwork.image_id) {
                   try {
@@ -37,6 +37,7 @@ function DisplayArtworks() {
             );
 
             setImageSources(sources);
+            setCurrentIndex(0); // Reset currentIndex when artworks are loaded (It started causing a bug for some reason?)
           } else {
             setError("No data available");
           }
@@ -86,6 +87,7 @@ function DisplayArtworks() {
           description: artwork.description,
           artworkTypeTitle: artwork.artwork_type_title,
           artworkTypeId: artwork.artwork_type_id,
+          artistId: artwork.artist_id,
           artistTitle: artwork.artist_title,
           artistIds: artwork.artist_ids,
           styleTitle: artwork.style_title,
@@ -128,6 +130,7 @@ function DisplayArtworks() {
           description: artwork.description,
           artworkTypeTitle: artwork.artwork_type_title,
           artworkTypeId: artwork.artwork_type_id,
+          artistId: artwork.artist_id, //
           artistTitle: artwork.artist_title,
           artistIds: artwork.artist_ids,
           styleTitle: artwork.style_title,
@@ -180,7 +183,7 @@ function DisplayArtworks() {
                   <p>Title: {artwork.title}</p>
                   <img
                     src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
-                    alt={artwork.thumbnail?.alt_text} //Optional chaining to prevent undefined error
+                    alt={artwork.thumbnail?.alt_text} 
                   />
                 </div>
                 </TinderCard>

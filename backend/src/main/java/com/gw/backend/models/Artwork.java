@@ -3,6 +3,8 @@ package com.gw.backend.models;
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "artworks")
 public class Artwork {
@@ -35,8 +37,11 @@ public class Artwork {
     @Column(name = "artist_title")
     private String artistTitle;
 
+    @Column(name = "artist_id")
+    private String artistId;
+
     @Column(name = "artist_ids")
-    private Long artistIds;
+    private List<Long> artistIds;
 
     @Column(name = "style_title")
     private String styleTitle;
@@ -49,6 +54,14 @@ public class Artwork {
 
     //Getters and Setters
 
+
+    public String getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(String artistId) {
+        this.artistId = artistId;
+    }
 
     public String getArtworkId() {
         return artworkId;

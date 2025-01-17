@@ -28,7 +28,7 @@ public class FetchInitialMatchSet {
     @GetMapping("/all")
     public ResponseEntity<Object> getArt() {
         String apiUrl = "https://api.artic.edu/api/v1/artworks?limit=10";
-
+//TODO: Use seeds for randomization
         RestTemplate restTemplate = new RestTemplate();
 
         try {

@@ -30,6 +30,9 @@ public class User extends AbstractIdentifiableModel {
     @Column
     private HashMap userDislikes;
 
+    @Column
+    private HashMap matches;
+
 
     public User() {
     }

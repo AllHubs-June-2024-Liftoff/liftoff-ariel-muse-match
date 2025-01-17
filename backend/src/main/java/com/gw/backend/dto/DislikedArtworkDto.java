@@ -4,8 +4,8 @@ import com.gw.backend.models.user.User;
 
 import java.util.List;
 
-public class ArtworkDto {
-    private User user;
+public class DislikedArtworkDto {
+    private User owner;
     private String artworkId;
     private String artworkTitle;
     private String artworkThumbnail;
@@ -14,17 +14,16 @@ public class ArtworkDto {
     private String description;
     private String artworkTypeTitle;
     private Long artworkTypeId;
-    private String artistId;
     private String artistTitle;
     private List<Long> artistIds;
     private String styleTitle;
     private String imageId;
 
-    public ArtworkDto() {
+    public DislikedArtworkDto() {
     }
 
-    public ArtworkDto(User user, String artworkId, String artworkTitle, String artworkThumbnail, String altText, String placeOfOrigin, String description, String artworkTypeTitle, Long artworkTypeId, String artistTitle, List<Long> artistIds, String styleTitle, String imageId, String artistId) {
-        this.user = user;
+    public DislikedArtworkDto(User owner, String artworkId, String artworkTitle, String artworkThumbnail, String altText, String placeOfOrigin, String description, String artworkTypeTitle, Long artworkTypeId, String artistTitle, List<Long> artistIds, String styleTitle, String imageId) {
+        this.owner = owner;
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;
         this.artworkThumbnail = artworkThumbnail;
@@ -33,30 +32,19 @@ public class ArtworkDto {
         this.description = description;
         this.artworkTypeTitle = artworkTypeTitle;
         this.artworkTypeId = artworkTypeId;
-        this.artistId = artistId;
         this.artistTitle = artistTitle;
         this.artistIds = artistIds;
         this.styleTitle = styleTitle;
         this.imageId = imageId;
     };
 
-    public User getUser() {
-        return user;
-    //Getters and Setters
-
-    public void setUser(User user) {
-        this.user = user;
+    public User getOwner() {
+        return owner;
     }
 
-    public String getArtistId() {
-        return artistId;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
-
-    public void setArtistId(String artistId) {
-        this.artistId = artistId;
-    }
-
-
 
     public String getArtworkId() {
         return artworkId;

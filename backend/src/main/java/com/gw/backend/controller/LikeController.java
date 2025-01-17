@@ -4,6 +4,7 @@ import com.gw.backend.dto.ArtworkDto;
 import com.gw.backend.models.LikedArtwork;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.LikedArtworkRepository;
+import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,17 @@ public class LikeController {
 
 	private static final String userSessionKey = "user";
 
-	private final UserRepository userRepository;
-	private final LikedArtworkRepository likedArtworkRepository;
+    private final UserRepository userRepository;
+    private final LikedArtworkRepository likedArtworkRepository;
+    private final MatchRepository matchRepository;
 
-	@Autowired
-	public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository) {
-		this.likedArtworkRepository = likedArtworkRepository;
-		this.userRepository = userRepository;
-	}
+
+    @Autowired
+    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MatchRepository matchRepository) {
+        this.likedArtworkRepository = likedArtworkRepository;
+        this.userRepository = userRepository;
+        this.matchRepository = matchRepository;
+    }
 
 
 	public User getUserFromSession(HttpSession session) {
