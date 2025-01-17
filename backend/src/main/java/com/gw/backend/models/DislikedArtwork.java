@@ -13,7 +13,7 @@ import java.util.List;
 public class DislikedArtwork extends AbstractIdentifiableModel {
 
     @ManyToOne
-    @JoinColumn(name = "owner", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne

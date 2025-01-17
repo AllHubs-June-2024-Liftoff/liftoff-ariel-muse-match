@@ -1,6 +1,6 @@
 package com.gw.backend.models.stats;
 
-import com.gw.backend.service.userdetail.stats.*;
+import com.gw.backend.service.stats.*;
 
 import java.util.List;
 

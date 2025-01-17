@@ -42,4 +42,29 @@ public interface DislikedArtworkRepository extends JpaRepository<DislikedArtwork
             "WHERE d.user = :user AND a.artYearFinished IS NOT NULL")
     Set<String> findDistinctArtYearFinishedByUser(@Param("user") Long user);
 
+    @Query("SELECT COUNT(d) FROM DislikedArtwork d " +
+            "JOIN d.artwork a " +
+            "WHERE a.artistName = :artistName " +
+            "AND d.user.id = :userId")
+    long countByArtistNameAndUserId(@Param("artistName") String artistName, @Param("userId") Long userId);
+
+    @Query("SELECT COUNT(d) FROM DislikedArtwork d " +
+            "JOIN d.artwork a " +
+            "WHERE a.artMovement = :artMovement " +
+            "AND d.user.id = :userId")
+    long countByArtMovementAndUserId(@Param("artMovement") String artMovement, @Param("userId") Long userId);
+
+    @Query("SELECT COUNT(d) FROM DislikedArtwork d " +
+            "JOIN d.artwork a " +
+            "WHERE a.artType = :artType " +
+            "AND d.user.id = :userId")
+    long countByArtTypeAndUserId(@Param("artType") String artType, @Param("userId") Long userId);
+
+    @Query("SELECT COUNT(d) FROM DislikedArtwork d " +
+            "JOIN d.artwork a " +
+            "WHERE a.artYearFinished = :artYearFinished " +
+            "AND d.user.id = :userId")
+    long countByArtYearFinishedAndUserId(@Param("artYearFinished") String artYearFinished, @Param("userId") Long userId);
+
+
 }

@@ -29,16 +29,17 @@ public class ArtistNameStatsService extends StatsService{
 		Set<String> distinctSet = likedArtworkRepository.findDistinctArtistNameByUser(userId);
 		distinctSet.addAll(likedArtworkRepository.findDistinctArtistNameByUser(userId));
 		return distinctSet.stream()
-				.map(this, userId::createStats)
+				.map(value -> createStats(value, userId))
 				.sorted(sortBy.getComparator())
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public ArtistName createStats(String value, Long userId) {
-		Integer likes = likedArtworkRepository.countByValueByUser()
-		Integer total = repository.countArtistNameByUserId(userId, value);
-		Integer percentage = this.findPercentage(likes, total);
+		long likes = likedArtworkRepository.countByArtistNameAndUserId(value, userId);
+		long dislikes = dislikedArtworkRepository.countByArtistNameAndUserId(value, userId);
+		long total = likes + dislikes;
+		Integer percentage = this.findPercentage(likes, dislikes);
 
 		return new ArtistName(value, new Statistics(likes, total, percentage));
 	}

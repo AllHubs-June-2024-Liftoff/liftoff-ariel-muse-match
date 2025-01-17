@@ -9,8 +9,8 @@ import java.util.List;
 @Service
 public abstract class StatsService {
 
-	public Integer findPercentage(Integer liked, Integer total) {
-		return Math.round(((float) liked / total) * 100);
+	public Integer findPercentage(Long liked, Long disliked) {
+		return Math.round(((float) liked / (liked + disliked)) * 100);
 	}
 
 	public abstract List<? extends StatsCategory> getStats(SortingCriteria sortBy, Long userId);
