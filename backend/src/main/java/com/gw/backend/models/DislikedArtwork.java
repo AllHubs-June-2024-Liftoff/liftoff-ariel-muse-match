@@ -16,7 +16,7 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
     @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
-    @Column(name = "artwork_id", nullable = false)
+    @Column(name = "artwork_id", columnDefinition = "VARCHAR(255)", nullable = false)
     private String artworkId;
 
 
@@ -27,6 +27,7 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
     private String description;
     private String artworkTypeTitle;
     private Long artworkTypeId;
+    private String artistId;
     private String artistTitle;
     private List<Long> artistIds;
     private String styleTitle;
@@ -45,6 +46,7 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
         this.description = description;
         this.artworkTypeTitle = artworkTypeTitle;
         this.artworkTypeId = artworkTypeId;
+        this.artistId = artistId;
         this.artistTitle = artistTitle;
         this.artistIds = artistIds;
         this.styleTitle = styleTitle;
@@ -156,5 +158,13 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 
     public void setImageId(String imageId) {
         this.imageId = imageId;
+    }
+
+    public String getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(String artistId) {
+        this.artistId = artistId;
     }
 }

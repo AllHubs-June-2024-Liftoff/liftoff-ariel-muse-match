@@ -5,10 +5,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.List;
+
 @Entity
 @Table(name = "artworks")
 public class Artwork extends AbstractIdentifiableModel {
-    @Column(name = "artwork_id")
+    @Column(name = "artwork_id", columnDefinition = "VARCHAR(255)", nullable = false)
     private String artworkId;
 
     @Column(name = "title")
@@ -35,14 +37,25 @@ public class Artwork extends AbstractIdentifiableModel {
     @Column(name = "artist_title")
     private String artistTitle;
 
+    @Column(name = "artist_id")
+    private String artistId;
+
     @Column(name = "artist_ids")
-    private Long artistIds;
+    private List<Long> artistIds;
 
     @Column(name = "style_title")
     private String styleTitle;
 
     //Getters and Setters
 
+
+    public String getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(String artistId) {
+        this.artistId = artistId;
+    }
 
     public String getArtworkId() {
         return artworkId;
@@ -108,11 +121,11 @@ public class Artwork extends AbstractIdentifiableModel {
         this.artistTitle = artistTitle;
     }
 
-    public Long getArtistIds() {
+    public List<Long> getArtistIds() {
         return artistIds;
     }
 
-    public void setArtistIds(Long artistIds) {
+    public void setArtistIds(List<Long> artistIds) {
         this.artistIds = artistIds;
     }
 

@@ -5,7 +5,6 @@ import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.*;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 
@@ -17,7 +16,7 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
-    @Column(name = "artwork_id", nullable = false)
+    @Column(name = "artwork_id", columnDefinition = "VARCHAR(255)", nullable = false)
     private String artworkId;
 
 
@@ -28,6 +27,7 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     private String description;
     private String artworkTypeTitle;
     private Long artworkTypeId;
+    private String artistId;
     private String artistTitle;
     private List<Long> artistIds;
     private String styleTitle;
@@ -47,14 +47,23 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.description = description;
         this.artworkTypeTitle = artworkTypeTitle;
         this.artworkTypeId = artworkTypeId;
+        this.artistId = artistId;
         this.artistTitle = artistTitle;
         this.artistIds = artistIds;
         this.styleTitle = styleTitle;
         this.imageId = imageId;
     };
 
-    //Getters and Settters
+    //Getters and Setters
 
+
+    public String getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(String artistId) {
+        this.artistId = artistId;
+    }
 
     public User getOwner() {
         return owner;

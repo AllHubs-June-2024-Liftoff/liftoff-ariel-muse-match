@@ -4,6 +4,7 @@ import com.gw.backend.dto.LikedArtworkDto;
 import com.gw.backend.models.LikedArtwork;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.LikedArtworkRepository;
+import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,14 @@ public class LikeController {
 
     private final UserRepository userRepository;
     private final LikedArtworkRepository likedArtworkRepository;
+    private final MatchRepository matchRepository;
+
 
     @Autowired
-    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository) {
+    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MatchRepository matchRepository) {
         this.likedArtworkRepository = likedArtworkRepository;
         this.userRepository = userRepository;
+        this.matchRepository = matchRepository;
     }
 
 
@@ -44,8 +48,9 @@ public class LikeController {
         }
         return user.get();
     }
+
     @PutMapping("/save")
-    public ResponseEntity<?> saveLike (@RequestBody LikedArtworkDto likedArtworkDto, Errors errors, HttpSession session) {
+    public ResponseEntity<?> saveLike(@RequestBody LikedArtworkDto likedArtworkDto, Errors errors, HttpSession session) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -61,31 +66,20 @@ public class LikeController {
             LikedArtwork likedArtwork = new LikedArtwork();
 
         likedArtwork.setOwner(owner);
-        System.out.println(owner);//Setting properties individually and saving in order to pass in the owner (User)
         likedArtwork.setArtworkId(likedArtworkDto.getArtworkId());
-        System.out.println(likedArtworkDto.getArtworkId());
         likedArtwork.setArtworkTitle(likedArtworkDto.getArtworkTitle());
-        System.out.println(likedArtworkDto.getArtworkTitle());
         likedArtwork.setArtworkThumbnail(likedArtworkDto.getArtworkThumbnail());
-        System.out.println(likedArtworkDto.getArtworkThumbnail());
         likedArtwork.setAltText(likedArtworkDto.getAltText());
-        System.out.println(likedArtworkDto.getAltText());
         likedArtwork.setPlaceOfOrigin(likedArtworkDto.getPlaceOfOrigin());
-        System.out.println(likedArtworkDto.getPlaceOfOrigin());
         likedArtwork.setDescription(likedArtworkDto.getDescription());
-        System.out.println(likedArtworkDto.getDescription());
         likedArtwork.setArtworkTypeTitle(likedArtworkDto.getArtworkTypeTitle());
-        System.out.println(likedArtworkDto.getArtworkTypeTitle());
         likedArtwork.setArtworkTypeId(likedArtworkDto.getArtworkTypeId());
-        System.out.println(likedArtworkDto.getArtworkTypeId());
+        likedArtwork.setArtistId(likedArtworkDto.getArtistId());
         likedArtwork.setArtistTitle(likedArtworkDto.getArtistTitle());
-        System.out.println(likedArtworkDto.getArtistTitle());
         likedArtwork.setArtistIds(likedArtworkDto.getArtistIds());
-        System.out.println(likedArtworkDto.getArtistIds());
         likedArtwork.setStyleTitle(likedArtworkDto.getStyleTitle());
-        System.out.println(likedArtworkDto.getStyleTitle());
         likedArtwork.setImageId(likedArtworkDto.getImageId());
-        System.out.println(likedArtworkDto.getImageId());
+
             try {
                 likedArtworkRepository.save(likedArtwork);
                 return new ResponseEntity<>(likedArtwork, HttpStatus.OK);

@@ -14,6 +14,7 @@ public class LikedArtworkDto {
     private String description;
     private String artworkTypeTitle;
     private Long artworkTypeId;
+    private String artistId;
     private String artistTitle;
     private List<Long> artistIds;
     private String styleTitle;
@@ -32,11 +33,23 @@ public class LikedArtworkDto {
         this.description = description;
         this.artworkTypeTitle = artworkTypeTitle;
         this.artworkTypeId = artworkTypeId;
+        this.artistId = artistId;
         this.artistTitle = artistTitle;
         this.artistIds = artistIds;
         this.styleTitle = styleTitle;
         this.imageId = imageId;
     };
+
+    //Getters and Setters
+
+
+    public String getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(String artistId) {
+        this.artistId = artistId;
+    }
 
     public User getOwner() {
         return owner;
