@@ -1,10 +1,12 @@
+import React from 'react';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import ShareMuseButton from '../ShareMuseButton'; // Assuming it's imported correctly
 
 function CustomCard({ id, artist, artistName, picture }) {
-  const shareUrl = `https://example.com/match/${id}`;
+  const shareUrl = `localhost:5173/match/${id}`;
 
   return (
     <Card sx={{ maxWidth: 300, margin: 2 }}>
@@ -21,3 +23,5 @@ function CustomCard({ id, artist, artistName, picture }) {
     </Card>
   );
 }
+
+export default CustomCard;

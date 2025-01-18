@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Card from './Card';
+import CustomCard from './CustomCard';
 
 function CardList() {
   const [matches, setMatches] = useState([]); // Store match data
@@ -9,7 +9,7 @@ function CardList() {
   useEffect(() => {
     const fetchMatches = async () => {
       try {
-        const response = await fetch('/api/matches'); // Replace with your API URL
+        const response = await fetch('http://localhost:8080/api/matches');
         const data = await response.json();
         setMatches(data);
         setLoading(false);
@@ -23,13 +23,13 @@ function CardList() {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>; // Show a loading indicator while data is being fetched
+    return <p>Loading...</p>;
   }
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
       {matches.map((match) => (
-        <Card
+        <CustomCard
           key={match.id}
           id={match.id}
           artist={match.artist}

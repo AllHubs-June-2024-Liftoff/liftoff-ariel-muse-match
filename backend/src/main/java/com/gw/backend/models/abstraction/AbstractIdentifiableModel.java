@@ -2,6 +2,7 @@ package com.gw.backend.models.abstraction;
 
 
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
@@ -13,7 +14,7 @@ public class AbstractIdentifiableModel {
     //Used to autogenerate a unique ID for any object created by a class
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Long getId() {
