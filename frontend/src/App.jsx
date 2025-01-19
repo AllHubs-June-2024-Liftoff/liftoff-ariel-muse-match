@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <div>
-        <h1>MuseMatch: Now completely Bug free</h1>
+        <h1>MuseMatch</h1>
         <LoadArtworks />
       </div>
     </>

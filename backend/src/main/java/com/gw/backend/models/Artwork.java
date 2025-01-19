@@ -9,39 +9,30 @@ import java.util.List;
 
 @Entity
 @Table(name = "artworks")
-public class Artwork {
+public class Artwork extends AbstractIdentifiableModel {
     @Column(name = "artwork_id", columnDefinition = "VARCHAR(255)", nullable = false)
     private String artworkId;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "thumbnail")
-    private String thumbnailUrl;
-
-    @Column(name = "alt_text")
+    @Column(name = "alt_text", columnDefinition = "TEXT")
     private String altText;
 
     @Column(name = "place_of_origin")
     private String placeOfOrigin;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "artwork_type_title")
     private String artworkTypeTitle;
-
-    @Column(name = "artwork_type_id")
-    private int artworkTypeId;
 
     @Column(name = "artist_title")
     private String artistTitle;
 
     @Column(name = "artist_id")
     private String artistId;
-
-    @Column(name = "artist_ids")
-    private List<Long> artistIds;
 
     @Column(name = "style_title")
     private String styleTitle;
@@ -73,14 +64,6 @@ public class Artwork {
         this.title = title;
     }
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
-    }
-
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
-    }
-
     public String getAltText() {
         return altText;
     }
@@ -105,28 +88,12 @@ public class Artwork {
         this.description = description;
     }
 
-    public int getArtworkTypeId() {
-        return artworkTypeId;
-    }
-
-    public void setArtworkTypeId(int artworkTypeId) {
-        this.artworkTypeId = artworkTypeId;
-    }
-
     public String getArtistTitle() {
         return artistTitle;
     }
 
     public void setArtistTitle(String artistTitle) {
         this.artistTitle = artistTitle;
-    }
-
-    public List<Long> getArtistIds() {
-        return artistIds;
-    }
-
-    public void setArtistIds(List<Long> artistIds) {
-        this.artistIds = artistIds;
     }
 
     public String getArtworkTypeTitle() {

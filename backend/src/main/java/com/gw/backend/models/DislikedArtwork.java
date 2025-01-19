@@ -21,34 +21,27 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 
 
     private String artworkTitle;
-    private String artworkThumbnail;
     private String altText;
     private String placeOfOrigin;
     private String description;
     private String artworkTypeTitle;
-    private Long artworkTypeId;
     private String artistId;
     private String artistTitle;
-    private List<Long> artistIds;
     private String styleTitle;
     private String imageId;
 
     public DislikedArtwork() {
-
     };
 
-    public DislikedArtwork(String artworkId, String artworkTitle, String artworkThumbnail, String altText, String placeOfOrigin, String description, String artworkTypeTitle, Long artworkTypeId, String artistTitle, List<Long> artistIds, String styleTitle, String imageId) {
+    public DislikedArtwork(String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistTitle, String styleTitle, String imageId) {
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;
-        this.artworkThumbnail = artworkThumbnail;
         this.altText = altText;
         this.placeOfOrigin = placeOfOrigin;
         this.description = description;
         this.artworkTypeTitle = artworkTypeTitle;
-        this.artworkTypeId = artworkTypeId;
         this.artistId = artistId;
         this.artistTitle = artistTitle;
-        this.artistIds = artistIds;
         this.styleTitle = styleTitle;
         this.imageId = imageId;
     };
@@ -78,14 +71,6 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 
     public void setArtworkTitle(String artworkTitle) {
         this.artworkTitle = artworkTitle;
-    }
-
-    public String getArtworkThumbnail() {
-        return artworkThumbnail;
-    }
-
-    public void setArtworkThumbnail(String artworkThumbnail) {
-        this.artworkThumbnail = artworkThumbnail;
     }
 
     public String getAltText() {
@@ -120,28 +105,12 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
         this.artworkTypeTitle = artworkTypeTitle;
     }
 
-    public Long getArtworkTypeId() {
-        return artworkTypeId;
-    }
-
-    public void setArtworkTypeId(Long artworkTypeId) {
-        this.artworkTypeId = artworkTypeId;
-    }
-
     public String getArtistTitle() {
         return artistTitle;
     }
 
     public void setArtistTitle(String artistTitle) {
         this.artistTitle = artistTitle;
-    }
-
-    public List<Long> getArtistIds() {
-        return artistIds;
-    }
-
-    public void setArtistIds(List<Long> artistIds) {
-        this.artistIds = artistIds;
     }
 
     public String getStyleTitle() {

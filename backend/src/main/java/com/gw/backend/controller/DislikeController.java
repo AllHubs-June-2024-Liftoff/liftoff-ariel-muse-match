@@ -2,7 +2,6 @@ package com.gw.backend.controller;
 
 
 import com.gw.backend.dto.DislikedArtworkDto;
-import com.gw.backend.dto.LikedArtworkDto;
 import com.gw.backend.models.DislikedArtwork;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.DislikedArtworkRepository;
@@ -65,15 +64,12 @@ public class DislikeController {
         dislikedArtwork.setOwner(owner);
         dislikedArtwork.setArtworkId(dislikedArtworkDto.getArtworkId());
         dislikedArtwork.setArtworkTitle(dislikedArtworkDto.getArtworkTitle());
-        dislikedArtwork.setArtworkThumbnail(dislikedArtworkDto.getArtworkThumbnail());
         dislikedArtwork.setAltText(dislikedArtworkDto.getAltText());
         dislikedArtwork.setPlaceOfOrigin(dislikedArtworkDto.getPlaceOfOrigin());
         dislikedArtwork.setDescription(dislikedArtworkDto.getDescription());
         dislikedArtwork.setArtworkTypeTitle(dislikedArtworkDto.getArtworkTypeTitle());
-        dislikedArtwork.setArtworkTypeId(dislikedArtworkDto.getArtworkTypeId());
         dislikedArtwork.setArtistId(dislikedArtworkDto.getArtistId());
         dislikedArtwork.setArtistTitle(dislikedArtworkDto.getArtistTitle());
-        dislikedArtwork.setArtistIds(dislikedArtworkDto.getArtistIds());
         dislikedArtwork.setStyleTitle(dislikedArtworkDto.getStyleTitle());
         dislikedArtwork.setImageId(dislikedArtworkDto.getImageId());
 

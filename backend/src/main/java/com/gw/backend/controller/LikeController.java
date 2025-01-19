@@ -15,9 +15,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -70,15 +67,12 @@ public class LikeController {
         likedArtwork.setOwner(owner);
         likedArtwork.setArtworkId(likedArtworkDto.getArtworkId());
         likedArtwork.setArtworkTitle(likedArtworkDto.getArtworkTitle());
-        likedArtwork.setArtworkThumbnail(likedArtworkDto.getArtworkThumbnail());
         likedArtwork.setAltText(likedArtworkDto.getAltText());
         likedArtwork.setPlaceOfOrigin(likedArtworkDto.getPlaceOfOrigin());
         likedArtwork.setDescription(likedArtworkDto.getDescription());
         likedArtwork.setArtworkTypeTitle(likedArtworkDto.getArtworkTypeTitle());
-        likedArtwork.setArtworkTypeId(likedArtworkDto.getArtworkTypeId());
         likedArtwork.setArtistId(likedArtworkDto.getArtistId());
         likedArtwork.setArtistTitle(likedArtworkDto.getArtistTitle());
-        likedArtwork.setArtistIds(likedArtworkDto.getArtistIds());
         likedArtwork.setStyleTitle(likedArtworkDto.getStyleTitle());
         likedArtwork.setImageId(likedArtworkDto.getImageId());
 
@@ -100,12 +94,12 @@ public class LikeController {
             }
     }
 
+
     private void createMatch(User owner, String artistId) {
-        //Check if match exists already for thtat user/artist ID
-        if (!matchRepository.existsByUserAndAArtistId(owner, artistId)) {
-            Match match = new Match();
-            match.setOwner(owner);
-            match.setArtistId(artistId);
+
+        //Check if match exists already for that user/artist ID
+        if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
+            Match match = new Match(owner, artistId);
             matchRepository.save(match);
 
             //TODO: notify user of the new match
