@@ -1,22 +1,24 @@
 package com.gw.backend.models;
 
+import com.gw.backend.dto.ArtworkDto;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "artworks")
 public class Artwork {
 
     @Id
-    @Column(name = "artwork_id")
-    private String artworkId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "title")
     private String title;
 
     @Column(name = "thumbnail")
-    private String thumbnailUrl;
+    private List<String> thumbnailUrl;
 
     @Column(name = "alt_text")
     private String altText;
@@ -24,50 +26,66 @@ public class Artwork {
     @Column(name = "place_of_origin")
     private String placeOfOrigin;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "short_description")
+    private String shortDescription;
 
     @Column(name = "artwork_type_title")
-    private String artworkTypeTitle;
+    private String artType;
 
     @Column(name = "artwork_type_id")
-    private int artworkTypeId;
+    private Long artworkTypeId;
 
     @Column(name = "artist_title")
     private String artistTitle;
 
     @Column(name = "artist_id")
-    private String artistId;
-
-    @Column(name = "artist_ids")
-    private List<Long> artistIds;
+    private Long artistId;
 
     @Column(name = "style_title")
-    private String styleTitle;
+    private String artMovement;
+
+    @Column(name = "image_id")
+    private UUID imageId;
+
+
+    @Column(name = "art_year_finished")
+    private String artYearFinished;
 
     @OneToMany(mappedBy = "artwork")
-    private DislikedArtwork dislikedArtwork;
+    private List<DislikedArtwork> dislikedArtwork;
 
     @OneToMany(mappedBy = "artwork")
-    private LikedArtwork likedArtwork;
+    private List<LikedArtwork> likedArtwork;
 
     //Getters and Setters
 
 
-    public String getArtistId() {
-        return artistId;
+    public Artwork() {
     }
 
-    public void setArtistId(String artistId) {
-        this.artistId = artistId;
+    public Artwork(ArtworkDto dto, List<DislikedArtwork> dislikedArtwork, List<LikedArtwork> likedArtwork) {
+        this.id = dto.getId();
+        this.title = dto.getTitle();
+        this.thumbnailUrl = dto.getThumbnailUrl();
+        this.altText = dto.getAltText();
+        this.placeOfOrigin = dto.getPlaceOfOrigin();
+        this.shortDescription = dto.getShortDescription();
+        this.artType = dto.getArtType();
+        this.artworkTypeId = dto.getArtworkTypeId();
+        this.artistTitle = dto.getArtistTitle();
+        this.artistId = dto.getArtistId();
+        this.artMovement = dto.getArtMovement();
+        this.dislikedArtwork = dislikedArtwork;
+        this.likedArtwork = likedArtwork;
+        this.artYearFinished = dto.getArtYearFinished();
     }
 
-    public String getArtworkId() {
-        return artworkId;
+    public Long getId() {
+        return id;
     }
 
-    public void setArtworkId(String artworkId) {
-        this.artworkId = artworkId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -78,11 +96,11 @@ public class Artwork {
         this.title = title;
     }
 
-    public String getThumbnailUrl() {
+    public List<String> getThumbnailUrl() {
         return thumbnailUrl;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
+    public void setThumbnailUrl(List<String> thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
     }
 
@@ -102,19 +120,27 @@ public class Artwork {
         this.placeOfOrigin = placeOfOrigin;
     }
 
-    public String getDescription() {
-        return description;
+    public String getShortDescription() {
+        return shortDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
-    public int getArtworkTypeId() {
+    public String getArtType() {
+        return artType;
+    }
+
+    public void setArtType(String artType) {
+        this.artType = artType;
+    }
+
+    public Long getArtworkTypeId() {
         return artworkTypeId;
     }
 
-    public void setArtworkTypeId(int artworkTypeId) {
+    public void setArtworkTypeId(Long artworkTypeId) {
         this.artworkTypeId = artworkTypeId;
     }
 
@@ -126,43 +152,51 @@ public class Artwork {
         this.artistTitle = artistTitle;
     }
 
-    public List<Long> getArtistIds() {
-        return artistIds;
+    public Long getArtistId() {
+        return artistId;
     }
 
-    public void setArtistIds(List<Long> artistIds) {
-        this.artistIds = artistIds;
+    public void setArtistId(Long artistId) {
+        this.artistId = artistId;
     }
 
-    public String getArtworkTypeTitle() {
-        return artworkTypeTitle;
+    public String getArtMovement() {
+        return artMovement;
     }
 
-    public void setArtworkTypeTitle(String artworkTypeTitle) {
-        this.artworkTypeTitle = artworkTypeTitle;
+    public void setArtMovement(String artMovement) {
+        this.artMovement = artMovement;
     }
 
-    public String getStyleTitle() {
-        return styleTitle;
+    public UUID getImageId() {
+        return imageId;
     }
 
-    public void setStyleTitle(String styleTitle) {
-        this.styleTitle = styleTitle;
+    public void setImageId(UUID imageId) {
+        this.imageId = imageId;
     }
 
-    public DislikedArtwork getDislikedArtwork() {
+    public String getArtYearFinished() {
+        return artYearFinished;
+    }
+
+    public void setArtYearFinished(String artYearFinished) {
+        this.artYearFinished = artYearFinished;
+    }
+
+    public List<DislikedArtwork> getDislikedArtwork() {
         return dislikedArtwork;
     }
 
-    public void setDislikedArtwork(DislikedArtwork dislikedArtwork) {
+    public void setDislikedArtwork(List<DislikedArtwork> dislikedArtwork) {
         this.dislikedArtwork = dislikedArtwork;
     }
 
-    public LikedArtwork getLikedArtwork() {
+    public List<LikedArtwork> getLikedArtwork() {
         return likedArtwork;
     }
 
-    public void setLikedArtwork(LikedArtwork likedArtwork) {
+    public void setLikedArtwork(List<LikedArtwork> likedArtwork) {
         this.likedArtwork = likedArtwork;
     }
 }

@@ -11,7 +11,7 @@ import jakarta.persistence.*;
 public class Matches extends AbstractIdentifiableModel {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User owner;
+    private User user;
 
     @Column(name = "artist_id", nullable = false)
     private String artistId;
@@ -20,12 +20,12 @@ public class Matches extends AbstractIdentifiableModel {
     //Getters and Setters
 
 
-    public User getOwner() {
-        return owner;
+    public User getUser() {
+        return user;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getArtistId() {

@@ -1,83 +1,65 @@
 package com.gw.backend.dto;
 
-import com.gw.backend.models.user.User;
-
 import java.util.List;
+import java.util.UUID;
 
 public class ArtworkDto {
-    private User user;
-    private String artworkId;
-    private String artworkTitle;
-    private String artworkThumbnail;
+
+    private Long id;
+    private String title;
+    private List<String> thumbnailUrl;
     private String altText;
     private String placeOfOrigin;
-    private String description;
-    private String artworkTypeTitle;
+    private String shortDescription;
+    private String artType;
     private Long artworkTypeId;
-    private String artistId;
+    private Long artistId;
     private String artistTitle;
-    private List<Long> artistIds;
-    private String styleTitle;
-    private String imageId;
+    private String artMovement;
+    private UUID imageId;
+    private String artYearFinished;
 
     public ArtworkDto() {
     }
 
-    public ArtworkDto(User user, String artworkId, String artworkTitle, String artworkThumbnail, String altText, String placeOfOrigin, String description, String artworkTypeTitle, Long artworkTypeId, String artistTitle, List<Long> artistIds, String styleTitle, String imageId, String artistId) {
-        this.user = user;
-        this.artworkId = artworkId;
-        this.artworkTitle = artworkTitle;
-        this.artworkThumbnail = artworkThumbnail;
+    public ArtworkDto(Long id, String title, List<String> thumbnailUrl, String altText, String placeOfOrigin, String shortDescription, String artType, Long artworkTypeId, Long artistId, String artistTitle, String artMovement, UUID imageId, String artYearFinished) {
+        this.id = id;
+        this.title = title;
+        this.thumbnailUrl = thumbnailUrl;
         this.altText = altText;
         this.placeOfOrigin = placeOfOrigin;
-        this.description = description;
-        this.artworkTypeTitle = artworkTypeTitle;
+        this.shortDescription = shortDescription;
+        this.artType = artType;
         this.artworkTypeId = artworkTypeId;
         this.artistId = artistId;
         this.artistTitle = artistTitle;
-        this.artistIds = artistIds;
-        this.styleTitle = styleTitle;
+        this.artMovement = artMovement;
         this.imageId = imageId;
-    };
-
-    public User getUser() {
-        return user;
+        this.artYearFinished = artYearFinished;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public Long getId() {
+        return id;
     }
 
-    public String getArtistId() {
-        return artistId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setArtistId(String artistId) {
-        this.artistId = artistId;
+    public String getTitle() {
+        return title;
     }
 
-    public String getArtworkId() {
-        return artworkId;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setArtworkId(String artworkId) {
-        this.artworkId = artworkId;
+    public List<String> getThumbnailUrl() {
+        return thumbnailUrl;
     }
 
-    public String getArtworkTitle() {
-        return artworkTitle;
-    }
-
-    public void setArtworkTitle(String artworkTitle) {
-        this.artworkTitle = artworkTitle;
-    }
-
-    public String getArtworkThumbnail() {
-        return artworkThumbnail;
-    }
-
-    public void setArtworkThumbnail(String artworkThumbnail) {
-        this.artworkThumbnail = artworkThumbnail;
+    public void setThumbnailUrl(List<String> thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public String getAltText() {
@@ -96,20 +78,20 @@ public class ArtworkDto {
         this.placeOfOrigin = placeOfOrigin;
     }
 
-    public String getDescription() {
-        return description;
+    public String getShortDescription() {
+        return shortDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
-    public String getArtworkTypeTitle() {
-        return artworkTypeTitle;
+    public String getArtType() {
+        return artType;
     }
 
-    public void setArtworkTypeTitle(String artworkTypeTitle) {
-        this.artworkTypeTitle = artworkTypeTitle;
+    public void setArtType(String artType) {
+        this.artType = artType;
     }
 
     public Long getArtworkTypeId() {
@@ -120,6 +102,14 @@ public class ArtworkDto {
         this.artworkTypeId = artworkTypeId;
     }
 
+    public Long getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(Long artistId) {
+        this.artistId = artistId;
+    }
+
     public String getArtistTitle() {
         return artistTitle;
     }
@@ -128,28 +118,28 @@ public class ArtworkDto {
         this.artistTitle = artistTitle;
     }
 
-    public List<Long> getArtistIds() {
-        return artistIds;
+    public String getArtMovement() {
+        return artMovement;
     }
 
-    public void setArtistIds(List<Long> artistIds) {
-        this.artistIds = artistIds;
+    public void setArtMovement(String artMovement) {
+        this.artMovement = artMovement;
     }
 
-    public String getStyleTitle() {
-        return styleTitle;
-    }
-
-    public void setStyleTitle(String styleTitle) {
-        this.styleTitle = styleTitle;
-    }
-
-    public String getImageId() {
+    public UUID getImageId() {
         return imageId;
     }
 
-    public void setImageId(String imageId) {
+    public void setImageId(UUID imageId) {
         this.imageId = imageId;
+    }
+
+    public String getArtYearFinished() {
+        return artYearFinished;
+    }
+
+    public void setArtYearFinished(String artYearFinished) {
+        this.artYearFinished = artYearFinished;
     }
 }
 

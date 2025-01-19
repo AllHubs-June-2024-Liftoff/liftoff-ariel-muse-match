@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
-public class ArtistNameStatsService extends StatsService{
+public class ArtistTitleStatsService extends StatsService{
 
 	private final LikedArtworkRepository likedArtworkRepository;
 
@@ -19,28 +18,28 @@ public class ArtistNameStatsService extends StatsService{
 
 
 	@Autowired
-	public ArtistNameStatsService(LikedArtworkRepository likedArtworkRepository, DislikedArtworkRepository dislikedArtworkRepository) {
+	public ArtistTitleStatsService(LikedArtworkRepository likedArtworkRepository, DislikedArtworkRepository dislikedArtworkRepository) {
 		this.likedArtworkRepository = likedArtworkRepository;
 		this.dislikedArtworkRepository = dislikedArtworkRepository;
 	}
 
 	@Override
-	public List<ArtistName> getStats(SortingCriteria sortBy, Long userId) {
-		Set<String> distinctSet = likedArtworkRepository.findDistinctArtistNameByUser(userId);
-		distinctSet.addAll(likedArtworkRepository.findDistinctArtistNameByUser(userId));
+	public List<ArtistTitle> getStats(SortingCriteria sortBy, Long userId) {
+		Set<String> distinctSet = likedArtworkRepository.findDistinctArtistTitleByUser(userId);
+		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtistTitleByUser(userId));
 		return distinctSet.stream()
 				.map(value -> createStats(value, userId))
 				.sorted(sortBy.getComparator())
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	@Override
-	public ArtistName createStats(String value, Long userId) {
-		long likes = likedArtworkRepository.countByArtistNameAndUserId(value, userId);
-		long dislikes = dislikedArtworkRepository.countByArtistNameAndUserId(value, userId);
+	public ArtistTitle createStats(String value, Long userId) {
+		long likes = likedArtworkRepository.countByArtistTitleAndUserId(value, userId);
+		long dislikes = dislikedArtworkRepository.countByArtistTitleAndUserId(value, userId);
 		long total = likes + dislikes;
 		Integer percentage = this.findPercentage(likes, dislikes);
 
-		return new ArtistName(value, new Statistics(likes, total, percentage));
+		return new ArtistTitle(value, new Statistics(likes, total, percentage));
 	}
 }

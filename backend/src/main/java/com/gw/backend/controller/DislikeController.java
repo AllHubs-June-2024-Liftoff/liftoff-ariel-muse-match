@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequestMapping("/api/dislike")
 public class DislikeController {
 
-    private static final String userSessionKey = "user";
+    private static final String USERSESSIONKEY = "user";
 
     private final DislikedArtworkRepository dislikedArtworkRepository;
     private final UserRepository userRepository;
@@ -32,20 +32,17 @@ public class DislikeController {
     }
 
     public User getUserFromSession(HttpSession session) {
-        Long userId = (Long) session.getAttribute(userSessionKey);
+        Long userId = (Long) session.getAttribute(USERSESSIONKEY);
         if (userId == null) {
             return null;
         }
         Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            return null;
-        }
-        return user.get();
+	    return user.orElse(null);
     }
 
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveDislike (@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
+    public ResponseEntity<?> saveDislike (@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -55,7 +52,7 @@ public class DislikeController {
 
         //User owner = getUserFromSession(session);
         if (user == null) {
-            return new ResponseEntity<String>("You must be logged in to dislike artworks", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("You must be logged in to dislike artworks", HttpStatus.UNAUTHORIZED);
         }
 
 

@@ -6,7 +6,7 @@
 
 	    private Statistics statistics;
 
-		public StatsCategory(String info, Statistics statistics) {
+		protected StatsCategory(String info, Statistics statistics) {
 			this.info = info;
 			this.statistics = statistics;
 		}

@@ -5,7 +5,7 @@ import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -22,9 +22,10 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 
     public DislikedArtwork() {
 
-    };
+    }
 
     public DislikedArtwork(Artwork artwork, User user) {
+        super();
         this.artwork = artwork;
         this.user = user;
     }
@@ -48,4 +49,16 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
         this.artwork = artwork;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        DislikedArtwork that = (DislikedArtwork) o;
+        return Objects.equals(user, that.user) && Objects.equals(artwork, that.artwork);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), user, artwork);
+    }
 }

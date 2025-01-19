@@ -16,10 +16,10 @@ public enum StatCategories {
 		}
 	},
 	ARTIST{
-		public ArtistNameStatsService convert(List<StatsService> statsService) {
+		public ArtistTitleStatsService convert(List<StatsService> statsService) {
 			for (StatsService statService : statsService){
-				if (statService.getClass() == ArtistNameStatsService.class){
-					return (ArtistNameStatsService) statService;
+				if (statService.getClass() == ArtistTitleStatsService.class){
+					return (ArtistTitleStatsService) statService;
 				}
 			}
 			return null;

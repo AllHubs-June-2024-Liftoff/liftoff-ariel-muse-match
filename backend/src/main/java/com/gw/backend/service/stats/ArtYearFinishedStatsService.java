@@ -27,11 +27,11 @@ public class ArtYearFinishedStatsService extends StatsService {
 	@Override
 	public List<ArtYearFinished> getStats(SortingCriteria sortBy, Long userId) {
 		Set<String> distinctSet = likedArtworkRepository.findDistinctArtYearFinishedByUser(userId);
-		distinctSet.addAll(likedArtworkRepository.findDistinctArtYearFinishedByUser(userId));
+		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtYearFinishedByUser(userId));
 		return distinctSet.stream()
 				.map(value -> createStats(value, userId))
 				.sorted(sortBy.getComparator())
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	@Override

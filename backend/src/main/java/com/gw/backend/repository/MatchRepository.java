@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface MatchRepository extends JpaRepository<Matches, Long>{
-        List<Matches> findByUser(User owner);
+        List<Matches> findByUser(User user);
     }

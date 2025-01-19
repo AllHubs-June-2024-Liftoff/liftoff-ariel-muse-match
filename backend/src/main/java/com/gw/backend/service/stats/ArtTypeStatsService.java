@@ -27,11 +27,11 @@ public class ArtTypeStatsService extends StatsService{
 	@Override
 	public List<ArtType> getStats(SortingCriteria sortBy, Long userId) {
 		Set<String> distinctSet = likedArtworkRepository.findDistinctArtTypeByUser(userId);
-		distinctSet.addAll(likedArtworkRepository.findDistinctArtTypeByUser(userId));
+		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtTypeByUser(userId));
 		return distinctSet.stream()
 				.map(value -> createStats(value, userId))
 				.sorted(sortBy.getComparator())
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	@Override

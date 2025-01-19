@@ -1,6 +1,7 @@
 package com.gw.backend.models;
 
 
+import com.gw.backend.dto.ArtworkDto;
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.*;
@@ -13,7 +14,7 @@ import java.util.List;
 public class LikedArtwork extends AbstractIdentifiableModel {
 
     @ManyToOne
-    @JoinColumn(name = "owner", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
@@ -25,9 +26,12 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     };
 
     public LikedArtwork(Artwork artwork, User user) {
+        super();
         this.artwork = artwork;
         this.user = user;
     }
+
+
 
 //Getters and Setters
 

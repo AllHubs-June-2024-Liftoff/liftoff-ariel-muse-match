@@ -28,7 +28,7 @@ public class AbstractIdentifiableModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractIdentifiableModel that = (AbstractIdentifiableModel) o;
-        return id == that.id;
+        return Objects.equals(id, that.id);
     }
 
     @Override

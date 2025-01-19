@@ -49,7 +49,7 @@ public class LikeController {
 		return user.get();
 	}
 	@PutMapping("/save")
-	public ResponseEntity<?> saveLike (@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
+	public ResponseEntity<?> saveLike (@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
 		if (errors.hasErrors()) {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
@@ -62,7 +62,7 @@ public class LikeController {
 			return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
 		}
 
-		LikedArtwork likedArtwork = new LikedArtwork();
+
 
 
 		try {
