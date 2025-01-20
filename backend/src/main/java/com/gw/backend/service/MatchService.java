@@ -10,9 +10,9 @@ import java.util.List;
 public class MatchService {
     public List<Match> getAllMatches() {
         return Arrays.asList(
-                new Match(1L, "Artist A", "John Doe", "/Users/zeb/Desktop/LaunchCode/Java/Java_Projects/liftoff-ariel-muse-match/frontend/public/muse.png"),
-                new Match(2L, "Artist B", "Jane Smith", "https://example.com/picture2.jpg"),
-                new Match(3L, "Artist C", "Bob Johnson", "https://example.com/picture3.jpg")
+                new Match(1L, "Good Artist", "Bobby Schmurda", "/Users/zeb/Desktop/LaunchCode/Java/Java_Projects/liftoff-ariel-muse-match/frontend/public/muse.png"),
+                new Match(2L, "An artist", "Beezle Bob", "pic2"),
+                new Match(3L, "The artist", "Raul Atraidista", "pic3")
         );
     }
 }

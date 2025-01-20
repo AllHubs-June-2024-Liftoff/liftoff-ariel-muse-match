@@ -5,35 +5,25 @@ import jakarta.persistence.Entity;
 
 @Entity
     public class Match extends AbstractIdentifiableModel{
-        private Long id;
-        private String artist;
+        private Long artistId;
         private String artistName;
-        private String picture;
+        private byte[] picture;
 
         // Constructors, getters, and setters
         public Match() {}
 
-        public Match(Long id, String artist, String artistName, String picture) {
-            this.id = id;
-            this.artist = artist;
+        public Match(Long artistId, String artist, String artistName, byte[] picture) {
+            this.artistId = artistId;
             this.artistName = artistName;
             this.picture = picture;
         }
 
         public Long getId() {
-            return id;
+            return artistId;
         }
 
         public void setId(Long id) {
-            this.id = id;
-        }
-
-        public String getArtist() {
-            return artist;
-        }
-
-        public void setArtist(String artist) {
-            this.artist = artist;
+            this.artistId = artistId;
         }
 
         public String getArtistName() {
@@ -44,11 +34,11 @@ import jakarta.persistence.Entity;
             this.artistName = artistName;
         }
 
-        public String getPicture() {
+        public byte[] getPicture() {
             return picture;
         }
 
-        public void setPicture(String picture) {
+        public void setPicture(byte[] picture) {
             this.picture = picture;
         }
     }

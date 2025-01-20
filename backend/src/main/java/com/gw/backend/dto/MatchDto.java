@@ -1,4 +1,8 @@
 package com.gw.backend.dto;
 
-public class MatchDto {
+import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
+
+public class MatchDto extends AbstractIdentifiableModel {
+    private Long artistId;
+    private Long userId;
 }
