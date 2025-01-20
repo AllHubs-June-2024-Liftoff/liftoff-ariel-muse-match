@@ -17,7 +17,7 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "artwork_id", nullable = false)
+    @JoinColumn(name = "artwork_id", nullable = false, columnDefinition = "BIGINT")
     private Artwork artwork;
 
     public DislikedArtwork() {

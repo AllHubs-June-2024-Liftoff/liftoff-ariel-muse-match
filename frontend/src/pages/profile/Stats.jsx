@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function Stats() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [uri, setUri] = useState({ category: "type", sort: "percentage" });
   const [activeButton, setActiveButton] = useState({
@@ -33,6 +33,8 @@ function Stats() {
         setLoading(false);
       });
   }, [uri]);
+
+  console.log(data);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -141,14 +143,14 @@ function Stats() {
         </button>
       </div>
       {data.map((datum) => {
-        const liked = data[datum].statistics.likes;
-        const total = data[datum].statistics.total;
-        const percent = data[datum].statistics.percent;
+        const liked = datum.statistics.likes;
+        const total = datum.statistics.total;
+        const percentage = datum.statistics.percentage;
         return (
           <>
-            <h3>{datum}</h3>
+            <h3>{datum.info}</h3>
             <p>
-              Liked: {percent}% {`(${liked}/${total})`}
+              Liked: {`${percentage}`}% {`(${liked}/${total})`}
             </p>
           </>
         );

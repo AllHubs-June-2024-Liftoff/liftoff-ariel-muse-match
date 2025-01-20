@@ -34,7 +34,7 @@ public class ProfileController {
 				StatCategories.valueOf(category.toUpperCase())
 				.convert(statsService)
 				.getStats(SortingCriteria
-						.valueOf(sortBy.toUpperCase()), userId)
+						.valueOf(sortBy.toUpperCase()), 1L)
 		);
 	}
 

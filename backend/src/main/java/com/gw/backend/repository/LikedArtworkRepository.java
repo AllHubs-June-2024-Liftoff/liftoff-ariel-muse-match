@@ -13,8 +13,6 @@ import java.util.Set;
 
 @Repository
 public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long> {
-    List<LikedArtwork> findByUser(User user);
-    boolean existsByUserAndArtworkId(User user, String artworkId);
 
     @Query(value = "SELECT DISTINCT a.artist_title " +
             "FROM liked_artworks d " +
@@ -69,7 +67,7 @@ public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long
     @Query("SELECT COUNT(d) FROM LikedArtwork d " +
             "WHERE d.artwork.artYearFinished = :artYearFinished " +
             "AND d.user.id = :userId")
-    long countByArtYearFinishedAndUserId(@Param("artType") String artYearFinished,
+    long countByArtYearFinishedAndUserId(@Param("artYearFinished") String artYearFinished,
                                          @Param("userId") Long userId);
 
 }

@@ -1,13 +1,11 @@
 package com.gw.backend.dto;
 
-import java.util.List;
 import java.util.UUID;
 
 public class ArtworkDto {
 
     private Long id;
     private String title;
-    private List<String> thumbnailUrl;
     private String altText;
     private String placeOfOrigin;
     private String shortDescription;
@@ -17,15 +15,14 @@ public class ArtworkDto {
     private String artistTitle;
     private String artMovement;
     private UUID imageId;
-    private String artYearFinished;
+    private Integer artYearFinished;
 
     public ArtworkDto() {
     }
 
-    public ArtworkDto(Long id, String title, List<String> thumbnailUrl, String altText, String placeOfOrigin, String shortDescription, String artType, Long artworkTypeId, Long artistId, String artistTitle, String artMovement, UUID imageId, String artYearFinished) {
+    public ArtworkDto(Long id, String title, String altText, String placeOfOrigin, String shortDescription, String artType, Long artworkTypeId, Long artistId, String artistTitle, String artMovement, UUID imageId, Integer artYearFinished) {
         this.id = id;
         this.title = title;
-        this.thumbnailUrl = thumbnailUrl;
         this.altText = altText;
         this.placeOfOrigin = placeOfOrigin;
         this.shortDescription = shortDescription;
@@ -52,14 +49,6 @@ public class ArtworkDto {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<String> getThumbnailUrl() {
-        return thumbnailUrl;
-    }
-
-    public void setThumbnailUrl(List<String> thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
     }
 
     public String getAltText() {
@@ -134,11 +123,11 @@ public class ArtworkDto {
         this.imageId = imageId;
     }
 
-    public String getArtYearFinished() {
+    public Integer getArtYearFinished() {
         return artYearFinished;
     }
 
-    public void setArtYearFinished(String artYearFinished) {
+    public void setArtYearFinished(Integer artYearFinished) {
         this.artYearFinished = artYearFinished;
     }
 }

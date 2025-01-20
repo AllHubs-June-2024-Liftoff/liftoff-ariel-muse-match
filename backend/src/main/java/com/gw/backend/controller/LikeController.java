@@ -1,8 +1,10 @@
 package com.gw.backend.controller;
 
 import com.gw.backend.dto.ArtworkDto;
+import com.gw.backend.models.Artwork;
 import com.gw.backend.models.LikedArtwork;
 import com.gw.backend.models.user.User;
+import com.gw.backend.repository.ArtworkRepository;
 import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
@@ -26,14 +28,16 @@ public class LikeController {
 
     private final UserRepository userRepository;
     private final LikedArtworkRepository likedArtworkRepository;
-    private final MatchRepository matchRepository;
+	private final ArtworkRepository artworkRepository;
+	private final MatchRepository matchRepository;
 
 
     @Autowired
-    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MatchRepository matchRepository) {
+    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, ArtworkRepository artworkRepository, MatchRepository matchRepository) {
         this.likedArtworkRepository = likedArtworkRepository;
         this.userRepository = userRepository;
-        this.matchRepository = matchRepository;
+	    this.artworkRepository = artworkRepository;
+	    this.matchRepository = matchRepository;
     }
 
 
@@ -59,13 +63,14 @@ public class LikeController {
 
 		//User owner = getUserFromSession(session);
 		if (user == null) {
-			return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
 		}
-
-
+		Artwork artwork = new Artwork(artworkDto);
+		LikedArtwork likedArtwork = new LikedArtwork(artwork, user);
 
 
 		try {
+			artworkRepository.save(artwork);
 			likedArtworkRepository.save(likedArtwork);
 			return new ResponseEntity<>(likedArtwork, HttpStatus.OK);
 		} catch (Exception e) {

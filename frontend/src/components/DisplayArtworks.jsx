@@ -76,7 +76,6 @@ function DisplayArtworks() {
     const likedArtwork = {
       id: artwork.id,
       title: artwork.title,
-      thumbnailUrl: artwork.thumbnail.lqip,
       altText: artwork.thumbnail?.alt_text,
       placeOfOrigin: artwork.place_of_origin,
       shortDescription: artwork.short_description,

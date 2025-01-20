@@ -2,8 +2,10 @@ package com.gw.backend.controller;
 
 
 import com.gw.backend.dto.ArtworkDto;
+import com.gw.backend.models.Artwork;
 import com.gw.backend.models.DislikedArtwork;
 import com.gw.backend.models.user.User;
+import com.gw.backend.repository.ArtworkRepository;
 import com.gw.backend.repository.DislikedArtworkRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
@@ -22,13 +24,15 @@ public class DislikeController {
     private static final String USERSESSIONKEY = "user";
 
     private final DislikedArtworkRepository dislikedArtworkRepository;
+    private final ArtworkRepository artworkRepository;
     private final UserRepository userRepository;
 
 
     @Autowired
-    public DislikeController(UserRepository userRepository, DislikedArtworkRepository dislikedArtworkRepository) {
+    public DislikeController(UserRepository userRepository, DislikedArtworkRepository dislikedArtworkRepository, ArtworkRepository artworkRepository) {
         this.userRepository = userRepository;
         this.dislikedArtworkRepository = dislikedArtworkRepository;
+        this.artworkRepository = artworkRepository;
     }
 
     public User getUserFromSession(HttpSession session) {
@@ -56,13 +60,15 @@ public class DislikeController {
         }
 
 
-        DislikedArtwork dislikedArtwork = new DislikedArtwork();
+        Artwork artwork = new Artwork(artworkDto);
+        DislikedArtwork dislikedArtwork = new DislikedArtwork(artwork, user);
 
 
 
 
 
         try {
+            artworkRepository.save(artwork);
             dislikedArtworkRepository.save(dislikedArtwork);
             return new ResponseEntity<>(dislikedArtwork, HttpStatus.OK);
         } catch (Exception e) {

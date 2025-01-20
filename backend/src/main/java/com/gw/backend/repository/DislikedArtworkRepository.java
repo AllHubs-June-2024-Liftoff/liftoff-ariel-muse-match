@@ -14,9 +14,6 @@ import java.util.Set;
 @Repository
 public interface DislikedArtworkRepository extends JpaRepository<DislikedArtwork, Long> {
 
-    List<DislikedArtwork> findByUser(User user);
-
-    boolean existsByUserAndId(User user, Long id);
 
     @Query(value = "SELECT DISTINCT a.artist_title " +
             "FROM disliked_artworks d " +
@@ -71,6 +68,6 @@ public interface DislikedArtworkRepository extends JpaRepository<DislikedArtwork
     @Query("SELECT COUNT(d) FROM DislikedArtwork d " +
             "WHERE d.artwork.artYearFinished = :artYearFinished " +
             "AND d.user.id = :userId")
-    long countByArtYearFinishedAndUserId(@Param("artType") String artYearFinished,
+    long countByArtYearFinishedAndUserId(@Param("artYearFinished") String artYearFinished,
                                  @Param("userId") Long userId);
 }

@@ -17,9 +17,6 @@ public class Artwork {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "thumbnail")
-    private List<String> thumbnailUrl;
-
     @Column(name = "alt_text")
     private String altText;
 
@@ -47,9 +44,8 @@ public class Artwork {
     @Column(name = "image_id")
     private UUID imageId;
 
-
     @Column(name = "art_year_finished")
-    private String artYearFinished;
+    private Integer artYearFinished;
 
     @OneToMany(mappedBy = "artwork")
     private List<DislikedArtwork> dislikedArtwork;
@@ -63,10 +59,9 @@ public class Artwork {
     public Artwork() {
     }
 
-    public Artwork(ArtworkDto dto, List<DislikedArtwork> dislikedArtwork, List<LikedArtwork> likedArtwork) {
+    public Artwork(ArtworkDto dto) {
         this.id = dto.getId();
         this.title = dto.getTitle();
-        this.thumbnailUrl = dto.getThumbnailUrl();
         this.altText = dto.getAltText();
         this.placeOfOrigin = dto.getPlaceOfOrigin();
         this.shortDescription = dto.getShortDescription();
@@ -75,8 +70,6 @@ public class Artwork {
         this.artistTitle = dto.getArtistTitle();
         this.artistId = dto.getArtistId();
         this.artMovement = dto.getArtMovement();
-        this.dislikedArtwork = dislikedArtwork;
-        this.likedArtwork = likedArtwork;
         this.artYearFinished = dto.getArtYearFinished();
     }
 
@@ -94,14 +87,6 @@ public class Artwork {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<String> getThumbnailUrl() {
-        return thumbnailUrl;
-    }
-
-    public void setThumbnailUrl(List<String> thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
     }
 
     public String getAltText() {
@@ -176,11 +161,11 @@ public class Artwork {
         this.imageId = imageId;
     }
 
-    public String getArtYearFinished() {
+    public Integer getArtYearFinished() {
         return artYearFinished;
     }
 
-    public void setArtYearFinished(String artYearFinished) {
+    public void setArtYearFinished(Integer artYearFinished) {
         this.artYearFinished = artYearFinished;
     }
 
