@@ -31,13 +31,14 @@ function DisplayArtworks() {
                   } catch (e) {
                     console.error(`Failed to fetch image for ${artwork.id}`, e); //If there is an error, the image source will be null
                     sources[artwork.id] = null;
+                    delete sources[artwork.id]; //If there is an error, the key will be deleted from the object
+                    console.log(`Deleted artwork ID: ${artwork.id}`); //This is just a console log to show that the key was deleted
                 }
                 }
               })
             );
 
             setImageSources(sources);
-            setCurrentIndex(0); // Reset currentIndex when artworks are loaded (It started causing a bug for some reason?)
           } else {
             setError("No data available");
           }
@@ -70,7 +71,6 @@ function DisplayArtworks() {
           sendDislike(swipedArtwork);
 
         }
-        setCurrentIndex((prevIndex) => prevIndex + 1);
       };
 
 
@@ -155,9 +155,18 @@ function DisplayArtworks() {
       }
 
       const outOfFrame = (artworkId) => {
-        console.log(`${artworkId} left the screen`);
-        setCurrentIndex((prevIndex) => prevIndex + 1);
-      };
+        setCurrentIndex((prevIndex) => {
+        return prevIndex + 1;
+      });
+    };
+
+    const handleMouseDown = (event) => {
+      event.preventDefault();
+    };
+
+    const handleDragStart = (event) => {
+      event.preventDefault();
+    }
     
     
       //TODO: Fix issue with scrolling causing art to change sometimes (wrap Tinder card component in a div with overflow:hidden, height: 100vh or something)
@@ -165,12 +174,16 @@ function DisplayArtworks() {
       return (
         <>
           <div>
-            <div className="cardContainer">
+            <div 
+            className="cardContainer"
+            onMouseDown={handleMouseDown} 
+            >
               {artworks.map((artwork, index) => (
                 <div
                   key={artwork.id}
                   style={{ display: index === currentIndex ? "block" : "none" }}
                   >
+                    <div className="tinderCardWrapper"> 
                 <TinderCard 
                 className="swipe"
                 onSwipe={(dir) => swiped(dir, artwork)}
@@ -178,16 +191,19 @@ function DisplayArtworks() {
                 preventSwipe={["up", "down"]}
                 swipeRequirementType="position"
                 swipeThreshold={10}
+                onDragStart={handleDragStart}
             >
                  <div className="card">
                   <h2>{artwork.title}</h2>
-                  <p>Title: {artwork.classification_title}</p>
+                  <p>{artwork.classification_title}</p>
                   <img
+                    className="artwork-image"
                     src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
                     alt={artwork.thumbnail?.alt_text} 
                   />
                 </div>
                 </TinderCard>
+                </div>
                 </div>
               ))}
             </div>

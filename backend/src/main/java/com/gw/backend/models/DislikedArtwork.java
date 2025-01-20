@@ -19,11 +19,16 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
     @Column(name = "artwork_id", columnDefinition = "VARCHAR(255)", nullable = false)
     private String artworkId;
 
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+    @Column(name = "alt_text", columnDefinition = "TEXT")
+    private String altText;
+
+
 
     private String artworkTitle;
-    private String altText;
     private String placeOfOrigin;
-    private String description;
     private String artworkTypeTitle;
     private String artistId;
     private String artistTitle;

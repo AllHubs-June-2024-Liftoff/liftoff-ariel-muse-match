@@ -46,21 +46,28 @@ h1 {
 }
 
 h2 {
+  font-family: Georgia;
   color: #fff;
+  text-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30);
 }
 
 .swipe {
-  position: absolute;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .cardContainer {
+  justify-content: center;
+  align-items: center;
   width: 90vw;
   max-width: 400px;
-  height: auto;
+  height: 100vh;
   margin-bottom: 20px;
 }
 
 .card {
+  margin: auto;
   position: relative;
   width: 80vw;
   max-width: 260px;
@@ -139,6 +146,17 @@ h2 {
 
 .buttons button:hover {
   transform: scale(1.05);
+}
+
+.tinderCardWrapper {
+  height: 100%;
+}
+
+img.artwork-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  overflow: visible;
 }
 
 @keyframes popup {

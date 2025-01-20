@@ -125,6 +125,7 @@ public class LikeController {
         for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
             if (entry.getValue() >= 3) {
                 matchingArtistIds.add(entry.getKey());
+                System.out.println("You hit " + artistIdCounts);
             }
         }
 

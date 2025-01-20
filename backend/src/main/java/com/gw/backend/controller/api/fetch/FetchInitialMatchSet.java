@@ -37,7 +37,6 @@ public class FetchInitialMatchSet {
 
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(apiUrl, String.class);
-            System.out.println(ResponseEntity.ok(response.getBody()));
             return ResponseEntity.ok(response.getBody());
         } catch (Exception error){
             return ResponseEntity.status(500).body("Error finding artworks" + error.getMessage());
