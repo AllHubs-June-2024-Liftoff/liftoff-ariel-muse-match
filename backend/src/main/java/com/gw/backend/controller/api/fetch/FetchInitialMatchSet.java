@@ -1,6 +1,7 @@
 package com.gw.backend.controller.api.fetch;
 
 import com.gw.backend.repository.user.UserRepository;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +22,17 @@ public class FetchInitialMatchSet {
     public FetchInitialMatchSet(UserRepository userRepository) {
         this.userRepository = userRepository;
 
-        //TODO: Check user Match set, check disliked array
+        //TODO: Check user Liked artworks and filter them out
     }
 
     //Responds to front-end calls
     @GetMapping("/all")
     public ResponseEntity<Object> getArt() {
-        String apiUrl = "https://api.artic.edu/api/v1/artworks?limit=10";
+         String apiUrl = "https://api.artic.edu/api/v1/artworks?limit=50";
 
+        //The commented url below is to grab a specific artist, intended for testing Matching
+        // String apiUrl = "https://api.artic.edu/api/v1/artworks/search?q=Vincent%20van%20Gogh";
+//TODO: Use seeds for randomization
         RestTemplate restTemplate = new RestTemplate();
 
         try {
@@ -39,7 +43,6 @@ public class FetchInitialMatchSet {
         }
 
     }
-
 
 
 }

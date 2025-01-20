@@ -1,32 +1,73 @@
 package com.gw.backend.models.user;
 
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
+import com.gw.backend.models.user.image.ProfilePicture;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import java.util.HashMap;
 
 @Entity
+@Table(name="users")
 public class User extends AbstractIdentifiableModel {
 
+    @Column
     private String username;
 
+    @Column
+    private String password;
+
+    @OneToOne
+    private ProfilePicture profilePicture;
+
+    @Column
     private String email;
 
-    private String hashPass;
+    @Column
+    private HashMap userLikes;
 
-    public User() {}
+    @Column
+    private HashMap userDislikes;
+
+    @Column
+    private HashMap matches;
 
 
-    public User(Integer userId, String username, String email, String hashPass) {
-        this.username = username;
-        this.email = email;
-        this.hashPass = hashPass;
+    public User() {
     }
 
-    public String getUsername() {
+    public User(String username, String password, ProfilePicture profilePicture, String email) {
+        this.username = username;
+        this.password = password;
+        this.profilePicture = profilePicture;
+        this.email = email;
+    }
+
+    //Getters and Setters
+
+    public String getUserName() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.username = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public ProfilePicture getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(ProfilePicture profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String getEmail() {
@@ -37,11 +78,27 @@ public class User extends AbstractIdentifiableModel {
         this.email = email;
     }
 
-    public String getHashPass() {
-        return hashPass;
+    public String getUsername() {
+        return username;
     }
 
-    public void setHashPass(String hashPass) {
-        this.hashPass = hashPass;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public HashMap getUserLikes() {
+        return userLikes;
+    }
+
+    public void setUserLikes(HashMap userLikes) {
+        this.userLikes = userLikes;
+    }
+
+    public HashMap getUserDislikes() {
+        return userDislikes;
+    }
+
+    public void setUserDislikes(HashMap userDislikes) {
+        this.userDislikes = userDislikes;
     }
 }
