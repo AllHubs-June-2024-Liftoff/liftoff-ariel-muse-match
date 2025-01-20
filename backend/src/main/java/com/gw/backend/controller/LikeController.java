@@ -25,19 +25,19 @@ public class LikeController {
 
 	private static final String USERSESSIONKEY = "user";
 
-    private final UserRepository userRepository;
-    private final LikedArtworkRepository likedArtworkRepository;
+	private final UserRepository userRepository;
+	private final LikedArtworkRepository likedArtworkRepository;
 	private final ArtworkRepository artworkRepository;
 	private final MatchRepository matchRepository;
 
 
-    @Autowired
-    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, ArtworkRepository artworkRepository, MatchRepository matchRepository) {
-        this.likedArtworkRepository = likedArtworkRepository;
-        this.userRepository = userRepository;
-	    this.artworkRepository = artworkRepository;
-	    this.matchRepository = matchRepository;
-    }
+	@Autowired
+	public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, ArtworkRepository artworkRepository, MatchRepository matchRepository) {
+		this.likedArtworkRepository = likedArtworkRepository;
+		this.userRepository = userRepository;
+		this.artworkRepository = artworkRepository;
+		this.matchRepository = matchRepository;
+	}
 
 
 	public User getUserFromSession(HttpSession session) {
@@ -46,21 +46,19 @@ public class LikeController {
 			return null;
 		}
 		Optional<User> user = userRepository.findById(userId);
-		if (user.isEmpty()) {
-			return null;
-		}
-		return user.get();
+		return user.orElse(null);
 	}
+
 	@PutMapping("/save")
-	public ResponseEntity<?> saveLike (@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
+	public ResponseEntity<?> saveLike(@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
 		if (errors.hasErrors()) {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 
 		//TEST VALUE
-		User user = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
+		User user = userRepository.findById(1L).orElseThrow(() -> new RuntimeException("user not found"));
 
-		//User owner = getUserFromSession(session);
+		//User user = getUserFromSession(session);
 		if (user == null) {
 			return new ResponseEntity<>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
 		}
@@ -71,65 +69,56 @@ public class LikeController {
 		try {
 			artworkRepository.save(artwork);
 			likedArtworkRepository.save(likedArtwork);
+			//Check for matching artist IDs
+			List<Long> matchingArtistIds = checkForMatchingArtistIds(user);
+
+			//Create new matches for the matching artist IDs
+			for (Long artistId : matchingArtistIds) {
+				createMatch(user, artistId);
+			}
 			return new ResponseEntity<>(likedArtwork, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e);
-			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-            try {
-                likedArtworkRepository.save(likedArtwork);
+	}
 
-                //Check for matching artist IDs
-                List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
+	private void createMatch(User user, Long artistId) {
 
-                //Create new matches for the matching artist IDs
-                for (String artistId : matchingArtistIds) {
-                    createMatch(owner, artistId);
-                }
+		//Check if match exists already for that user/artist ID
+		if (!matchRepository.existsByUserAndArtistId(user, artistId)) {
+			Match match = new Match(user, artistId);
+			matchRepository.save(match);
 
-                return new ResponseEntity<>(likedArtwork, HttpStatus.OK);
-            } catch (Exception e) {
-                System.out.println(e);
-                return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-    }
+			//TODO: notify user of the new match
+		}
+	}
 
 
-    private void createMatch(User owner, String artistId) {
+	private List<Long> checkForMatchingArtistIds(User user) {
+		List<LikedArtwork> likedArtworks = likedArtworkRepository.findByUser(user);
 
-        //Check if match exists already for that user/artist ID
-        if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
-            Match match = new Match(owner, artistId);
-            matchRepository.save(match);
+		//This HashMap stores the counts of artist IDs
+		Map<String, Integer> artistIdCounts = new HashMap<>();
 
-            //TODO: notify user of the new match
-        }
-    }
+		//Loop through artworks, iterating the counts in the HashMap
+		for (LikedArtwork artwork : likedArtworks) {
+			Long artistId = artwork.getArtwork().getArtistId();
+			artistIdCounts.put(String.valueOf(artistId), artistIdCounts.getOrDefault(artistId, 0) + 1);
+		}
+
+		//Filter down to just the artist IDs with 3+
+		List<Long> matchingArtistIds = new ArrayList<>();
+		for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
+			if (entry.getValue() >= 3) {
+				matchingArtistIds.add(Long.valueOf(entry.getKey()));
+				System.out.println("You hit " + artistIdCounts);
+			}
+		}
+
+		return matchingArtistIds;
+	}
+
+}
 
 
-
-            private List<String> checkForMatchingArtistIds(User owner) {
-        List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
-
-        //This HashMap stores the counts of artist IDs
-                Map<String, Integer> artistIdCounts = new HashMap<>();
-
-        //Loop through artworks, iterating the counts in the HashMap
-        for (LikedArtwork artwork : likedArtworks) {
-            String artistId = artwork.getArtistId();
-            artistIdCounts.put(artistId, artistIdCounts.getOrDefault(artistId, 0) + 1);
-        }
-
-        //Filter down to just the artist IDs with 3+
-                List<String> matchingArtistIds = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
-            if (entry.getValue() >= 3) {
-                matchingArtistIds.add(entry.getKey());
-                System.out.println("You hit " + artistIdCounts);
-            }
-        }
-
-        return matchingArtistIds;
-    }
-
-};

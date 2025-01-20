@@ -10,100 +10,100 @@ import java.util.UUID;
 @Table(name = "artworks")
 public class Artwork {
 
-    @Id
-    @Column(name = "id")
-    private Long id;
+	@Id
+	@Column(name = "id")
+	private Long id;
 
-    @Column(name = "title")
-    private String title;
+	@Column(name = "title")
+	private String title;
 
-    @Column(name = "alt_text", columnDefinition = "TEXT")
-    private String altText;
+	@Column(name = "alt_text", columnDefinition = "TEXT")
+	private String altText;
 
-    @Column(name = "place_of_origin")
-    private String placeOfOrigin;
+	@Column(name = "place_of_origin")
+	private String placeOfOrigin;
 
-    @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
+	@Column(name = "description", columnDefinition = "TEXT")
+	private String description;
 
-    @Column(name = "artwork_type_title")
-    private String artType;
+	@Column(name = "artwork_type_title")
+	private String artType;
 
-    @Column(name = "artwork_type_id")
-    private Long artworkTypeId;
+	@Column(name = "artwork_type_id")
+	private int artworkTypeId;
 
-    @Column(name = "artist_title")
-    private String artistTitle;
+	@Column(name = "artist_title")
+	private String artistTitle;
 
-    @Column(name = "artist_id")
-    private Long artistId;
+	@Column(name = "artist_id")
+	private Long artistId;
 
-    @Column(name = "style_title")
-    private String artMovement;
+	@Column(name = "style_title")
+	private String artMovement;
 
-    @Column(name = "image_id")
-    private UUID imageId;
+	@Column(name = "image_id")
+	private UUID imageId;
 
-    @Column(name = "art_year_finished")
-    private Integer artYearFinished;
+	@Column(name = "art_year_finished")
+	private Integer artYearFinished;
 
-    @OneToMany(mappedBy = "artwork")
-    private List<DislikedArtwork> dislikedArtwork;
+	@OneToMany(mappedBy = "artwork")
+	private List<DislikedArtwork> dislikedArtwork;
 
-    @OneToMany(mappedBy = "artwork")
-    private List<LikedArtwork> likedArtwork;
+	@OneToMany(mappedBy = "artwork")
+	private List<LikedArtwork> likedArtwork;
 
-    //Getters and Setters
+	//Getters and Setters
 
 
-    public Artwork() {
-    }
+	public Artwork() {
+	}
 
-    public Artwork(ArtworkDto dto) {
-        this.id = dto.getId();
-        this.title = dto.getTitle();
-        this.altText = dto.getAltText();
-        this.placeOfOrigin = dto.getPlaceOfOrigin();
-        this.shortDescription = dto.getShortDescription();
-        this.artType = dto.getArtType();
-        this.artworkTypeId = dto.getArtworkTypeId();
-        this.artistTitle = dto.getArtistTitle();
-        this.artistId = dto.getArtistId();
-        this.artMovement = dto.getArtMovement();
-        this.artYearFinished = dto.getArtYearFinished();
-    }
+	public Artwork(ArtworkDto dto) {
+		this.id = dto.getId();
+		this.title = dto.getTitle();
+		this.altText = dto.getAltText();
+		this.placeOfOrigin = dto.getPlaceOfOrigin();
+		this.description = dto.getDescription();
+		this.artType = dto.getArtType();
+		this.artworkTypeId = dto.getArtworkTypeId();
+		this.artistTitle = dto.getArtistTitle();
+		this.artistId = dto.getArtistId();
+		this.artMovement = dto.getArtMovement();
+		this.artYearFinished = dto.getArtYearFinished();
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getAltText() {
-        return altText;
-    }
+	public String getAltText() {
+		return altText;
+	}
 
-    public void setAltText(String altText) {
-        this.altText = altText;
-    }
+	public void setAltText(String altText) {
+		this.altText = altText;
+	}
 
-    public String getPlaceOfOrigin() {
-        return placeOfOrigin;
-    }
+	public String getPlaceOfOrigin() {
+		return placeOfOrigin;
+	}
 
-    public void setPlaceOfOrigin(String placeOfOrigin) {
-        this.placeOfOrigin = placeOfOrigin;
-    }
+	public void setPlaceOfOrigin(String placeOfOrigin) {
+		this.placeOfOrigin = placeOfOrigin;
+	}
 
 	public String getDescription() {
 		return description;
@@ -112,75 +112,76 @@ public class Artwork {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-    public String getArtType() {
-        return artType;
-    }
 
-    public void setArtType(String artType) {
-        this.artType = artType;
-    }
+	public String getArtType() {
+		return artType;
+	}
 
-    public int getArtworkTypeId() {
-        return artworkTypeId;
-    }
+	public void setArtType(String artType) {
+		this.artType = artType;
+	}
 
-    public void setArtworkTypeId(int artworkTypeId) {
-        this.artworkTypeId = artworkTypeId;
-    }
+	public int getArtworkTypeId() {
+		return artworkTypeId;
+	}
 
-    public String getArtistTitle() {
-        return artistTitle;
-    }
+	public void setArtworkTypeId(int artworkTypeId) {
+		this.artworkTypeId = artworkTypeId;
+	}
 
-    public void setArtistTitle(String artistTitle) {
-        this.artistTitle = artistTitle;
-    }
+	public String getArtistTitle() {
+		return artistTitle;
+	}
 
-    public Long getArtistId() {
-        return artistId;
-    }
+	public void setArtistTitle(String artistTitle) {
+		this.artistTitle = artistTitle;
+	}
 
-    public void setArtistId(Long artistId) {
-        this.artistId = artistId;
-    }
+	public Long getArtistId() {
+		return artistId;
+	}
 
-    public String getArtMovement() {
-        return artMovement;
-    }
+	public void setArtistId(Long artistId) {
+		this.artistId = artistId;
+	}
 
-    public void setArtMovement(String artMovement) {
-        this.artMovement = artMovement;
-    }
+	public String getArtMovement() {
+		return artMovement;
+	}
 
-    public UUID getImageId() {
-        return imageId;
-    }
+	public void setArtMovement(String artMovement) {
+		this.artMovement = artMovement;
+	}
 
-    public void setImageId(UUID imageId) {
-        this.imageId = imageId;
-    }
+	public UUID getImageId() {
+		return imageId;
+	}
 
-    public Integer getArtYearFinished() {
-        return artYearFinished;
-    }
+	public void setImageId(UUID imageId) {
+		this.imageId = imageId;
+	}
 
-    public void setArtYearFinished(Integer artYearFinished) {
-        this.artYearFinished = artYearFinished;
-    }
+	public Integer getArtYearFinished() {
+		return artYearFinished;
+	}
 
-    public List<DislikedArtwork> getDislikedArtwork() {
-        return dislikedArtwork;
-    }
+	public void setArtYearFinished(Integer artYearFinished) {
+		this.artYearFinished = artYearFinished;
+	}
 
-    public void setDislikedArtwork(List<DislikedArtwork> dislikedArtwork) {
-        this.dislikedArtwork = dislikedArtwork;
-    }
+	public List<DislikedArtwork> getDislikedArtwork() {
+		return dislikedArtwork;
+	}
 
-    public List<LikedArtwork> getLikedArtwork() {
-        return likedArtwork;
-    }
+	public void setDislikedArtwork(List<DislikedArtwork> dislikedArtwork) {
+		this.dislikedArtwork = dislikedArtwork;
+	}
 
-    public void setLikedArtwork(List<LikedArtwork> likedArtwork) {
-        this.likedArtwork = likedArtwork;
-    }
+	public List<LikedArtwork> getLikedArtwork() {
+		return likedArtwork;
+	}
+
+	public void setLikedArtwork(List<LikedArtwork> likedArtwork) {
+		this.likedArtwork = likedArtwork;
+	}
 }

@@ -6,29 +6,29 @@ import java.util.List;
 
 public enum StatCategories {
 	MOVEMENT {
-		public ArtMovementStatsService convert(List<StatsService> statsService){
-			for (StatsService statService : statsService){
-				if (statService.getClass() == ArtMovementStatsService.class){
+		public ArtMovementStatsService convert(List<StatsService> statsService) {
+			for (StatsService statService : statsService) {
+				if (statService.getClass() == ArtMovementStatsService.class) {
 					return (ArtMovementStatsService) statService;
 				}
 			}
 			return null;
 		}
 	},
-	ARTIST{
+	ARTIST {
 		public ArtistTitleStatsService convert(List<StatsService> statsService) {
-			for (StatsService statService : statsService){
-				if (statService.getClass() == ArtistTitleStatsService.class){
+			for (StatsService statService : statsService) {
+				if (statService.getClass() == ArtistTitleStatsService.class) {
 					return (ArtistTitleStatsService) statService;
 				}
 			}
 			return null;
 		}
 	},
-	TYPE{
-		public ArtTypeStatsService convert(List<StatsService>  statsService) {
-			for (StatsService statService : statsService){
-				if (statService.getClass() == ArtTypeStatsService.class){
+	TYPE {
+		public ArtTypeStatsService convert(List<StatsService> statsService) {
+			for (StatsService statService : statsService) {
+				if (statService.getClass() == ArtTypeStatsService.class) {
 					return (ArtTypeStatsService) statService;
 				}
 			}
@@ -36,17 +36,18 @@ public enum StatCategories {
 		}
 
 	},
-	YEAR{
+	YEAR {
 		public ArtYearFinishedStatsService convert(List<StatsService> statsService) {
-			for (StatsService statService : statsService){
-				if (statService.getClass() == ArtYearFinishedStatsService.class){
+			for (StatsService statService : statsService) {
+				if (statService.getClass() == ArtYearFinishedStatsService.class) {
 					return (ArtYearFinishedStatsService) statService;
 				}
 			}
 			return null;
 		}
 
-	}, ;
+	},
+	;
 
 	public abstract StatsService convert(List<StatsService> statsService);
 

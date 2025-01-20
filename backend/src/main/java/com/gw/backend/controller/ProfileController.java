@@ -1,8 +1,8 @@
 package com.gw.backend.controller;
 
-import com.gw.backend.models.stats.StatsCategory;
 import com.gw.backend.models.stats.SortingCriteria;
 import com.gw.backend.models.stats.StatCategories;
+import com.gw.backend.models.stats.StatsCategory;
 import com.gw.backend.service.stats.StatsService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +32,9 @@ public class ProfileController {
 		Long userId = (Long) session.getAttribute(userSessionKey);
 		return (
 				StatCategories.valueOf(category.toUpperCase())
-				.convert(statsService)
-				.getStats(SortingCriteria
-						.valueOf(sortBy.toUpperCase()), 1L)
+						.convert(statsService)
+						.getStats(SortingCriteria
+								.valueOf(sortBy.toUpperCase()), 1L)
 		);
 	}
 
