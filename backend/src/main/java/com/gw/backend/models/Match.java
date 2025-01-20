@@ -1,46 +1,45 @@
 package com.gw.backend.models;
 
+
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
+import com.gw.backend.models.user.User;
 import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity
-    public class Match extends AbstractIdentifiableModel{
-        private Long artistId;
-        private String artistName;
-        private byte[] picture;
+@Table(name = "user_matches")
+public class Match extends AbstractIdentifiableModel {
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User owner;
 
-        // Constructors, getters, and setters
-        public Match() {}
+    @Column(name = "artist_id", nullable = false)
+    private String artistId;
 
-        public Match(Long artistId, String artist, String artistName, byte[] picture) {
-            this.artistId = artistId;
-            this.artistName = artistName;
-            this.picture = picture;
-        }
-
-        public Long getId() {
-            return artistId;
-        }
-
-        public void setId(Long id) {
-            this.artistId = artistId;
-        }
-
-        public String getArtistName() {
-            return artistName;
-        }
-
-        public void setArtistName(String artistName) {
-            this.artistName = artistName;
-        }
-
-        public byte[] getPicture() {
-            return picture;
-        }
-
-        public void setPicture(byte[] picture) {
-            this.picture = picture;
-        }
+    public Match() {
     }
 
+    public Match(User owner, String artistId) {
+        this.owner = owner;
+        this.artistId = artistId;
+    }
 
+    //Getters and Setters
+
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public String getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(String artistId) {
+        this.artistId = artistId;
+    }
+}
