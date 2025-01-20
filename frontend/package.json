@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
+    "start-backend": "cd ../backend && mvn spring-boot:run",  
+    "start-frontend": "npm run dev",  
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
