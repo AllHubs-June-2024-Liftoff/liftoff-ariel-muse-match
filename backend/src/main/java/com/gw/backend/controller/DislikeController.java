@@ -2,7 +2,8 @@ package com.gw.backend.controller;
 
 
 import com.gw.backend.dto.ArtworkDto;
-import com.gw.backend.models.Artwork;
+import com.gw.backend.dto.DislikedArtworkDto;
+import com.gw.backend.dto.LikedArtworkDto;
 import com.gw.backend.models.DislikedArtwork;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.ArtworkRepository;

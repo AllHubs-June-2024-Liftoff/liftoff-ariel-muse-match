@@ -17,14 +17,14 @@ public class Artwork {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "alt_text")
+    @Column(name = "alt_text", columnDefinition = "TEXT")
     private String altText;
 
     @Column(name = "place_of_origin")
     private String placeOfOrigin;
 
-    @Column(name = "short_description")
-    private String shortDescription;
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 
     @Column(name = "artwork_type_title")
     private String artType;
@@ -105,14 +105,13 @@ public class Artwork {
         this.placeOfOrigin = placeOfOrigin;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
+	public void setDescription(String description) {
+		this.description = description;
+	}
     public String getArtType() {
         return artType;
     }
@@ -121,11 +120,11 @@ public class Artwork {
         this.artType = artType;
     }
 
-    public Long getArtworkTypeId() {
+    public int getArtworkTypeId() {
         return artworkTypeId;
     }
 
-    public void setArtworkTypeId(Long artworkTypeId) {
+    public void setArtworkTypeId(int artworkTypeId) {
         this.artworkTypeId = artworkTypeId;
     }
 

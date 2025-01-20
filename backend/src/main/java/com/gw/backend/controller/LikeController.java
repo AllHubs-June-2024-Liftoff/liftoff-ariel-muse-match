@@ -3,6 +3,7 @@ package com.gw.backend.controller;
 import com.gw.backend.dto.ArtworkDto;
 import com.gw.backend.models.Artwork;
 import com.gw.backend.models.LikedArtwork;
+import com.gw.backend.models.Match;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.ArtworkRepository;
 import com.gw.backend.repository.LikedArtworkRepository;
@@ -15,16 +16,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/like")
 public class LikeController {
 
-	private static final String userSessionKey = "user";
+	private static final String USERSESSIONKEY = "user";
 
     private final UserRepository userRepository;
     private final LikedArtworkRepository likedArtworkRepository;
@@ -42,7 +41,7 @@ public class LikeController {
 
 
 	public User getUserFromSession(HttpSession session) {
-		Long userId = (Long) session.getAttribute(userSessionKey);
+		Long userId = (Long) session.getAttribute(USERSESSIONKEY);
 		if (userId == null) {
 			return null;
 		}
@@ -77,7 +76,60 @@ public class LikeController {
 			System.out.println(e);
 			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+            try {
+                likedArtworkRepository.save(likedArtwork);
 
-	}
+                //Check for matching artist IDs
+                List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
+
+                //Create new matches for the matching artist IDs
+                for (String artistId : matchingArtistIds) {
+                    createMatch(owner, artistId);
+                }
+
+                return new ResponseEntity<>(likedArtwork, HttpStatus.OK);
+            } catch (Exception e) {
+                System.out.println(e);
+                return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+    }
+
+
+    private void createMatch(User owner, String artistId) {
+
+        //Check if match exists already for that user/artist ID
+        if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
+            Match match = new Match(owner, artistId);
+            matchRepository.save(match);
+
+            //TODO: notify user of the new match
+        }
+    }
+
+
+
+            private List<String> checkForMatchingArtistIds(User owner) {
+        List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
+
+        //This HashMap stores the counts of artist IDs
+                Map<String, Integer> artistIdCounts = new HashMap<>();
+
+        //Loop through artworks, iterating the counts in the HashMap
+        for (LikedArtwork artwork : likedArtworks) {
+            String artistId = artwork.getArtistId();
+            artistIdCounts.put(artistId, artistIdCounts.getOrDefault(artistId, 0) + 1);
+        }
+
+        //Filter down to just the artist IDs with 3+
+                List<String> matchingArtistIds = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
+            if (entry.getValue() >= 3) {
+                matchingArtistIds.add(entry.getKey());
+                System.out.println("You hit " + artistIdCounts);
+            }
+        }
+
+        return matchingArtistIds;
+    }
 
 };
