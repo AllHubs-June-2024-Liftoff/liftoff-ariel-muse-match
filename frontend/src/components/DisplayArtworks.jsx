@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import getImage from "./image/GetImage";
 import fetchArtworks from "./match/FetchArtworks";
-import "../App.css";
+import "../styles/ArtCard.css";
 import TinderCard from "react-tinder-card";
 
 function DisplayArtworks() {
