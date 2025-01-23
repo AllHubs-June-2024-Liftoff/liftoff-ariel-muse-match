@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import LoadArtworks from './components/DisplayArtworks.jsx'
+import { ThemeProvider } from './components/Themes.jsx'
+import DisplayArtworks from './components/DisplayArtworks.jsx'
 
 function App() {
 
@@ -8,8 +9,10 @@ function App() {
   return (
     <>
       <div>
+        <ThemeProvider>
         <h1>MuseMatch</h1>
-        <LoadArtworks />
+        <DisplayArtworks />
+        </ThemeProvider>
       </div>
     </>
   );

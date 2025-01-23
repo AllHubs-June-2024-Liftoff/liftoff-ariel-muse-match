@@ -17,12 +17,12 @@ function DisplayArtworks() {
     const loadArtwork = async () => {
         try {
           const data = await fetchArtworks();
-          if (data && data.data) {
-            setArtworks(data.data); //This sets the artworks to the data from the fetchArtworks function
-    
-            const sources = {}; //Key is artwork ID, Value is the returned URL from the getImage() function (the image source)
+          console.log(data);
+          if (Array.isArray(data) && data.length > 0) { //makes sure the data is an array before being able to map it and set it to the state
+            setArtworks(data); //This sets the artworks to the data from the fetchArtworks function
+            const sources = {}; //Key: artwork ID, Value: the returned URL from the getImage() function (the image source)
             await Promise.all(
-              data.data.map(async (artwork) => {
+              data.map(async (artwork) => {
                 if (artwork.image_id) {
                   try {
                     sources[artwork.id] = await getImage(artwork.image_id); //This is creating an object where every artwork Id is the key and the value is the image source (Link)
@@ -64,10 +64,10 @@ function DisplayArtworks() {
         console.log("You swiped: " + direction + " on " + swipedArtwork.id);
         
         if (direction === "right" && swipedArtwork) {
-          console.log("You liked the artwork");
+          console.log(`You liked ${swipedArtwork.title}`);
           sendLike(swipedArtwork);
         } else if (direction === "left" && swipedArtwork) {
-          console.log("You disliked the artwork");
+          console.log(`You disliked ${swipedArtwork.title}`);
           sendDislike(swipedArtwork);
 
         }
@@ -168,9 +168,6 @@ function DisplayArtworks() {
       event.preventDefault();
     }
     
-    
-      //TODO: Fix issue with scrolling causing art to change sometimes (wrap Tinder card component in a div with overflow:hidden, height: 100vh or something)
-      //TODO: Createt artwrok-wrapper .CSS, and perhaps a .page-content css class for everything else (?)
       return (
         <>
           <div>
@@ -194,13 +191,13 @@ function DisplayArtworks() {
                 onDragStart={handleDragStart}
             >
                  <div className="card">
-                  <h2>{artwork.title}</h2>
-                  <p>{artwork.classification_title}</p>
                   <img
                     className="artwork-image"
                     src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
                     alt={artwork.thumbnail?.alt_text} 
                   />
+                  <h2>{artwork.title}</h2>
+                  <p>{artwork.classification_title}</p>
                 </div>
                 </TinderCard>
                 </div>

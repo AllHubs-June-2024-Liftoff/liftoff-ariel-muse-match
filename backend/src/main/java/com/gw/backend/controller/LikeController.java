@@ -8,6 +8,7 @@ import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class LikeController {
     private final UserRepository userRepository;
     private final LikedArtworkRepository likedArtworkRepository;
     private final MatchRepository matchRepository;
+    private boolean matched = false;
 
 
     @Autowired
@@ -54,7 +56,7 @@ public class LikeController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        //TEST VALUE
+        //TEST VALUE FOR USER
         User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
 
         //User owner = getUserFromSession(session);
@@ -79,7 +81,6 @@ public class LikeController {
             try {
                 likedArtworkRepository.save(likedArtwork);
 
-                //Check for matching artist IDs
                 List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
 
                 //Create new matches for the matching artist IDs
@@ -87,22 +88,26 @@ public class LikeController {
                     createMatch(owner, artistId);
                 }
 
-                return new ResponseEntity<>(likedArtwork, HttpStatus.OK);
+                Map<String, Object> response = new HashMap<>();
+                response.put("likedArtwork", likedArtwork);
+                if (matched) {
+                    response.put("matched", matched);
+                }
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
             } catch (Exception e) {
                 System.out.println(e);
                 return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
             }
     }
 
-
     private void createMatch(User owner, String artistId) {
-
         //Check if match exists already for that user/artist ID
         if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
             Match match = new Match(owner, artistId);
             matchRepository.save(match);
+            matched = true;
 
-            //TODO: notify user of the new match
         }
     }
 
@@ -125,7 +130,6 @@ public class LikeController {
         for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
             if (entry.getValue() >= 3) {
                 matchingArtistIds.add(entry.getKey());
-                System.out.println("You hit " + artistIdCounts);
             }
         }
 
