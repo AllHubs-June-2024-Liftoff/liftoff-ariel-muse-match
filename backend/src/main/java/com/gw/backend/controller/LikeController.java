@@ -107,8 +107,9 @@ public class LikeController {
     }
 
 
-
+    @GetMapping("/matches")
             private List<String> checkForMatchingArtistIds(User owner) {
+        System.out.println("write before matching artists ids");
         List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
 
         //This HashMap stores the counts of artist IDs
@@ -128,8 +129,8 @@ public class LikeController {
                 System.out.println("You hit " + artistIdCounts);
             }
         }
+        return ResponseEntity.ok(matchingArtistIds);
 
-        return matchingArtistIds;
     }
 
 };

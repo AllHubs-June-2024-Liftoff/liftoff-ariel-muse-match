@@ -1,7 +1,6 @@
 package com.gw.backend.controller.api.fetch;
 
 import com.gw.backend.repository.user.UserRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/match")
 public class FetchInitialMatchSet {
     //any interactions with API regarding fetching artworks
+
 
     private final UserRepository userRepository;
 
@@ -31,7 +31,7 @@ public class FetchInitialMatchSet {
          String apiUrl = "https://api.artic.edu/api/v1/artworks?limit=50";
 
         //The commented url below is to grab a specific artist, intended for testing Matching
-        // String apiUrl = "https://api.artic.edu/api/v1/artworks/search?q=Vincent%20van%20Gogh";
+//         String apiUrl = "https://api.artic.edu/api/v1/artworks/search?q=Vincent%20van%20Gogh";
 //TODO: Use seeds for randomization
         RestTemplate restTemplate = new RestTemplate();
 

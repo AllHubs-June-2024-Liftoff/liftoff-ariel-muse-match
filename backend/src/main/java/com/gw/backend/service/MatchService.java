@@ -1,18 +1,35 @@
 package com.gw.backend.service;
 
+import com.gw.backend.models.Artwork;
 import com.gw.backend.models.Match;
+import com.gw.backend.repository.LikedArtworkRepository;
+import com.gw.backend.repository.MatchRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class MatchService {
-    public List<Match> getAllMatches() {
-        return Arrays.asList(
-                new Match(1L, "Good Artist", "Bobby Schmurda", "/Users/zeb/Desktop/LaunchCode/Java/Java_Projects/liftoff-ariel-muse-match/frontend/public/muse.png"),
-                new Match(2L, "An artist", "Beezle Bob", "pic2"),
-                new Match(3L, "The artist", "Raul Atraidista", "pic3")
-        );
+
+
+    private final LikedArtworkRepository likedArtworkRepository;
+    private final MatchRepository matchRepository;
+    @Autowired
+    public MatchService(MatchRepository matchRepository, LikedArtworkRepository likedArtworkRepository)
+    {
+        this.matchRepository = matchRepository;
+        this.likedArtworkRepository = likedArtworkRepository;
+    }
+
+    public List<Match> getAllMatchesId() {
+        return matchRepository.findAll();
+    }
+
+    public List<Artwork> getListOfArtistToMatches(Long id){
+
+        likedArtworkRepository.findByOwner(Long id);
     }
 }

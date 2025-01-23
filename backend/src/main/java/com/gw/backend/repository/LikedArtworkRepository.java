@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long> {
-    List<LikedArtwork> findByOwner(User owner);
+    List<LikedArtwork> findByOwner(Long Id);
     boolean existsByOwnerAndArtworkId(User owner, String artworkId);
 }

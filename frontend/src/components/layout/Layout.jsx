@@ -7,6 +7,7 @@ import { Row } from 'react-bootstrap';
 
 export default function Layout({ children }) {
   return(
+
     <>
       <MainNavbar/>
       <main>
@@ -14,6 +15,8 @@ export default function Layout({ children }) {
           {children}
         </Container>
       </main>
-    </>
+      </>
+
+
   );
 }

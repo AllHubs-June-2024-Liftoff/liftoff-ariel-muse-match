@@ -31,12 +31,12 @@ function ShareMuseButton({ shareUrl }) {
             </Button>
           </FacebookShareButton>
           <TwitterShareButton url={shareUrl} title={shareMessage}>
-            <Button variant="outlined" color="info" sx={{ m: 1 }}>
+            <Button variant="outlined" color="primary" sx={{ m: 1 }}>
               Twitter
             </Button>
           </TwitterShareButton>
           <LinkedinShareButton url={shareUrl} summary={shareMessage}>
-            <Button variant="outlined" color="secondary" sx={{ m: 1 }}>
+            <Button variant="outlined" color="primary" sx={{ m: 1 }}>
               LinkedIn
             </Button>
           </LinkedinShareButton>

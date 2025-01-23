@@ -3,13 +3,14 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import { useAuth } from '../auth/AuthContext';
+import { Outlet } from "react-router-dom";
 
 
 export default function MainNavbar() {
   const {isAuthenticated} = useAuth();
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
       <Container>
         <Navbar.Brand href="/">MuseMatch</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -24,6 +25,9 @@ export default function MainNavbar() {
               <NavDropdown.Divider />
               <NavDropdown.Item href="settings">
                 Settings
+              </NavDropdown.Item>
+               <NavDropdown.Item href="profile/matches">
+                  Matches
               </NavDropdown.Item>
             </NavDropdown> </> : <></> }
           </Nav>

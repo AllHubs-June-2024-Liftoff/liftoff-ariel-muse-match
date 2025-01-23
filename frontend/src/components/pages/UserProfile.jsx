@@ -1,6 +1,7 @@
 import React from "react";
 import Form from 'react-bootstrap/Form';
 import { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
 
 export default function UserProfile(params) {
 
@@ -17,6 +18,7 @@ export default function UserProfile(params) {
     <>
       <h4>@{userName}</h4>
       <h5>Email: {myEmail}</h5>
+      <Outlet />
     </>
   );
 }
