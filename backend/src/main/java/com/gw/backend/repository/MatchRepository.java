@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface MatchRepository extends JpaRepository<Match, Long>{
         List<Match> findByOwner(User owner);
+        List<Match> findAllByOwner(User owner);
         boolean existsByOwnerAndArtistId(User owner, String artistId);
     }

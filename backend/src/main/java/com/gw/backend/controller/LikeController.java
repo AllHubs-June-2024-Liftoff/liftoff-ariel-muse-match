@@ -129,8 +129,7 @@ public class LikeController {
                 System.out.println("You hit " + artistIdCounts);
             }
         }
-        return ResponseEntity.ok(matchingArtistIds);
-
+        return matchingArtistIds;
     }
 
 };

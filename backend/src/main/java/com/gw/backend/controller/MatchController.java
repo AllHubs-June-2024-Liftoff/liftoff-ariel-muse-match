@@ -1,14 +1,11 @@
 package com.gw.backend.controller;
 
-import com.gw.backend.models.Match;
+import com.gw.backend.models.Muse;
 import com.gw.backend.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +25,13 @@ public class MatchController {
     }
 
 
-    @GetMapping("/matches")
-    public ResponseEntity<List<Match>>apiMatchesReturn()
+    @GetMapping("/matches/{userId}")
+    public ResponseEntity<List<Muse>>apiMatchesReturn(@PathVariable
+                                                           Long userId)
     {
-        List<Match> matches = new ArrayList<Match>;
-        matches = matchService.getAllMatches();
-        return new ResponseEntity<>(matches, HttpStatus.OK);
+        List<Muse> muses = new ArrayList<Muse>();
+        muses = matchService.getListOfMusesFromUserMatches(userId);
+        return new ResponseEntity<>(muses, HttpStatus.OK);
     }
 
 }
