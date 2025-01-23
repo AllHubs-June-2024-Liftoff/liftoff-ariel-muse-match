@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/match")
+@RequestMapping("/api")
 public class FetchInitialMatchSet {
     //any interactions with API regarding fetching artworks
 
@@ -26,7 +26,7 @@ public class FetchInitialMatchSet {
     }
 
     //Responds to front-end calls
-    @GetMapping("/all")
+    @GetMapping("match/all")
     public ResponseEntity<Object> getArt() {
          String apiUrl = "https://api.artic.edu/api/v1/artworks?limit=50";
 
