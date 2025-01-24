@@ -29,6 +29,7 @@ public class LikeController {
 	private final LikedArtworkRepository likedArtworkRepository;
 	private final ArtworkRepository artworkRepository;
 	private final MatchRepository matchRepository;
+	private boolean matched = false;
 
 
 	@Autowired
@@ -67,16 +68,22 @@ public class LikeController {
 
 
 		try {
-			artworkRepository.save(artwork);
 			likedArtworkRepository.save(likedArtwork);
-			//Check for matching artist IDs
+
 			List<Long> matchingArtistIds = checkForMatchingArtistIds(user);
 
 			//Create new matches for the matching artist IDs
 			for (Long artistId : matchingArtistIds) {
 				createMatch(user, artistId);
 			}
-			return new ResponseEntity<>(likedArtwork, HttpStatus.OK);
+
+			Map<String, Object> response = new HashMap<>();
+			response.put("likedArtwork", likedArtwork);
+			if (matched) {
+				response.put("matched", matched);
+			}
+
+			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -84,13 +91,12 @@ public class LikeController {
 	}
 
 	private void createMatch(User user, Long artistId) {
-
 		//Check if match exists already for that user/artist ID
 		if (!matchRepository.existsByUserAndArtistId(user, artistId)) {
 			Match match = new Match(user, artistId);
 			matchRepository.save(match);
+			matched = true;
 
-			//TODO: notify user of the new match
 		}
 	}
 
@@ -99,20 +105,19 @@ public class LikeController {
 		List<LikedArtwork> likedArtworks = likedArtworkRepository.findByUser(user);
 
 		//This HashMap stores the counts of artist IDs
-		Map<String, Integer> artistIdCounts = new HashMap<>();
+		Map<Long, Integer> artistIdCounts = new HashMap<>();
 
 		//Loop through artworks, iterating the counts in the HashMap
 		for (LikedArtwork artwork : likedArtworks) {
 			Long artistId = artwork.getArtwork().getArtistId();
-			artistIdCounts.put(String.valueOf(artistId), artistIdCounts.getOrDefault(artistId, 0) + 1);
+			artistIdCounts.put(artistId, artistIdCounts.getOrDefault(artistId, 0) + 1);
 		}
 
 		//Filter down to just the artist IDs with 3+
 		List<Long> matchingArtistIds = new ArrayList<>();
-		for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
+		for (Map.Entry<Long, Integer> entry : artistIdCounts.entrySet()) {
 			if (entry.getValue() >= 3) {
-				matchingArtistIds.add(Long.valueOf(entry.getKey()));
-				System.out.println("You hit " + artistIdCounts);
+				matchingArtistIds.add(entry.getKey());
 			}
 		}
 
