@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from "react";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import Button from "react-bootstrap/Button";
 
 function Stats() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [uri, setUri] = useState({ category: "type", sort: "percentage" });
-    const [activeButton, setActiveButton] = useState({
-        set1: "button1",
-        set2: "button1",
-    });
 
-    const changeCategoryPathAndActive = (path, active) => {
+    const changeCategoryPath = (path) => {
         setUri({ ...uri, category: path });
-        setActiveButton({ ...activeButton, set1: active });
     };
 
-    const changeSortPathAndActive = (path, active) => {
+    const changeSortPath = (path) => {
         setUri({ ...uri, sort: path });
-        setActiveButton({ ...activeButton, set2: active });
     };
 
     useEffect(() => {
@@ -44,79 +41,10 @@ function Stats() {
         return (
             <>
                 <div>
-                    <button
-                        onClick={() =>
-                            changeCategoryPathAndActive("type", "button1")
-                        }
-                        className={
-                            activeButton.set1 === "button1" ? "active" : ""
-                        }
-                    >
-                        By Art Type
-                    </button>
-                    <button
-                        onClick={() =>
-                            changeCategoryPathAndActive("movement", "button2")
-                        }
-                        className={
-                            activeButton.set1 === "button2" ? "active" : ""
-                        }
-                    >
-                        By Art Movement
-                    </button>
-                    <button
-                        onClick={() =>
-                            changeCategoryPathAndActive("artist", "button3")
-                        }
-                        className={
-                            activeButton.set1 === "button3" ? "active" : ""
-                        }
-                    >
-                        By Artist
-                    </button>
-                    <button
-                        onClick={() =>
-                            changeCategoryPathAndActive("year", "button4")
-                        }
-                        className={
-                            activeButton.set1 === "button4" ? "active" : ""
-                        }
-                    >
-                        By Year
-                    </button>
+                    <Button onClick={() => changeCategoryPath("type")}>
+                        REFRESH
+                    </Button>
                 </div>
-                <div>
-                    <button
-                        onClick={() =>
-                            changeSortPathAndActive("percentage", "button1")
-                        }
-                        className={
-                            activeButton.set2 === "button1" ? "active" : ""
-                        }
-                    >
-                        By Percentage
-                    </button>
-                    <button
-                        onClick={() =>
-                            changeSortPathAndActive("total", "button2")
-                        }
-                        className={
-                            activeButton.set2 === "button2" ? "active" : ""
-                        }
-                    >
-                        By Total
-                    </button>
-                    <button
-                        onClick={() =>
-                            changeSortPathAndActive("likes", "button3")
-                        }
-                        className={
-                            activeButton.set2 === "button3" ? "active" : ""
-                        }
-                    >
-                        By Likes
-                    </button>
-                </div>{" "}
                 <p> No data to report</p>
             </>
         );
@@ -124,62 +52,67 @@ function Stats() {
 
     return (
         <>
-            <div>
-                <button
-                    onClick={() =>
-                        changeCategoryPathAndActive("type", "button1")
-                    }
-                    className={activeButton.set1 === "button1" ? "active" : ""}
+            <ToggleButtonGroup
+                type="radio"
+                name="options"
+                defaultValue={"type"}
+            >
+                <ToggleButton
+                    onClick={() => changeCategoryPath("type")}
+                    value="type"
+                    id="tbg=radio-1"
                 >
-                    By Art Type
-                </button>
-                <button
-                    onClick={() =>
-                        changeCategoryPathAndActive("movement", "button2")
-                    }
-                    className={activeButton.set1 === "button2" ? "active" : ""}
+                    Art Type
+                </ToggleButton>
+                <ToggleButton
+                    onClick={() => changeCategoryPath("movement")}
+                    value="movement"
+                    id="tbg=radio-2"
                 >
-                    By Art Movement
-                </button>
-                <button
-                    onClick={() =>
-                        changeCategoryPathAndActive("artist", "button3")
-                    }
-                    className={activeButton.set1 === "button3" ? "active" : ""}
+                    Art Movement
+                </ToggleButton>
+                <ToggleButton
+                    onClick={() => changeCategoryPath("artist")}
+                    value="artist"
+                    id="tbg=radio-3"
                 >
-                    By Artist
-                </button>
-                <button
-                    onClick={() =>
-                        changeCategoryPathAndActive("year", "button4")
-                    }
-                    className={activeButton.set1 === "button4" ? "active" : ""}
+                    Artist
+                </ToggleButton>
+                <ToggleButton
+                    onClick={() => changeCategoryPath("year")}
+                    value="year"
+                    id="tbg=radio-4"
                 >
-                    By Year
-                </button>
-            </div>
-            <div>
-                <button
-                    onClick={() =>
-                        changeSortPathAndActive("percentage", "button1")
-                    }
-                    className={activeButton.set2 === "button1" ? "active" : ""}
+                    Year
+                </ToggleButton>
+            </ToggleButtonGroup>
+            <ToggleButtonGroup
+                type="radio"
+                name="options"
+                defaultValue={"total"}
+            >
+                <ToggleButton
+                    onClick={() => changeSortPath("total")}
+                    value="total"
+                    id="tbg=radio-1"
                 >
-                    By Percentage
-                </button>
-                <button
-                    onClick={() => changeSortPathAndActive("total", "button2")}
-                    className={activeButton.set2 === "button2" ? "active" : ""}
+                    Total
+                </ToggleButton>
+                <ToggleButton
+                    onClick={() => changeSortPath("percentage")}
+                    value="percentage"
+                    id="tbg=radio-2"
                 >
-                    By Total
-                </button>
-                <button
-                    onClick={() => changeSortPathAndActive("likes", "button3")}
-                    className={activeButton.set2 === "button3" ? "active" : ""}
+                    Percentage
+                </ToggleButton>
+                <ToggleButton
+                    onClick={() => changeSortPath("likes")}
+                    value="likes"
+                    id="tbg=radio-3"
                 >
-                    By Likes
-                </button>
-            </div>
+                    Likes
+                </ToggleButton>
+            </ToggleButtonGroup>
             {data.map((datum) => {
                 const liked = datum.statistics.likes;
                 const total = datum.statistics.total;
