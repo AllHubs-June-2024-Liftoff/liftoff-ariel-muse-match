@@ -15,7 +15,7 @@ public interface DislikedArtworkRepository extends JpaRepository<DislikedArtwork
 
 	@Query(value = "SELECT DISTINCT a.artist_title " +
 			"FROM disliked_artworks d " +
-			"JOIN artworks a ON d.artwork_id = a.id " +
+			"JOIN artists a ON d.artist_id = a.id " +
 			"WHERE d.user_id = :userId " +
 			"AND a.artist_title IS NOT NULL",
 			nativeQuery = true)
@@ -23,7 +23,6 @@ public interface DislikedArtworkRepository extends JpaRepository<DislikedArtwork
 
 	@Query(value = "SELECT DISTINCT a.style_title " +
 			"FROM disliked_artworks d " +
-			"JOIN artworks a ON d.artwork_id = a.id " +
 			"WHERE d.user_id = :userId " +
 			"AND a.style_title IS NOT NULL",
 			nativeQuery = true)
@@ -31,7 +30,6 @@ public interface DislikedArtworkRepository extends JpaRepository<DislikedArtwork
 
 	@Query(value = "SELECT DISTINCT a.artwork_type_title " +
 			"FROM disliked_artworks d " +
-			"JOIN artworks a ON d.artwork_id = a.id " +
 			"WHERE d.user_id = :userId " +
 			"AND a.artwork_type_title IS NOT NULL",
 			nativeQuery = true)
@@ -39,32 +37,31 @@ public interface DislikedArtworkRepository extends JpaRepository<DislikedArtwork
 
 	@Query(value = "SELECT DISTINCT a.art_year_finished " +
 			"FROM disliked_artworks d " +
-			"JOIN artworks a ON d.artwork_id = a.id " +
 			"WHERE d.user_id = :userId " +
 			"AND a.art_year_finished IS NOT NULL",
 			nativeQuery = true)
 	Set<String> findDistinctArtYearFinishedByUser(@Param("userId") Long userId);
 
 	@Query("SELECT COUNT(d) FROM DislikedArtwork d " +
-			"WHERE d.artwork.artistTitle = :artistTitle " +
+			"WHERE d.artist.artistTitle = :artistTitle " +
 			"AND d.user.id = :userId")
 	long countByArtistTitleAndUserId(@Param("artistTitle") String artistTitle,
 	                                 @Param("userId") Long userId);
 
 	@Query("SELECT COUNT(d) FROM DislikedArtwork d " +
-			"WHERE d.artwork.artMovement = :artMovement " +
+			"WHERE d.artMovement = :artMovement " +
 			"AND d.user.id = :userId")
 	long countByArtMovementAndUserId(@Param("artMovement") String artMovement,
 	                                 @Param("userId") Long userId);
 
 	@Query("SELECT COUNT(d) FROM DislikedArtwork d " +
-			"WHERE d.artwork.artType = :artType " +
+			"WHERE d.artType = :artType " +
 			"AND d.user.id = :userId")
 	long countByArtTypeAndUserId(@Param("artType") String artType,
 	                             @Param("userId") Long userId);
 
 	@Query("SELECT COUNT(d) FROM DislikedArtwork d " +
-			"WHERE d.artwork.artYearFinished = :artYearFinished " +
+			"WHERE d.artYearFinished = :artYearFinished " +
 			"AND d.user.id = :userId")
 	long countByArtYearFinishedAndUserId(@Param("artYearFinished") String artYearFinished,
 	                                     @Param("userId") Long userId);

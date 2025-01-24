@@ -2,8 +2,10 @@ package com.gw.backend.controller;
 
 
 import com.gw.backend.dto.ArtworkDto;
+import com.gw.backend.models.Artist;
 import com.gw.backend.models.DislikedArtwork;
 import com.gw.backend.models.user.User;
+import com.gw.backend.repository.ArtistRepository;
 import com.gw.backend.repository.DislikedArtworkRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
@@ -24,52 +26,57 @@ public class DislikeController {
 
 	private static final String USERSESSIONKEY = "user";
 
-    private final DislikedArtworkRepository dislikedArtworkRepository;
-    private final UserRepository userRepository;
+	private final DislikedArtworkRepository dislikedArtworkRepository;
+	private final UserRepository userRepository;
+	private final ArtistRepository artistRepository;
 
 
-    @Autowired
-    public DislikeController(UserRepository userRepository, DislikedArtworkRepository dislikedArtworkRepository) {
-        this.userRepository = userRepository;
-        this.dislikedArtworkRepository = dislikedArtworkRepository;
-    }
+	@Autowired
+	public DislikeController(UserRepository userRepository, DislikedArtworkRepository dislikedArtworkRepository,
+	                         ArtistRepository artistRepository) {
+		this.userRepository = userRepository;
+		this.dislikedArtworkRepository = dislikedArtworkRepository;
+		this.artistRepository = artistRepository;
+	}
 
-    public User getUserFromSession(HttpSession session) {
-        Long userId = (Long) session.getAttribute(USERSESSIONKEY);
-        if (userId == null) {
-            return null;
-        }
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            return null;
-        }
-        return user.get();
-    }
-
-
-    @PutMapping("/save")
-    public ResponseEntity<?> saveDislike (@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
-        if (errors.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
-
-        //TEST VALUE
-        User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
-
-        //User owner = getUserFromSession(session);
-        if (owner == null) {
-            return new ResponseEntity<String>("You must be logged in to dislike artworks", HttpStatus.UNAUTHORIZED);
-        }
+	public User getUserFromSession(HttpSession session) {
+		Long userId = (Long) session.getAttribute(USERSESSIONKEY);
+		if (userId == null) {
+			return null;
+		}
+		Optional<User> user = userRepository.findById(userId);
+		if (user.isEmpty()) {
+			return null;
+		}
+		return user.get();
+	}
 
 
-        DislikedArtwork dislikedArtwork = new DislikedArtwork(artworkDto);
+	@PutMapping("/save")
+	public ResponseEntity<?> saveDislike(@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
+		if (errors.hasErrors()) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		}
 
-        try {
-            dislikedArtworkRepository.save(dislikedArtwork);
-            return new ResponseEntity<>(dislikedArtwork, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-};
+		//TEST VALUE
+		User owner = userRepository.findById(1L).orElseThrow(() -> new RuntimeException("user not found"));
+
+		//User owner = getUserFromSession(session);
+		if (owner == null) {
+			return new ResponseEntity<String>("You must be logged in to dislike artworks", HttpStatus.UNAUTHORIZED);
+		}
+		Optional<Artist> artist = artistRepository.findById(artworkDto.getArtistId());
+		if (artist.isEmpty()) {
+			artistRepository.save(new Artist(artworkDto));
+		}
+		DislikedArtwork dislikedArtwork = new DislikedArtwork(artworkDto);
+
+		try {
+			dislikedArtworkRepository.save(dislikedArtwork);
+			return new ResponseEntity<>(dislikedArtwork, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+}

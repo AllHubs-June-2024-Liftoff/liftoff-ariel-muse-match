@@ -1,14 +1,15 @@
 package com.gw.backend.controller;
 
 import com.gw.backend.dto.ArtworkDto;
+import com.gw.backend.models.Artist;
 import com.gw.backend.models.LikedArtwork;
 import com.gw.backend.models.Match;
 import com.gw.backend.models.user.User;
+import com.gw.backend.repository.ArtistRepository;
 import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,18 +29,21 @@ public class LikeController {
 	private final LikedArtworkRepository likedArtworkRepository;
 	private final MatchRepository matchRepository;
 	private boolean matched = false;
+	private final ArtistRepository artistRepository;
 
 
 	@Autowired
-	public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MatchRepository matchRepository) {
+	public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MatchRepository matchRepository,
+	                      ArtistRepository artistRepository) {
 		this.likedArtworkRepository = likedArtworkRepository;
 		this.userRepository = userRepository;
 		this.matchRepository = matchRepository;
+		this.artistRepository = artistRepository;
 	}
 
 
 	public User getUserFromSession(HttpSession session) {
-		Long userId = (Long) session.getAttribute(userSessionKey);
+		Long userId = (Long) session.getAttribute(USERSESSIONKEY);
 		if (userId == null) {
 			return null;
 		}
@@ -61,15 +65,18 @@ public class LikeController {
 
 		//User owner = getUserFromSession(session);
 		if (owner == null) {
-			return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
 		}
 
+		Optional<Artist> artist = artistRepository.findById(artworkDto.getArtistId());
+		if (artist.isEmpty()) {
+			artistRepository.save(new Artist(artworkDto));
+		}
 		LikedArtwork likedArtwork = new LikedArtwork(artworkDto);
 
 
 		try {
 			likedArtworkRepository.save(likedArtwork);
-
 			List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
 
 			//Create new matches for the matching artist IDs
@@ -92,7 +99,7 @@ public class LikeController {
 
 	private void createMatch(User owner, String artistId) {
 		//Check if match exists already for that user/artist ID
-		if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
+		if (!matchRepository.existsByOwnerAndArtistId(owner, Long.valueOf(artistId))) {
 			Match match = new Match(owner, artistId);
 			matchRepository.save(match);
 			matched = true;
@@ -109,7 +116,7 @@ public class LikeController {
 
 		//Loop through artworks, iterating the counts in the HashMap
 		for (LikedArtwork artwork : likedArtworks) {
-			String artistId = artwork.getArtistId();
+			String artistId = String.valueOf(artwork.getArtist().getId());
 			artistIdCounts.put(artistId, artistIdCounts.getOrDefault(artistId, 0) + 1);
 		}
 

@@ -6,16 +6,18 @@ import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "liked_artworks")
 public class LikedArtwork extends AbstractIdentifiableModel {
 
     @ManyToOne
-    @JoinColumn(name = "owner", nullable = false)
+    @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
     @Column(name = "artwork_id", columnDefinition = "VARCHAR(255)", nullable = false)
-    private String artworkId;
+    private Long artworkId;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
@@ -23,34 +25,36 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     @Column(name = "alt_text", columnDefinition = "TEXT")
     private String altText;
 
+
     private String artworkTitle;
     private String placeOfOrigin;
     private String artworkTypeTitle;
-    private String artistId;
-    private String artistTitle;
-    private String styleTitle;
 
-    @Column(name = "image_id")
-    private String imageId;
+    @ManyToOne
+    @JoinColumn(name = "artist_id", nullable = false)
+    private Artist artist;
+
+    private String styleTitle;
+    private UUID imageId;
+    private Integer artYearFinished;
 
     public LikedArtwork() {
     }
 
-    public LikedArtwork(ArtworkDto artworkDto, User owner) {
-        this.owner = owner;
-        this.artworkId = artworkDto.getArtworkId().toString();
+    public LikedArtwork(ArtworkDto artworkDto) {
+        this.artworkId = artworkDto.getArtworkId();
         this.artworkTitle = artworkDto.getTitle();
         this.altText = artworkDto.getAltText();
         this.placeOfOrigin = artworkDto.getPlaceOfOrigin();
         this.description = artworkDto.getDescription();
         this.artworkTypeTitle = artworkDto.getArtType();
-        this.artistId = artworkDto.getArtistId().toString();
-        this.artistTitle = artworkDto.getArtistTitle();
+        this.artist = new Artist(artworkDto);
         this.styleTitle = artworkDto.getArtMovement();
-        this.imageId = artworkDto.getImageId().toString();
+        this.imageId = artworkDto.getImageId();
+        this.artYearFinished = artworkDto.getArtYearFinished();
     }
 
-    public LikedArtwork(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistId, String artistTitle, String styleTitle, String imageId) {
+    public LikedArtwork(User owner, Long artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String styleTitle, UUID imageId, Integer artYearFinished) {
         this.owner = owner;
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;
@@ -58,22 +62,11 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.placeOfOrigin = placeOfOrigin;
         this.description = description;
         this.artworkTypeTitle = artworkTypeTitle;
-        this.artistId = artistId;
-        this.artistTitle = artistTitle;
         this.styleTitle = styleTitle;
         this.imageId = imageId;
+        this.artYearFinished = artYearFinished;
     }
-
     //Getters and Setters
-
-
-    public String getArtistId() {
-        return artistId;
-    }
-
-    public void setArtistId(String artistId) {
-        this.artistId = artistId;
-    }
 
     public User getOwner() {
         return owner;
@@ -83,36 +76,12 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.owner = owner;
     }
 
-    public String getArtworkId() {
+    public Long getArtworkId() {
         return artworkId;
     }
 
-    public void setArtworkId(String artworkId) {
+    public void setArtworkId(Long artworkId) {
         this.artworkId = artworkId;
-    }
-
-    public String getArtworkTitle() {
-        return artworkTitle;
-    }
-
-    public void setArtworkTitle(String artworkTitle) {
-        this.artworkTitle = artworkTitle;
-    }
-
-    public String getAltText() {
-        return altText;
-    }
-
-    public void setAltText(String altText) {
-        this.altText = altText;
-    }
-
-    public String getPlaceOfOrigin() {
-        return placeOfOrigin;
-    }
-
-    public void setPlaceOfOrigin(String placeOfOrigin) {
-        this.placeOfOrigin = placeOfOrigin;
     }
 
     public String getDescription() {
@@ -123,6 +92,30 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.description = description;
     }
 
+    public String getAltText() {
+        return altText;
+    }
+
+    public void setAltText(String altText) {
+        this.altText = altText;
+    }
+
+    public String getArtworkTitle() {
+        return artworkTitle;
+    }
+
+    public void setArtworkTitle(String artworkTitle) {
+        this.artworkTitle = artworkTitle;
+    }
+
+    public String getPlaceOfOrigin() {
+        return placeOfOrigin;
+    }
+
+    public void setPlaceOfOrigin(String placeOfOrigin) {
+        this.placeOfOrigin = placeOfOrigin;
+    }
+
     public String getArtworkTypeTitle() {
         return artworkTypeTitle;
     }
@@ -131,12 +124,12 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.artworkTypeTitle = artworkTypeTitle;
     }
 
-    public String getArtistTitle() {
-        return artistTitle;
+    public Artist getArtist() {
+        return artist;
     }
 
-    public void setArtistTitle(String artistTitle) {
-        this.artistTitle = artistTitle;
+    public void setArtist(Artist artist) {
+        this.artist = artist;
     }
 
     public String getStyleTitle() {
@@ -147,11 +140,15 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.styleTitle = styleTitle;
     }
 
-    public String getImageId() {
+    public UUID getImageId() {
         return imageId;
     }
 
-    public void setImageId(String imageId) {
+    public void setImageId(UUID imageId) {
         this.imageId = imageId;
+    }
+
+    public Integer getArtYearFinished() {
+        return artYearFinished;
     }
 }
