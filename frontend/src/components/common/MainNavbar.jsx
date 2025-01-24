@@ -26,7 +26,7 @@ export default function MainNavbar() {
               <NavDropdown.Item href="settings">
                 Settings
               </NavDropdown.Item>
-               <NavDropdown.Item href="profile/matches">
+               <NavDropdown.Item href="matches">
                   Matches
               </NavDropdown.Item>
             </NavDropdown> </> : <></> }

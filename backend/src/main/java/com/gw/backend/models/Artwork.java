@@ -5,8 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-import java.util.List;
-
 @Entity
 @Table(name = "artworks")
 public class Artwork extends AbstractIdentifiableModel {
@@ -36,6 +34,9 @@ public class Artwork extends AbstractIdentifiableModel {
 
     @Column(name = "style_title")
     private String styleTitle;
+
+    public Artwork(){
+    };
 
     //Getters and Setters
 

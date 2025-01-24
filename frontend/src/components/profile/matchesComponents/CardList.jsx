@@ -8,7 +8,8 @@ function CardList() {
   useEffect(() => {
     const fetchMatches = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/matches", {
+          const userId = localStorage.getItem("userId");
+        const response = await fetch("http://localhost:8080/api/matches/${userId}", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

@@ -1,9 +1,10 @@
 package com.gw.backend.models;
 
+import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import jakarta.persistence.Entity;
 
 @Entity
-public class Muse  extends {
+public class Muse  extends AbstractIdentifiableModel {
     private String artistId;
     private String placeOfOrigin;
     private String artworkTypeTitle;

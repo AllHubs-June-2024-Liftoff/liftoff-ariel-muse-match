@@ -24,9 +24,8 @@ function App() {
         <Layout>
           <Routes>
             <Route path='/' element={<Home/>}/>
-                 <Route path="profile" element={<UserProfile/>}>
-                    <Route path="matches" element={<Matches/>}/>
-                </Route>
+            <Route path="profile" element={<UserProfile/>}/>
+            <Route path="profile/matches" element={<Matches/>}/>
             {/* <Route path='my-profile' element={<UserProfile/>}/> */}
 {/*             <Route path='settings' */}
 {/*             element={ */}
@@ -37,12 +36,10 @@ function App() {
             {/* <Route path='settings' element={<MySettings/>}/> */}
             <Route path='sign-up' element={<SignUp/>}/>
             <Route path='login' element={<Login/>} />
-            <Route path='match' element={<Match/>}>
-                <Route path="all" element={<DisplayArtworks/>}/>
-            </Route>
+            <Route path='match' element={<Match/>}/>
+            <Route path="all" element={<DisplayArtworks/>}/>
             <Route path='contacts' element={<Contact/>} />
             <Route path='give' element={<Give/>} />
-
           </Routes>
         </Layout>
       </AuthProvider>
