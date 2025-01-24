@@ -32,10 +32,6 @@ public class LikedArtwork extends AbstractIdentifiableModel {
 		this.user = user;
 	}
 
-
-//Getters and Setters
-
-
 	public User getUser() {
 		return user;
 	}
