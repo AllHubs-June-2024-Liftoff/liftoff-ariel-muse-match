@@ -8,6 +8,7 @@ import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import java.util.*;
 @RequestMapping("/api/like")
 public class LikeController {
 
-	private static final String userSessionKey = "user";
+	private static final String USERSESSIONKEY = "user";
 
 	private final UserRepository userRepository;
 	private final LikedArtworkRepository likedArtworkRepository;
@@ -50,7 +51,7 @@ public class LikeController {
 	}
 
 	@PutMapping("/save")
-	public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
+	public ResponseEntity<?> saveLike(@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
 		if (errors.hasErrors()) {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
@@ -63,19 +64,8 @@ public class LikeController {
 			return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
 		}
 
-		LikedArtwork likedArtwork = new LikedArtwork();
+		LikedArtwork likedArtwork = new LikedArtwork(artworkDto);
 
-		likedArtwork.setOwner(owner);
-		likedArtwork.setArtworkId(ArtworkDto.getArtworkId());
-		likedArtwork.setArtworkTitle(ArtworkDto.getArtworkTitle());
-		likedArtwork.setAltText(ArtworkDto.getAltText());
-		likedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
-		likedArtwork.setDescription(ArtworkDto.getDescription());
-		likedArtwork.setArtworkTypeTitle(ArtworkDto.getArtworkTypeTitle());
-		likedArtwork.setArtistId(ArtworkDto.getArtistId());
-		likedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
-		likedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
-		likedArtwork.setImageId(ArtworkDto.getImageId());
 
 		try {
 			likedArtworkRepository.save(likedArtwork);

@@ -80,88 +80,92 @@ function DisplayArtworks() {
 
 
         const likedArtwork = {
-          artworkId: artwork.id,
-          artworkTitle: artwork.title,
-          altText: artwork.thumbnail?.alt_text,
-          placeOfOrigin: artwork.place_of_origin,
-          description: artwork.description,
-          artworkTypeTitle: artwork.artwork_type_title,
-          artistId: artwork.artist_id,
-          artistTitle: artwork.artist_title,
-          styleTitle: artwork.style_title,
-          imageId: artwork.image_id,
+            id: artwork.id,
+            title: artwork.title,
+            altText: artwork.thumbnail?.alt_text,
+            placeOfOrigin: artwork.place_of_origin,
+            description: artwork.description,
+            artType: artwork.artwork_type_title,
+            artistId: artwork.artist_id,
+            artistTitle: artwork.artist_title,
+            styleTitle: artwork.style_title,
+            artMovement: artwork.style_title,
+            imageId: artwork.image_id,
+            artYearFinished: artwork.date_end,
         };
 
         console.log(JSON.stringify(likedArtwork));
         fetch("http://localhost:8080/api/like/save", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", 
-          body: JSON.stringify(likedArtwork), //better to deserialize on the front end rather than the backend (more efficient)
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify(likedArtwork), //better to deserialize on the front end rather than the backend (more efficient)
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Failed to save like");
-            }
-            return response.json(); 
-          })
-          .then((data) => {
-            console.log("Like saved successfully:", data);
-          })
-          .catch((error) => {
-            console.error("Error saving like:", error);
-          });
-      }
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to save like");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log("Like saved successfully:", data);
+            })
+            .catch((error) => {
+                console.error("Error saving like:", error);
+            });
+    };
 
-      //Logic for sending a dislike to the backend
-      const sendDislike = (artwork) => {
+    //Logic for sending a dislike to the backend
+    const sendDislike = (artwork) => {
         if (!artwork) return;
 
         const dislikedArtwork = {
-          artworkId: artwork.id,
-          artworkTitle: artwork.title,
-          altText: artwork.thumbnail?.alt_text,
-          placeOfOrigin: artwork.place_of_origin,
-          description: artwork.description,
-          artworkTypeTitle: artwork.artwork_type_title,
-          artistId: artwork.artist_id, 
-          artistTitle: artwork.artist_title,
-          styleTitle: artwork.style_title,
-          imageId: artwork.image_id,
-      };
+            id: artwork.id,
+            title: artwork.title,
+            altText: artwork.thumbnail?.alt_text,
+            placeOfOrigin: artwork.place_of_origin,
+            description: artwork.description,
+            artType: artwork.artwork_type_title,
+            artistId: artwork.artist_id,
+            artistTitle: artwork.artist_title,
+            styleTitle: artwork.style_title,
+            artMovement: artwork.style_title,
+            imageId: artwork.image_id,
+            artYearFinished: artwork.date_end,
+        };
 
-      fetch("http://localhost:8080/api/dislike/save", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(dislikedArtwork),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to save dislike");
-          }
-          return response.json();
+        fetch("http://localhost:8080/api/dislike/save", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify(dislikedArtwork),
         })
-        .then((data) => {
-          console.log("dislike saved successfully:", data);
-        })
-        .catch((error) => {
-          console.error("Error saving dislike:", error);
-        });
-      }
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to save dislike");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log("dislike saved successfully:", data);
+            })
+            .catch((error) => {
+                console.error("Error saving dislike:", error);
+            });
+    };
 
-      const outOfFrame = (artworkId) => {
+    const outOfFrame = () => {
         setCurrentIndex((prevIndex) => {
-        return prevIndex + 1;
-      });
+            return prevIndex + 1;
+        });
     };
 
     const handleMouseDown = (event) => {
-      event.preventDefault();
+        event.preventDefault();
     };
 
     const handleDragStart = (event) => {
@@ -194,7 +198,7 @@ function DisplayArtworks() {
                   <img
                     className="artwork-image"
                     src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
-                    alt={artwork.thumbnail?.alt_text} 
+                    alt={artwork.thumbnail?.alt_text}
                   />
                   <h2>{artwork.title}</h2>
                   <p>{artwork.classification_title}</p>
@@ -206,7 +210,7 @@ function DisplayArtworks() {
             </div>
           </div>
         </>
-      );
-      }
-    
-      export default DisplayArtworks;
+    );
+}
+
+export default DisplayArtworks;

@@ -1,12 +1,10 @@
 package com.gw.backend.models;
 
 
+import com.gw.backend.dto.ArtworkDto;
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.*;
-
-import java.util.List;
-
 
 @Entity
 @Table(name = "liked_artworks")
@@ -36,7 +34,21 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     private String imageId;
 
     public LikedArtwork() {
-    };
+    }
+
+    public LikedArtwork(ArtworkDto artworkDto, User owner) {
+        this.owner = owner;
+        this.artworkId = artworkDto.getArtworkId().toString();
+        this.artworkTitle = artworkDto.getTitle();
+        this.altText = artworkDto.getAltText();
+        this.placeOfOrigin = artworkDto.getPlaceOfOrigin();
+        this.description = artworkDto.getDescription();
+        this.artworkTypeTitle = artworkDto.getArtType();
+        this.artistId = artworkDto.getArtistId().toString();
+        this.artistTitle = artworkDto.getArtistTitle();
+        this.styleTitle = artworkDto.getArtMovement();
+        this.imageId = artworkDto.getImageId().toString();
+    }
 
     public LikedArtwork(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistId, String artistTitle, String styleTitle, String imageId) {
         this.owner = owner;
@@ -50,7 +62,7 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.artistTitle = artistTitle;
         this.styleTitle = styleTitle;
         this.imageId = imageId;
-    };
+    }
 
     //Getters and Setters
 

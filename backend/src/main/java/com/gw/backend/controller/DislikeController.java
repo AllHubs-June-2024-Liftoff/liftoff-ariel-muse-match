@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
@@ -19,7 +22,7 @@ import java.util.Optional;
 @RequestMapping("/api/dislike")
 public class DislikeController {
 
-    private static final String userSessionKey = "user";
+	private static final String USERSESSIONKEY = "user";
 
     private final DislikedArtworkRepository dislikedArtworkRepository;
     private final UserRepository userRepository;
@@ -32,7 +35,7 @@ public class DislikeController {
     }
 
     public User getUserFromSession(HttpSession session) {
-        Long userId = (Long) session.getAttribute(userSessionKey);
+        Long userId = (Long) session.getAttribute(USERSESSIONKEY);
         if (userId == null) {
             return null;
         }
@@ -45,7 +48,7 @@ public class DislikeController {
 
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveDislike (@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
+    public ResponseEntity<?> saveDislike (@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -59,19 +62,7 @@ public class DislikeController {
         }
 
 
-        DislikedArtwork dislikedArtwork = new DislikedArtwork();
-
-        dislikedArtwork.setOwner(owner);
-        dislikedArtwork.setArtworkId(ArtworkDto.getArtworkId());
-        dislikedArtwork.setArtworkTitle(ArtworkDto.getArtworkTitle());
-        dislikedArtwork.setAltText(ArtworkDto.getAltText());
-        dislikedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
-        dislikedArtwork.setDescription(ArtworkDto.getDescription());
-        dislikedArtwork.setArtworkTypeTitle(ArtworkDto.getArtworkTypeTitle());
-        dislikedArtwork.setArtistId(ArtworkDto.getArtistId());
-        dislikedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
-        dislikedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
-        dislikedArtwork.setImageId(ArtworkDto.getImageId());
+        DislikedArtwork dislikedArtwork = new DislikedArtwork(artworkDto);
 
         try {
             dislikedArtworkRepository.save(dislikedArtwork);

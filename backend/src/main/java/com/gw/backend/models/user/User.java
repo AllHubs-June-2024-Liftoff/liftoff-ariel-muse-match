@@ -1,11 +1,13 @@
 package com.gw.backend.models.user;
 
+
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.image.ProfilePicture;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
 import java.util.HashMap;
 
 @Entity
@@ -76,29 +78,5 @@ public class User extends AbstractIdentifiableModel {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public HashMap getUserLikes() {
-        return userLikes;
-    }
-
-    public void setUserLikes(HashMap userLikes) {
-        this.userLikes = userLikes;
-    }
-
-    public HashMap getUserDislikes() {
-        return userDislikes;
-    }
-
-    public void setUserDislikes(HashMap userDislikes) {
-        this.userDislikes = userDislikes;
     }
 }
