@@ -1,6 +1,6 @@
 package com.gw.backend.controller;
 
-import com.gw.backend.dto.LikedArtworkDto;
+import com.gw.backend.dto.ArtworkDto;
 import com.gw.backend.models.LikedArtwork;
 import com.gw.backend.models.Match;
 import com.gw.backend.models.user.User;
@@ -51,7 +51,7 @@ public class LikeController {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveLike(@RequestBody LikedArtworkDto likedArtworkDto, Errors errors, HttpSession session) {
+    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -67,16 +67,16 @@ public class LikeController {
             LikedArtwork likedArtwork = new LikedArtwork();
 
         likedArtwork.setOwner(owner);
-        likedArtwork.setArtworkId(likedArtworkDto.getArtworkId());
-        likedArtwork.setArtworkTitle(likedArtworkDto.getArtworkTitle());
-        likedArtwork.setAltText(likedArtworkDto.getAltText());
-        likedArtwork.setPlaceOfOrigin(likedArtworkDto.getPlaceOfOrigin());
-        likedArtwork.setDescription(likedArtworkDto.getDescription());
-        likedArtwork.setArtworkTypeTitle(likedArtworkDto.getArtworkTypeTitle());
-        likedArtwork.setArtistId(likedArtworkDto.getArtistId());
-        likedArtwork.setArtistTitle(likedArtworkDto.getArtistTitle());
-        likedArtwork.setStyleTitle(likedArtworkDto.getStyleTitle());
-        likedArtwork.setImageId(likedArtworkDto.getImageId());
+        likedArtwork.setArtworkId(ArtworkDto.getArtworkId());
+        likedArtwork.setArtworkTitle(ArtworkDto.getArtworkTitle());
+        likedArtwork.setAltText(ArtworkDto.getAltText());
+        likedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
+        likedArtwork.setDescription(ArtworkDto.getDescription());
+        likedArtwork.setArtworkTypeTitle(ArtworkDto.getArtworkTypeTitle());
+        likedArtwork.setArtistId(ArtworkDto.getArtistId());
+        likedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
+        likedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
+        likedArtwork.setImageId(ArtworkDto.getImageId());
 
             try {
                 likedArtworkRepository.save(likedArtwork);

@@ -13,7 +13,7 @@ public class Match extends AbstractIdentifiableModel {
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
 
-    @Column(name = "artist_id", nullable = false)
+    @Column(name = "artist_id") //There are some artworks that are not associated with an artist
     private String artistId;
 
     public Match() {
@@ -25,7 +25,6 @@ public class Match extends AbstractIdentifiableModel {
     }
 
     //Getters and Setters
-
 
     public User getOwner() {
         return owner;

@@ -1,7 +1,7 @@
 package com.gw.backend.controller;
 
 
-import com.gw.backend.dto.DislikedArtworkDto;
+import com.gw.backend.dto.ArtworkDto;
 import com.gw.backend.models.DislikedArtwork;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.DislikedArtworkRepository;
@@ -45,7 +45,7 @@ public class DislikeController {
 
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveDislike (@RequestBody DislikedArtworkDto dislikedArtworkDto, Errors errors, HttpSession session) {
+    public ResponseEntity<?> saveDislike (@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -62,16 +62,16 @@ public class DislikeController {
         DislikedArtwork dislikedArtwork = new DislikedArtwork();
 
         dislikedArtwork.setOwner(owner);
-        dislikedArtwork.setArtworkId(dislikedArtworkDto.getArtworkId());
-        dislikedArtwork.setArtworkTitle(dislikedArtworkDto.getArtworkTitle());
-        dislikedArtwork.setAltText(dislikedArtworkDto.getAltText());
-        dislikedArtwork.setPlaceOfOrigin(dislikedArtworkDto.getPlaceOfOrigin());
-        dislikedArtwork.setDescription(dislikedArtworkDto.getDescription());
-        dislikedArtwork.setArtworkTypeTitle(dislikedArtworkDto.getArtworkTypeTitle());
-        dislikedArtwork.setArtistId(dislikedArtworkDto.getArtistId());
-        dislikedArtwork.setArtistTitle(dislikedArtworkDto.getArtistTitle());
-        dislikedArtwork.setStyleTitle(dislikedArtworkDto.getStyleTitle());
-        dislikedArtwork.setImageId(dislikedArtworkDto.getImageId());
+        dislikedArtwork.setArtworkId(ArtworkDto.getArtworkId());
+        dislikedArtwork.setArtworkTitle(ArtworkDto.getArtworkTitle());
+        dislikedArtwork.setAltText(ArtworkDto.getAltText());
+        dislikedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
+        dislikedArtwork.setDescription(ArtworkDto.getDescription());
+        dislikedArtwork.setArtworkTypeTitle(ArtworkDto.getArtworkTypeTitle());
+        dislikedArtwork.setArtistId(ArtworkDto.getArtistId());
+        dislikedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
+        dislikedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
+        dislikedArtwork.setImageId(ArtworkDto.getImageId());
 
         try {
             dislikedArtworkRepository.save(dislikedArtwork);

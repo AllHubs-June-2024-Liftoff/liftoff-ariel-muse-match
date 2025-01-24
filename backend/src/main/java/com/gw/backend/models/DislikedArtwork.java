@@ -26,7 +26,6 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
     private String altText;
 
 
-
     private String artworkTitle;
     private String placeOfOrigin;
     private String artworkTypeTitle;
@@ -38,7 +37,7 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
     public DislikedArtwork() {
     };
 
-    public DislikedArtwork(String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistTitle, String styleTitle, String imageId) {
+    public DislikedArtwork(String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistId, String artistTitle, String styleTitle, String imageId) {
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;
         this.altText = altText;
@@ -51,7 +50,7 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
         this.imageId = imageId;
     };
 
-    //Getters and Settters
+    //Getters and Setters
 
 
     public User getOwner() {
@@ -138,7 +137,5 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
         return artistId;
     }
 
-    public void setArtistId(String artistId) {
-        this.artistId = artistId;
-    }
+    public void setArtistId(String artistId) { this.artistId = artistId; }
 }

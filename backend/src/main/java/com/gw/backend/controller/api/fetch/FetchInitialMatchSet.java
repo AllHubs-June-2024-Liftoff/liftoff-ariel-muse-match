@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,10 @@ public class FetchInitialMatchSet {
     //Responds to front-end calls
     @GetMapping("/all")
     public ResponseEntity<Object> getArt() {
-        String apiUrl = "https://api.artic.edu/api/v1/artworks?limit=100";
+        Random random = new Random();
+        int totalPages = 1270;
+        int page = random.nextInt(totalPages) + 1;
+        String apiUrl = "https://api.artic.edu/api/v1/artworks?page=" + page + "&limit=100";
         RestTemplate restTemplate = new RestTemplate();
 
         try {
@@ -68,7 +72,8 @@ public class FetchInitialMatchSet {
     private List<JsonNode> parseAndFilterArtworks(String responseBody, Set<String> likedArtworkIds) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            JsonNode artworks = objectMapper.readTree(responseBody).path("data");
+            JsonNode root = objectMapper.readTree(responseBody);
+            JsonNode artworks = root.path("data");
             List<JsonNode> filteredArtworks = new ArrayList<>();
             for (JsonNode artwork : artworks) {
                 String id = artwork.path("id").asText();
