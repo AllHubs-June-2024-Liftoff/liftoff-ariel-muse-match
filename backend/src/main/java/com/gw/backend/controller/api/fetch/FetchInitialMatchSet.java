@@ -52,7 +52,7 @@ public class FetchInitialMatchSet {
             //Get the liked artwork IDs of the user
             List<LikedArtwork> likedArtworks = likedArtworkRepository.findByUser(user);
             Set<String> likedArtworkIds = likedArtworks.stream()
-                    .map(LikedArtwork::getArtworkId) //Transforms each LikedArtwork object to its artworkId value
+                    .map(artwork -> String.valueOf(artwork.getArtwork().getArtistId())) //Transforms each LikedArtwork object to its artworkId value
                     .collect(Collectors.toSet()); //Convert artworkId values to a set
 
             //Parse through response body to extract artwork objects

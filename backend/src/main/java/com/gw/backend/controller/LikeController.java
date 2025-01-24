@@ -69,6 +69,7 @@ public class LikeController {
 
 		try {
 			likedArtworkRepository.save(likedArtwork);
+			artworkRepository.save(artwork);
 
 			List<Long> matchingArtistIds = checkForMatchingArtistIds(user);
 
