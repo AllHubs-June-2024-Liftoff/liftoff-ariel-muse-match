@@ -12,7 +12,7 @@ const fetchArtworks = async () => {
         } catch (error) {
             console.error("Error fetching artworks:", error);
             throw error;
-        }
+        }   
     }
 
     export default fetchArtworks;

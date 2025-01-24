@@ -89,7 +89,7 @@ function DisplayArtworks() {
           artistId: artwork.artist_id,
           artistTitle: artwork.artist_title,
           styleTitle: artwork.style_title,
-          ImageId: artwork.image_id,
+          imageId: artwork.image_id,
         };
 
         console.log(JSON.stringify(likedArtwork));
@@ -129,7 +129,7 @@ function DisplayArtworks() {
           artistId: artwork.artist_id, 
           artistTitle: artwork.artist_title,
           styleTitle: artwork.style_title,
-          ImageId: artwork.image_id,
+          imageId: artwork.image_id,
       };
 
       fetch("http://localhost:8080/api/dislike/save", {
