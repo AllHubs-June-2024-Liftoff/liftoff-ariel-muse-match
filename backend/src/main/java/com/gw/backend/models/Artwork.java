@@ -41,7 +41,7 @@ public class Artwork {
 	@Column(name = "style_title")
 	private String artMovement;
 
-	@Column(name = "image_id")
+	@Column(name = "image_id", columnDefinition = "CHAR(36)")
 	private UUID imageId;
 
 	@Column(name = "art_year_finished")
@@ -60,7 +60,7 @@ public class Artwork {
 	}
 
 	public Artwork(ArtworkDto dto) {
-		this.id = dto.getId();
+		this.id = dto.getArtworkId();
 		this.title = dto.getTitle();
 		this.altText = dto.getAltText();
 		this.placeOfOrigin = dto.getPlaceOfOrigin();
