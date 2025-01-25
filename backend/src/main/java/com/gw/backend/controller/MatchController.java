@@ -2,12 +2,13 @@ package com.gw.backend.controller;
 
 import com.gw.backend.models.Muse;
 import com.gw.backend.service.MatchService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,6 +16,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class MatchController {
 
+    private static final Logger logger = LoggerFactory.getLogger(MatchController.class);
     private final MatchService matchService;
 
 
@@ -29,7 +31,8 @@ public class MatchController {
     public ResponseEntity<List<Muse>>apiMatchesReturn(@PathVariable
                                                            Long userId)
     {
-        List<Muse> muses = new ArrayList<Muse>();
+        logger.info("Variable value: {}", userId);
+        List<Muse> muses;
         muses = matchService.getListOfMusesFromUserMatches(userId);
         return new ResponseEntity<>(muses, HttpStatus.OK);
     }

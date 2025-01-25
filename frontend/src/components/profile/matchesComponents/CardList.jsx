@@ -4,38 +4,45 @@ import CustomCard from './CustomCard';
 function CardList() {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
+          console.log("Got here: cardlist")
+
     const fetchMatches = async () => {
       try {
-          const userId = localStorage.getItem("userId");
-        const response = await fetch("http://localhost:8080/api/matches/${userId}", {
+          console.log("got here #2");
+          const userId = 1;
+        const response = await fetch(`http://localhost:8080/api/matches/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include", // Includes cookies if any for authentication
+          credentials: "include",
         });
+    console.log("got here #3");
 
         if (!response.ok) {
           throw new Error('Failed to fetch matches');
+          console.log(response.statusText);
+          console.log("got here 4");
         }
-
         const data = await response.json();
         console.log("Fetched matches data:", data);
-        setMatches(data); // Update the matches state
-        setLoading(false); // Turn off the loading state
-      } catch (error) {
+        console.log("got here #5");
+        setMatches(data);
+        setLoading(false);}
+        catch (error){
+            console.log("got here: #6");
         console.error('Error fetching matches:', error);
-        setLoading(false); // Turn off loading in case of error
-      }
-    };
+        setLoading(false);
+        }
 
-    fetchMatches(); // Call the function to fetch data
-  }, []); // The empty dependency array ensures the effect runs only once after the component mounts
+    }
+
+    fetchMatches();
+  }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // You can display a loading indicator if the data is still being fetched
+    return <div>Loading...</div>;
   }
 
   return (

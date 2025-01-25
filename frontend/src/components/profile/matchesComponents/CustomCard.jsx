@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import ShareMuseButton from './ShareMuseButton';
 
 function CustomCard({ id, artist, artistName, picture }) {
+
   const shareUrl = `localhost:5173/match/${id}`;
 
   return (

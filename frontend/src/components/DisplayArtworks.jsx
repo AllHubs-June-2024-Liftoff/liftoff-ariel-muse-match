@@ -94,7 +94,7 @@ function DisplayArtworks() {
 
         console.log(JSON.stringify(likedArtwork));
         fetch("http://localhost:8080/api/like/save", {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -103,10 +103,14 @@ function DisplayArtworks() {
         })
           .then((response) => {
             if (!response.ok) {
-              throw new Error("Failed to save like");
-            }
-            return response.json(); 
-          })
+                return response.text()
+                .then((text) => {
+                    console.log("Failed to save like", text);
+              throw new Error(text || "Failed to save like");
+              });
+          }
+            return response.json();
+           })
           .then((data) => {
             console.log("Like saved successfully:", data);
           })

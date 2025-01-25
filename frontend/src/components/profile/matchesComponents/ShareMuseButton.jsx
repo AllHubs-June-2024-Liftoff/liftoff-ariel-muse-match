@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
 
 function ShareMuseButton({ shareUrl }) {
+    console.log("got here share muse botton");
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
 

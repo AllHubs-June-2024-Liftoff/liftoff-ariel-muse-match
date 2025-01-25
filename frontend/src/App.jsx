@@ -24,8 +24,8 @@ function App() {
         <Layout>
           <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path="profile" element={<UserProfile/>}/>
-            <Route path="profile/matches" element={<Matches/>}/>
+            <Route path="/profile" element={<UserProfile/>}/>
+            <Route path="/profile/matches" element={<Matches/>}/>
             {/* <Route path='my-profile' element={<UserProfile/>}/> */}
 {/*             <Route path='settings' */}
 {/*             element={ */}

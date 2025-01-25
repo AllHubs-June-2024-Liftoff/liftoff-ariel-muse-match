@@ -31,10 +31,6 @@ public class MatchService {
         this.museRepository = museRepository;
     }
 
-    public List<Match> getAllMatchesId() {
-        return matchRepository.findAll();
-    }
-
     public List<Muse> getListOfMusesFromUserMatches(Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
         try {
