@@ -28,13 +28,13 @@ public class LikedArtwork extends AbstractIdentifiableModel {
 
     private String artworkTitle;
     private String placeOfOrigin;
-    private String artworkTypeTitle;
+    private String artType;
 
     @ManyToOne
     @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
 
-    private String styleTitle;
+    private String artMovement;
     private UUID imageId;
     private Integer artYearFinished;
 
@@ -47,22 +47,22 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.altText = artworkDto.getAltText();
         this.placeOfOrigin = artworkDto.getPlaceOfOrigin();
         this.description = artworkDto.getDescription();
-        this.artworkTypeTitle = artworkDto.getArtType();
+        this.artType = artworkDto.getArtType();
         this.artist = new Artist(artworkDto);
-        this.styleTitle = artworkDto.getArtMovement();
+        this.artMovement = artworkDto.getArtMovement();
         this.imageId = artworkDto.getImageId();
         this.artYearFinished = artworkDto.getArtYearFinished();
     }
 
-    public LikedArtwork(User owner, Long artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String styleTitle, UUID imageId, Integer artYearFinished) {
+    public LikedArtwork(User owner, Long artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artType, String artMovement, UUID imageId, Integer artYearFinished) {
         this.owner = owner;
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;
         this.altText = altText;
         this.placeOfOrigin = placeOfOrigin;
         this.description = description;
-        this.artworkTypeTitle = artworkTypeTitle;
-        this.styleTitle = styleTitle;
+        this.artType = artType;
+        this.artMovement = artMovement;
         this.imageId = imageId;
         this.artYearFinished = artYearFinished;
     }
@@ -116,12 +116,12 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.placeOfOrigin = placeOfOrigin;
     }
 
-    public String getArtworkTypeTitle() {
-        return artworkTypeTitle;
+    public String getArtType() {
+        return artType;
     }
 
-    public void setArtworkTypeTitle(String artworkTypeTitle) {
-        this.artworkTypeTitle = artworkTypeTitle;
+    public void setArtType(String artType) {
+        this.artType = artType;
     }
 
     public Artist getArtist() {
@@ -132,12 +132,12 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.artist = artist;
     }
 
-    public String getStyleTitle() {
-        return styleTitle;
+    public String getArtMovement() {
+        return artMovement;
     }
 
-    public void setStyleTitle(String styleTitle) {
-        this.styleTitle = styleTitle;
+    public void setArtMovement(String artMovement) {
+        this.artMovement = artMovement;
     }
 
     public UUID getImageId() {

@@ -59,9 +59,9 @@ public class DislikeController {
 		}
 
 		//TEST VALUE
-		User owner = userRepository.findById(1L).orElseThrow(() -> new RuntimeException("user not found"));
+//		User owner = userRepository.findById(1L).orElseThrow(() -> new RuntimeException("user not found"));
 
-		//User owner = getUserFromSession(session);
+		User owner = getUserFromSession(session);
 		if (owner == null) {
 			return new ResponseEntity<String>("You must be logged in to dislike artworks", HttpStatus.UNAUTHORIZED);
 		}

@@ -4,7 +4,6 @@ package com.gw.backend.controller.api.fetch;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gw.backend.models.Artwork;
 import com.gw.backend.models.LikedArtwork;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.LikedArtworkRepository;
@@ -56,7 +55,7 @@ public class FetchInitialMatchSet {
             //Get the liked artwork IDs of the user
             List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(user);
             Set<String> likedArtworkIds = likedArtworks.stream()
-                    .map(artwork -> String.valueOf(artwork.getArtwork().getArtistId())) //Transforms each LikedArtwork object to its artworkId value
+                    .map(artwork -> String.valueOf(artwork.getArtist().getId())) //Transforms each LikedArtwork object to its artworkId value
                     .collect(Collectors.toSet()); //Convert artworkId values to a set
 
             //Parse through response body to extract artwork objects

@@ -25,8 +25,8 @@ public class ArtistTitleStatsService extends StatsService{
 
 	@Override
 	public List<ArtistTitle> getStats(SortingCriteria sortBy, Long userId) {
-		Set<String> distinctSet = likedArtworkRepository.findDistinctArtistTitleByUser(userId);
-		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtistTitleByUser(userId));
+		Set<String> distinctSet = likedArtworkRepository.findDistinctArtistTitleByOwner(userId);
+		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtistTitleByOwner(userId));
 		return distinctSet.stream()
 				.map(value -> createStats(value, userId))
 				.sorted(sortBy.getComparator())
@@ -35,8 +35,8 @@ public class ArtistTitleStatsService extends StatsService{
 
 	@Override
 	public ArtistTitle createStats(String value, Long userId) {
-		long likes = likedArtworkRepository.countByArtistTitleAndUserId(value, userId);
-		long dislikes = dislikedArtworkRepository.countByArtistTitleAndUserId(value, userId);
+		long likes = likedArtworkRepository.countByArtistTitleAndOwnerId(value, userId);
+		long dislikes = dislikedArtworkRepository.countByArtistTitleAndOwnerId(value, userId);
 		long total = likes + dislikes;
 		Integer percentage = this.findPercentage(likes, dislikes);
 

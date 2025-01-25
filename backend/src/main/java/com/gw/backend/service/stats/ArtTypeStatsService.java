@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class ArtTypeStatsService extends StatsService{
@@ -26,8 +25,8 @@ public class ArtTypeStatsService extends StatsService{
 
 	@Override
 	public List<ArtType> getStats(SortingCriteria sortBy, Long userId) {
-		Set<String> distinctSet = likedArtworkRepository.findDistinctArtTypeByUser(userId);
-		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtTypeByUser(userId));
+		Set<String> distinctSet = likedArtworkRepository.findDistinctArtTypeByOwner(userId);
+		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtTypeByOwner(userId));
 		return distinctSet.stream()
 				.map(value -> createStats(value, userId))
 				.sorted(sortBy.getComparator())
@@ -36,8 +35,8 @@ public class ArtTypeStatsService extends StatsService{
 
 	@Override
 	public ArtType createStats(String value, Long userId) {
-		long likes = likedArtworkRepository.countByArtTypeAndUserId(value, userId);
-		long dislikes = dislikedArtworkRepository.countByArtTypeAndUserId(value, userId);
+		long likes = likedArtworkRepository.countByArtTypeAndOwnerId(value, userId);
+		long dislikes = dislikedArtworkRepository.countByArtTypeAndOwnerId(value, userId);
 		long total = likes + dislikes;
 		Integer percentage = this.findPercentage(likes, dislikes);
 

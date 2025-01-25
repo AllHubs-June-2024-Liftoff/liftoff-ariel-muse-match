@@ -1,83 +1,85 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import getImage from "./image/GetImage";
 import fetchArtworks from "./match/FetchArtworks";
 import "../App.css";
 import TinderCard from "react-tinder-card";
 
-
 function DisplayArtworks() {
-  const [artworks, setArtworks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [imageSources, setImageSources] = useState({});
-  const [currentIndex, setCurrentIndex] = useState(0);
-    
+    const [artworks, setArtworks] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [imageSources, setImageSources] = useState({});
+    const [currentIndex, setCurrentIndex] = useState(0);
+
     useEffect(() => {
+        const loadArtwork = async () => {
+            try {
+                const data = await fetchArtworks();
+                console.log(data);
+                if (Array.isArray(data) && data.length > 0) {
+                    //makes sure the data is an array before being able to map it and set it to the state
+                    setArtworks(data); //This sets the artworks to the data from the fetchArtworks function
+                    const sources = {}; //Key: artwork ID, Value: the returned URL from the getImage() function (the image source)
+                    await Promise.all(
+                        data.map(async (artwork) => {
+                            if (artwork.image_id) {
+                                try {
+                                    sources[artwork.id] = await getImage(
+                                        artwork.image_id
+                                    ); //This is creating an object where every artwork Id is the key and the value is the image source (Link)
+                                    //{
+                                    //  123: "https://www.artic.edu/iiif/2/123/full/843,/0/default.jpg",} <---Creates this with each artwork ID
+                                } catch (e) {
+                                    console.error(
+                                        `Failed to fetch image for ${artwork.id}`,
+                                        e
+                                    ); //If there is an error, the image source will be null
+                                    sources[artwork.id] = null;
+                                    delete sources[artwork.id]; //If there is an error, the key will be deleted from the object
+                                    console.log(
+                                        `Deleted artwork ID: ${artwork.id}`
+                                    ); //This is just a console log to show that the key was deleted
+                                }
+                            }
+                        })
+                    );
 
-    const loadArtwork = async () => {
-        try {
-          const data = await fetchArtworks();
-          console.log(data);
-          if (Array.isArray(data) && data.length > 0) { //makes sure the data is an array before being able to map it and set it to the state
-            setArtworks(data); //This sets the artworks to the data from the fetchArtworks function
-            const sources = {}; //Key: artwork ID, Value: the returned URL from the getImage() function (the image source)
-            await Promise.all(
-              data.map(async (artwork) => {
-                if (artwork.image_id) {
-                  try {
-                    sources[artwork.id] = await getImage(artwork.image_id); //This is creating an object where every artwork Id is the key and the value is the image source (Link)
-                    //{
-                    //  123: "https://www.artic.edu/iiif/2/123/full/843,/0/default.jpg",} <---Creates this with each artwork ID
-                  } catch (e) {
-                    console.error(`Failed to fetch image for ${artwork.id}`, e); //If there is an error, the image source will be null
-                    sources[artwork.id] = null;
-                    delete sources[artwork.id]; //If there is an error, the key will be deleted from the object
-                    console.log(`Deleted artwork ID: ${artwork.id}`); //This is just a console log to show that the key was deleted
+                    setImageSources(sources);
+                } else {
+                    setError("No data available");
                 }
-                }
-              })
-            );
-
-            setImageSources(sources);
-          } else {
-            setError("No data available");
-          }
-          setLoading(false);
-        } catch (err) {
-          setError(err.message);
-          setLoading(false);
-        }
-      };
-      loadArtwork();
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+        loadArtwork();
     }, []);
-    
-    
-      if (loading) {
+
+    if (loading) {
         return <div>Loading...</div>;
-      }
-    
-      if (error) {
+    }
+
+    if (error) {
         return <div>Error: {error}</div>;
-      }
+    }
 
-     const swiped = (direction, swipedArtwork) => {
+    const swiped = (direction, swipedArtwork) => {
         console.log("You swiped: " + direction + " on " + swipedArtwork.id);
-        
+
         if (direction === "right" && swipedArtwork) {
-          console.log(`You liked ${swipedArtwork.title}`);
-          sendLike(swipedArtwork);
+            console.log(`You liked ${swipedArtwork.title}`);
+            sendLike(swipedArtwork);
         } else if (direction === "left" && swipedArtwork) {
-          console.log(`You disliked ${swipedArtwork.title}`);
-          sendDislike(swipedArtwork);
-
+            console.log(`You disliked ${swipedArtwork.title}`);
+            sendDislike(swipedArtwork);
         }
-      };
+    };
 
-
-      //Logic for sending a like to the backend
-      const sendLike = (artwork) => {
+    //Logic for sending a like to the backend
+    const sendLike = (artwork) => {
         if (!artwork) return;
-
 
         const likedArtwork = {
             id: artwork.id,
@@ -169,46 +171,48 @@ function DisplayArtworks() {
     };
 
     const handleDragStart = (event) => {
-      event.preventDefault();
-    }
-    
-      return (
+        event.preventDefault();
+    };
+
+    return (
         <>
-          <div>
-            <div 
-            className="cardContainer"
-            onMouseDown={handleMouseDown} 
-            >
-              {artworks.map((artwork, index) => (
-                <div
-                  key={artwork.id}
-                  style={{ display: index === currentIndex ? "block" : "none" }}
-                  >
-                    <div className="tinderCardWrapper"> 
-                <TinderCard 
-                className="swipe"
-                onSwipe={(dir) => swiped(dir, artwork)}
-                onCardLeftScreen={() => outOfFrame(artwork.id)}
-                preventSwipe={["up", "down"]}
-                swipeRequirementType="position"
-                swipeThreshold={10}
-                onDragStart={handleDragStart}
-            >
-                 <div className="card">
-                  <img
-                    className="artwork-image"
-                    src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
-                    alt={artwork.thumbnail?.alt_text}
-                  />
-                  <h2>{artwork.title}</h2>
-                  <p>{artwork.classification_title}</p>
+            <div>
+                <div className="cardContainer" onMouseDown={handleMouseDown}>
+                    {artworks.map((artwork, index) => (
+                        <div
+                            key={artwork.id}
+                            style={{
+                                display:
+                                    index === currentIndex ? "block" : "none",
+                            }}
+                        >
+                            <div className="tinderCardWrapper">
+                                <TinderCard
+                                    className="swipe"
+                                    onSwipe={(dir) => swiped(dir, artwork)}
+                                    onCardLeftScreen={() =>
+                                        outOfFrame(artwork.id)
+                                    }
+                                    preventSwipe={["up", "down"]}
+                                    swipeRequirementType="position"
+                                    swipeThreshold={10}
+                                    onDragStart={handleDragStart}
+                                >
+                                    <div className="card">
+                                        <img
+                                            className="artwork-image"
+                                            src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
+                                            alt={artwork.thumbnail?.alt_text}
+                                        />
+                                        <h2>{artwork.title}</h2>
+                                        <p>{artwork.classification_title}</p>
+                                    </div>
+                                </TinderCard>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-                </TinderCard>
-                </div>
-                </div>
-              ))}
             </div>
-          </div>
         </>
     );
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("profile")
 public class ProfileController {
 
-	private static final String userSessionKey = "user";
+	private static final String USERSESSIONKEY = "user";
 
 	private final List<StatsService> statsService;
 
@@ -29,7 +29,7 @@ public class ProfileController {
 
 	@GetMapping("/stats/{category}/{sortBy}")
 	public List<? extends StatsCategory> deliverSortedStats(@PathVariable String category, @PathVariable String sortBy, HttpSession session) {
-		Long userId = (Long) session.getAttribute(userSessionKey);
+		Long userId = (Long) session.getAttribute(USERSESSIONKEY);
 		return (
 				StatCategories.valueOf(category.toUpperCase())
 						.convert(statsService)

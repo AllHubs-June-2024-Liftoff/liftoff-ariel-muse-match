@@ -14,12 +14,12 @@ public class Match extends AbstractIdentifiableModel {
     private User owner;
 
     @Column(name = "artist_id") //There are some artworks that are not associated with an artist
-    private String artistId;
+    private Long artistId;
 
     public Match() {
     }
 
-    public Match(User owner, String artistId) {
+    public Match(User owner, Long artistId) {
         this.owner = owner;
         this.artistId = artistId;
     }
@@ -34,11 +34,11 @@ public class Match extends AbstractIdentifiableModel {
         this.owner = owner;
     }
 
-    public String getArtistId() {
+    public Long getArtistId() {
         return artistId;
     }
 
-    public void setArtistId(String artistId) {
+    public void setArtistId(Long artistId) {
         this.artistId = artistId;
     }
 }
