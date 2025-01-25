@@ -22,16 +22,16 @@ function CardList() {
 
         if (!response.ok) {
           throw new Error('Failed to fetch matches');
-          console.log(response.statusText);
-          console.log("got here 4");
         }
         const data = await response.json();
         console.log("Fetched matches data:", data);
-        console.log("got here #5");
+        console.log("got here #4");
         setMatches(data);
-        setLoading(false);}
+        setLoading(false);
+        console.log(data);
+        }
         catch (error){
-            console.log("got here: #6");
+            console.log("got here: #5");
         console.error('Error fetching matches:', error);
         setLoading(false);
         }
@@ -49,11 +49,12 @@ function CardList() {
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
       {matches.map((match) => (
         <CustomCard
-          key={match.id}
-          id={match.id}
-          artist={match.artist}
-          artistName={match.artistName}
-          picture={match.picture}
+          artistId={match.artistId}
+          artistName={match.artistTitle}
+          artworkTypeTitle={match.artworkTypeTitle}
+          picture={match.imageId}
+          placeOfOrigin={match.placeOfOrigin}
+          styleTitle={match.styleTitle}
         />
       ))}
     </div>

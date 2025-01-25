@@ -31,9 +31,10 @@ public class MatchController {
     public ResponseEntity<List<Muse>>apiMatchesReturn(@PathVariable
                                                            Long userId)
     {
-        logger.info("Variable value: {}", userId);
         List<Muse> muses;
-        muses = matchService.getListOfMusesFromUserMatches(userId);
+        logger.warn("This is a warning! # 1" + userId);
+        muses = matchService.getListOfMusesFromUserMatches(1L);
+        logger.warn("This is a warning! # 6" + userId);
         return new ResponseEntity<>(muses, HttpStatus.OK);
     }
 

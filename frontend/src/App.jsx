@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { ThemeProvider } from './components/Themes.jsx'
 import DisplayArtworks from './components/DisplayArtworks.jsx'
-import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { useState } from 'react'
 import Layout from './components/layout/Layout'
 import Home from './components/pages/Home'
 import './styles/App.css'
@@ -18,23 +16,15 @@ import Matches from './components/pages/Matches'
 import Match from './components/pages/Match'
 import Contact from './components/pages/Contact'
 import Give from './components/pages/Give'
-import DisplayArtworks from './components/DisplayArtworks'
 
 function App() {
 
 
   return (
-    <>
-      <div>
-        <ThemeProvider>
-        <h1>MuseMatch</h1>
-        <DisplayArtworks />
-        </ThemeProvider>
-      </div>
-    </>
-  );
+
     <Router>
       <AuthProvider>
+          <ThemeProvider>
         <Layout>
           <Routes>
             <Route path='/' element={<Home/>}/>
@@ -56,6 +46,7 @@ function App() {
             <Route path='give' element={<Give/>} />
           </Routes>
         </Layout>
+        </ThemeProvider>
       </AuthProvider>
     </Router>
   )

@@ -6,7 +6,7 @@ const fetchArtworks = async () => {
 
         // });
 
-        const response = await fetch("http://localhost:8080/api/match/all", {
+        const response = await fetch("http://localhost:8080/match/all", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

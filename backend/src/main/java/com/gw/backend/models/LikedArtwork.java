@@ -140,4 +140,21 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     public void setImageId(String imageId) {
         this.imageId = imageId;
     }
+
+    @Override
+    public String toString() {
+        return "LikedArtwork{" +
+                "owner=" + owner +
+                ", artworkId='" + artworkId + '\'' +
+                ", description='" + description + '\'' +
+                ", altText='" + altText + '\'' +
+                ", artworkTitle='" + artworkTitle + '\'' +
+                ", placeOfOrigin='" + placeOfOrigin + '\'' +
+                ", artworkTypeTitle='" + artworkTypeTitle + '\'' +
+                ", artistId='" + artistId + '\'' +
+                ", artistTitle='" + artistTitle + '\'' +
+                ", styleTitle='" + styleTitle + '\'' +
+                ", imageId='" + imageId + '\'' +
+                '}';
+    }
 }

@@ -94,7 +94,7 @@ function DisplayArtworks() {
 
         console.log(JSON.stringify(likedArtwork));
         fetch("http://localhost:8080/api/like/save", {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
