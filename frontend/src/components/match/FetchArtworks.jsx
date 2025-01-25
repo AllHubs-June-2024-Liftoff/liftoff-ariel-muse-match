@@ -18,14 +18,11 @@ const fetchArtworks = async () => {
             throw new Error(`There was an error fetching your data: Status: ${response.status}`)
         } 
         const data = await response.json();
-        console.log(data);
         return data;
         } catch (error) {
             console.error("Error fetching artworks:", error);
             throw error;
-        }
+        }   
     }
-
-    //TODO: Data.pagination.next_url <--- call more random artworks (see current page, next page portions of API Doc)
 
     export default fetchArtworks;

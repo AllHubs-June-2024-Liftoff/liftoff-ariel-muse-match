@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react'
+import './App.css'
+import { ThemeProvider } from './components/Themes.jsx'
+import DisplayArtworks from './components/DisplayArtworks.jsx'
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { useState } from 'react'
@@ -18,7 +22,17 @@ import DisplayArtworks from './components/DisplayArtworks'
 
 function App() {
 
+
   return (
+    <>
+      <div>
+        <ThemeProvider>
+        <h1>MuseMatch</h1>
+        <DisplayArtworks />
+        </ThemeProvider>
+      </div>
+    </>
+  );
     <Router>
       <AuthProvider>
         <Layout>

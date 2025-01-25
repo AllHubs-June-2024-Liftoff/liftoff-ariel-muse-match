@@ -4,7 +4,7 @@ import com.gw.backend.models.user.User;
 
 import java.util.List;
 
-public class DislikedArtworkDto {
+public class ArtworkDto {
     private User owner;
     private String artworkId;
     private String artworkTitle;
@@ -17,10 +17,10 @@ public class DislikedArtworkDto {
     private String styleTitle;
     private String imageId;
 
-    public DislikedArtworkDto() {
+    public ArtworkDto() {
     }
 
-    public DislikedArtworkDto(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistId, String artistTitle, String styleTitle, String imageId) {
+    public ArtworkDto(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistId, String artistTitle, String styleTitle, String imageId) {
         this.owner = owner;
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;
@@ -33,7 +33,6 @@ public class DislikedArtworkDto {
         this.styleTitle = styleTitle;
         this.imageId = imageId;
     };
-
 
     //Getters and Setters
 

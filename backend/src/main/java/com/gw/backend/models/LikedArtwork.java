@@ -23,17 +23,17 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     @Column(name = "alt_text", columnDefinition = "TEXT")
     private String altText;
 
-
     private String artworkTitle;
     private String placeOfOrigin;
     private String artworkTypeTitle;
     private String artistId;
     private String artistTitle;
     private String styleTitle;
+
+    @Column(name = "image_id")
     private String imageId;
 
     public LikedArtwork() {
-
     };
 
     public LikedArtwork(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistId, String artistTitle, String styleTitle, String imageId) {
