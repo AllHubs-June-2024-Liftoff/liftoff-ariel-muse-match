@@ -39,7 +39,8 @@ public class MatchService {
     {
         logger.warn("Value of userId # 2" + userId);
         Optional<User> optionalUser = userRepository.findById(userId);
-        logger.warn("Optional User" + optionalUser.toString());
+
+        logger.warn("Optional User" + optionalUser);
         try {
             if(optionalUser.isPresent()){
                 logger.warn("Value of userId # 3" + userId);

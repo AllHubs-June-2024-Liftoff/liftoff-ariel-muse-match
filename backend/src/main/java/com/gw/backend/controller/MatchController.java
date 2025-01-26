@@ -34,6 +34,7 @@ public class MatchController {
         List<Muse> muses;
         logger.warn("This is a warning! # 1" + userId);
         muses = matchService.getListOfMusesFromUserMatches(1L);
+        logger.warn(muses.toString());
         logger.warn("This is a warning! # 6" + userId);
         return new ResponseEntity<>(muses, HttpStatus.OK);
     }
