@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/match")
+@RequestMapping("/api")
 public class FetchInitialMatchSet {
     //any interactions with API regarding fetching artworks
 
@@ -37,7 +37,7 @@ public class FetchInitialMatchSet {
     }
 
     //Responds to front-end calls
-    @GetMapping("/all")
+    @GetMapping("match/all")
     public ResponseEntity<Object> getArt() {
         Random random = new Random();
         int totalPages = 1270;
