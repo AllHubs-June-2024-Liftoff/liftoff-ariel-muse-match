@@ -1,4 +1,7 @@
 #root {
+  text-align: center;
+  /* display: flex; */
+  /* justify-content: center; */
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
@@ -93,10 +96,6 @@ h2 {
   height: auto;
 }
 
-.swipe:last-of-type {
-
-}
-
 .card h3 {
   position: absolute;
   bottom: 0;
@@ -163,8 +162,4 @@ img.artwork-image {
   57%  { transform: scale(1,1) }
   64%  { transform: scale(1,1) }
   100% { transform: scale(1,1) }
-}
-
-#main-container {
-  margin-top: 30px;
 }

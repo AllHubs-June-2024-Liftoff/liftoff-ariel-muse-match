@@ -8,6 +8,7 @@ import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,27 +78,27 @@ public class LikeController {
         likedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
         likedArtwork.setImageId(ArtworkDto.getImageId());
 
-        try {
-            likedArtworkRepository.save(likedArtwork);
+            try {
+                likedArtworkRepository.save(likedArtwork);
 
-            List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
+                List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
 
-            //Create new matches for the matching artist IDs
-            for (String artistId : matchingArtistIds) {
-                createMatch(owner, artistId);
+                //Create new matches for the matching artist IDs
+                for (String artistId : matchingArtistIds) {
+                    createMatch(owner, artistId);
+                }
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("likedArtwork", likedArtwork);
+                if (matched) {
+                    response.put("matched", matched);
+                }
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } catch (Exception e) {
+                System.out.println(e);
+                return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
             }
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("likedArtwork", likedArtwork);
-            if (matched) {
-                response.put("matched", matched);
-            }
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     private void createMatch(User owner, String artistId) {
@@ -116,7 +117,7 @@ public class LikeController {
         List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
 
         //This HashMap stores the counts of artist IDs
-        Map<String, Integer> artistIdCounts = new HashMap<>();
+                Map<String, Integer> artistIdCounts = new HashMap<>();
 
         //Loop through artworks, iterating the counts in the HashMap
         for (LikedArtwork artwork : likedArtworks) {
@@ -125,7 +126,7 @@ public class LikeController {
         }
 
         //Filter down to just the artist IDs with 3+
-        List<String> matchingArtistIds = new ArrayList<>();
+                List<String> matchingArtistIds = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
             if (entry.getValue() >= 3) {
                 matchingArtistIds.add(entry.getKey());
