@@ -26,10 +26,10 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedOrigins("http://www.localhost:5173", "http://localhost:5173")
+                        .allowedMethods("PUT", "GET", "POST", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers")
+                        .exposedHeaders("Access-Control-Allow-Origin: ", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers")
                         .allowCredentials(true)
                         .maxAge(3600);
             }

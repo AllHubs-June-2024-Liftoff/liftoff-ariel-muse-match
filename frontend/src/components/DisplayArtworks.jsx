@@ -94,17 +94,18 @@ function DisplayArtworks() {
 
         console.log(JSON.stringify(likedArtwork));
         fetch("http://localhost:8080/api/like/save", {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           credentials: "include", 
-          body: JSON.stringify(likedArtwork), //better to deserialize on the front end rather than the backend (more efficient)
+//           body: JSON.stringify(likedArtwork), //better to deserialize on the front end rather than the backend (more efficient)
         })
           .then((response) => {
             if (!response.ok) {
                 return response.text()
                 .then((text) => {
+                    console.log("stops here");
                     console.log("Failed to save like", text);
               throw new Error(text || "Failed to save like");
               });
@@ -137,7 +138,7 @@ function DisplayArtworks() {
       };
 
       fetch("http://localhost:8080/api/dislike/save", {
-        method: "PUT",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },

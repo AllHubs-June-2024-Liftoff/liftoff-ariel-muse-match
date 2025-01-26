@@ -1,10 +1,9 @@
 package com.gw.backend.models.user;
-
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.image.ProfilePicture;
 import jakarta.persistence.*;
-
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -22,27 +21,35 @@ public class User extends AbstractIdentifiableModel {
     @Column
     private String email;
 
+    private String hashPass;
+    //Once methods are created for uploading profile photos, this will ensure there's a relational database that keeps
+    //track of their uploaded photo.  If another image is uploaded,  it overwrites the previous image.
+    //TODO: add logic for overwriting profile picture
+
+    @OneToMany(mappedBy = "user")
+    private List<UserPreferencesModel> preferences = new ArrayList<>();
+
     public User() {
     }
 
-    public User(String username, String password, ProfilePicture profilePicture, String email, HashMap userLikes, HashMap userDislikes, HashMap matches) {
+    public User(String username, String password, ProfilePicture profilePicture, String email, String hashPass, List<UserPreferencesModel> preferences) {
         this.username = username;
         this.password = password;
         this.profilePicture = profilePicture;
         this.email = email;
-
+        this.hashPass = hashPass;
+        this.preferences = preferences;
     }
 
-    //Getters and Setters
+//Getters and Setters
 
 
-
-    public String  getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String userName) {
-        this.username = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -69,14 +76,20 @@ public class User extends AbstractIdentifiableModel {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getHashPass() {
+        return hashPass;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setHashPass(String hashPass) {
+        this.hashPass = hashPass;
     }
 
-
+    public List<UserPreferencesModel> getPreferences() {
+        return preferences;
     }
+
+    public void setPreferences(List<UserPreferencesModel> preferences) {
+        this.preferences = preferences;
+    }
+}
 

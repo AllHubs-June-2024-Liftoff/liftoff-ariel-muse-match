@@ -26,11 +26,11 @@ public class UserPreferencesModel extends AbstractIdentifiableModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserModel user;
+    private User user;
 
     public UserPreferencesModel() {}
 
-    public UserPreferencesModel(Preference preference, String artMovement, String artYearFinished, String artType, String artistName, UserModel user) {
+    public UserPreferencesModel(Preference preference, String artMovement, String artYearFinished, String artType, String artistName, User user) {
         this.preference = preference;
         this.artMovement = artMovement;
         this.artYearFinished = artYearFinished;
@@ -79,11 +79,11 @@ public class UserPreferencesModel extends AbstractIdentifiableModel {
         this.artistName = artistName;
     }
 
-    public UserModel getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserModel user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

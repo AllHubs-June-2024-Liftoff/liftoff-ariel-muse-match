@@ -8,19 +8,22 @@ import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("/api/like")
+@RequestMapping("/api")
 public class LikeController {
+
+    private static final Logger logger = LoggerFactory.getLogger(LikeController.class);
 
     private static final String userSessionKey = "user";
 
@@ -38,36 +41,52 @@ public class LikeController {
     }
 
 
-    public User getUserFromSession(HttpSession session) {
-        Long userId = (Long) session.getAttribute(userSessionKey);
+    public User getUserFromSession(Integer userId) {
+//        Integer userId = (Integer) session.getAttribute(userSessionKey);
+
         if (userId == null) {
             return null;
         }
-        Optional<User> user = userRepository.findById(userId);
+        Optional <User> user = userRepository.findById(userId);
         if (user.isEmpty()) {
             return null;
         }
         return user.get();
     }
 
-    @PutMapping("/save")
+    @PostMapping("/like/save")
     public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
+        logger.warn("Got here  1 with artwork: +++++++++++++++++++");
+
         if (errors.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            StringBuilder errorMessage = new StringBuilder();
+            errors.getAllErrors().forEach(error -> errorMessage.append(error.getDefaultMessage()).append("\n"));
+            logger.warn("Got here 2 with artwork: +++++++++++++++++++");
+            return new ResponseEntity<>(errorMessage.toString(), HttpStatus.BAD_REQUEST);
+
+
         }
 
         //TEST VALUE FOR USER
-        User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
+//        User owner = userRepository.findById(1).orElseThrow( () -> new RuntimeException("user not found"));
 
-        //User owner = getUserFromSession(session);
+        User owner = getUserFromSession(1);
         if (owner == null) {
+            logger.warn("Got here 3 with artwork: +++++++++++++++++++");
+
             return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
         }
+        logger.warn("Got here 4 with artwork: +++++++++++++++++++");
 
         LikedArtwork likedArtwork = new LikedArtwork();
+        logger.warn("Got here 5 with artwork: +++++++++++++++++++");
 
         likedArtwork.setOwner(owner);
+        logger.warn("Got here 6 with artwork: +++++++++++++++++++");
+
         likedArtwork.setArtworkId(ArtworkDto.getArtworkId());
+        logger.warn("Got here 7 with artwork: +++++++++++++++++++");
+
         likedArtwork.setArtworkTitle(ArtworkDto.getArtworkTitle());
         likedArtwork.setAltText(ArtworkDto.getAltText());
         likedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
@@ -77,8 +96,7 @@ public class LikeController {
         likedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
         likedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
         likedArtwork.setImageId(ArtworkDto.getImageId());
-
-            try {
+        try {
                 likedArtworkRepository.save(likedArtwork);
 
                 List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
@@ -96,8 +114,9 @@ public class LikeController {
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
             } catch (Exception e) {
-                System.out.println(e);
-                return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
+                System.out.println("Error saving liked artwork: " + e.getMessage());
+                e.printStackTrace();  // Print stack trace for debugging
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
     }
 
@@ -107,7 +126,6 @@ public class LikeController {
             Match match = new Match(owner, artistId);
             matchRepository.save(match);
             matched = true;
-
         }
     }
 

@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import { ThemeProvider } from './components/Themes.jsx'
-import DisplayArtworks from './components/DisplayArtworks.jsx'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import Home from './components/pages/Home'
@@ -16,10 +14,9 @@ import Matches from './components/pages/Matches'
 import Match from './components/pages/Match'
 import Contact from './components/pages/Contact'
 import Give from './components/pages/Give'
-import { useEffect, useState } from "react";
 import "./App.css";
 import LoadArtworks from "./components/DisplayArtworks.jsx";
-import Stats from "./pages/profile/Stats.jsx";
+import Stats from "./components/profile/statsComponents/Stats.jsx";
 
 function App() {
 
@@ -35,6 +32,7 @@ function App() {
             <Route path='/' element={<Home/>}/>
             <Route path="/profile" element={<UserProfile/>}/>
             <Route path="/profile/matches" element={<Matches/>}/>
+            <Route path="/profile/stats" element={<Stats/>}/>
             {/* <Route path='my-profile' element={<UserProfile/>}/> */}
 {/*             <Route path='settings' */}
 {/*             element={ */}
@@ -46,10 +44,10 @@ function App() {
             <Route path='sign-up' element={<SignUp/>}/>
             <Route path='login' element={<Login/>} />
             <Route path='match' element={<Match/>}/>
-            <Route path="all" element={<DisplayArtworks/>}/>
+            <Route path="all" element={<LoadArtworks/>}/>
             <Route path='contacts' element={<Contact/>} />
             <Route path='give' element={<Give/>} />
-            <SRoute path="stats" element={<Stats/>}/>
+
 
 
           </Routes>

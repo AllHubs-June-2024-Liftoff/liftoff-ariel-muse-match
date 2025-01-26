@@ -50,7 +50,7 @@ public class FetchInitialMatchSet {
             String responseBody = response.getBody();
 
             //Get the current user
-            User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("User not found"));
+            User owner = userRepository.findById(1).orElseThrow( () -> new RuntimeException("User not found"));
 
             //Get the liked artwork IDs of the user
             List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
 @CrossOrigin(origins = "http://localhost:5173")
+@RestController
 @RequestMapping("/api")
 public class MatchController {
 
@@ -29,11 +29,11 @@ public class MatchController {
 
     @GetMapping("/matches/{userId}")
     public ResponseEntity<List<Muse>>apiMatchesReturn(@PathVariable
-                                                           Long userId)
+                                                           Integer userId)
     {
         List<Muse> muses;
         logger.warn("This is a warning! # 1" + userId);
-        muses = matchService.getListOfMusesFromUserMatches(1L);
+        muses = matchService.getListOfMusesFromUserMatches(1);
         logger.warn(muses.toString());
         logger.warn("This is a warning! # 6" + userId);
         return new ResponseEntity<>(muses, HttpStatus.OK);

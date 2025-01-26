@@ -35,7 +35,7 @@ public class MatchService {
         this.museRepository = museRepository;
     }
 
-    public List<Muse> getListOfMusesFromUserMatches(Long userId)
+    public List<Muse> getListOfMusesFromUserMatches(Integer userId)
     {
         logger.warn("Value of userId # 2" + userId);
         Optional<User> optionalUser = userRepository.findById(userId);

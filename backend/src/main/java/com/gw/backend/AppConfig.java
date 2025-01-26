@@ -1,6 +1,6 @@
 package com.gw.backend;
 
-import com.gw.backend.models.user.UserModel;
+import com.gw.backend.models.user.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
 	@Bean
-	public UserModel userModel() {
-		return new UserModel();
+	public User userModel() {
+		return new User();
 	}
 
 }

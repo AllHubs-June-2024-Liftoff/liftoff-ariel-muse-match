@@ -5,8 +5,6 @@ import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.*;
 
-import java.util.List;
-
 
 @Entity
 @Table(name = "disliked_artworks")

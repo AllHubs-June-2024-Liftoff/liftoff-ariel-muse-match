@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MuseRepository extends JpaRepository<Muse, Long> {
+public interface MuseRepository extends JpaRepository<Muse, Integer> {
 
 }

@@ -16,26 +16,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/dislike")
+@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api")
 public class DislikeController {
 
-    private static final String userSessionKey = "user";
+//    private static final String userSessionKey = "user";
 
     private final DislikedArtworkRepository dislikedArtworkRepository;
     private final UserRepository userRepository;
 
 
     @Autowired
-    public DislikeController(UserRepository userRepository, DislikedArtworkRepository dislikedArtworkRepository) {
+    public DislikeController(DislikedArtworkRepository dislikedArtworkRepository, UserRepository userRepository) {
         this.userRepository = userRepository;
         this.dislikedArtworkRepository = dislikedArtworkRepository;
     }
 
-    public User getUserFromSession(HttpSession session) {
-        Long userId = (Long) session.getAttribute(userSessionKey);
-        if (userId == null) {
-            return null;
-        }
+    public User getUserFromSession(Integer userId) {
+//        Integer userId = (Integer) session.getAttribute(userSessionKey);
+//        if (userId == null) {
+//            return null;
+//        }
         Optional<User> user = userRepository.findById(userId);
         if (user.isEmpty()) {
             return null;
@@ -44,13 +45,15 @@ public class DislikeController {
     }
 
 
-    @PutMapping("/save")
+    @PostMapping("/dislike/save")
     public ResponseEntity<?> saveDislike (@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        User owner = getUserFromSession(session);
+//        User owner = userRepository.findById(1).orElseThrow( () -> new RuntimeException("user not found"));
+
+        User owner = getUserFromSession(1);
         if (owner == null) {
             return new ResponseEntity<String>("You must be logged in to dislike artworks", HttpStatus.UNAUTHORIZED);
         }

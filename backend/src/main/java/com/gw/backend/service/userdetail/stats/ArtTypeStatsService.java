@@ -1,10 +1,9 @@
 package com.gw.backend.service.userdetail.stats;
 
 import com.gw.backend.models.stats.*;
-import com.gw.backend.models.user.UserModel;
+import com.gw.backend.models.user.User;
 import com.gw.backend.models.user.UserPreferencesModel;
 import com.gw.backend.repository.user.UserPreferencesRepository;
-import com.gw.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 public class ArtTypeStatsService extends StatsService{
 
 	@Autowired
-	public ArtTypeStatsService(UserPreferencesRepository repository, UserModel user) {
+	public ArtTypeStatsService(UserPreferencesRepository repository, User user) {
 		super(repository, user);
 	}
 

@@ -2,7 +2,7 @@ package com.gw.backend.service.userdetail.stats;
 
 import com.gw.backend.models.stats.StatsCategory;
 import com.gw.backend.models.stats.SortingCriteria;
-import com.gw.backend.models.user.UserModel;
+import com.gw.backend.models.user.User;
 import com.gw.backend.repository.user.UserPreferencesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,12 @@ public abstract class StatsService {
 
 	public final UserPreferencesRepository repository;
 
-	private final UserModel user;
+	private final User user;
 
-	public final Long userId;
+	public final Integer userId;
 
 	@Autowired
-	protected StatsService(UserPreferencesRepository repository, UserModel user) {
+	protected StatsService(UserPreferencesRepository repository, User user) {
 		this.repository = repository;
 		this.user = user;
 		this.userId = user.getId();
@@ -37,11 +37,11 @@ public abstract class StatsService {
 		return repository;
 	}
 
-	public UserModel getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public Long getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 }
