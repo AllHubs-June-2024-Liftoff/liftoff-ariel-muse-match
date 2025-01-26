@@ -1,13 +1,11 @@
 package com.gw.backend.models.abstraction;
 
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 import java.util.Objects;
-
 
 @MappedSuperclass
 public class AbstractIdentifiableModel {
@@ -37,4 +35,6 @@ public class AbstractIdentifiableModel {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+
 }

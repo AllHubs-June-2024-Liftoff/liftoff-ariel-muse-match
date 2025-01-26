@@ -16,6 +16,10 @@ import Matches from './components/pages/Matches'
 import Match from './components/pages/Match'
 import Contact from './components/pages/Contact'
 import Give from './components/pages/Give'
+import { useEffect, useState } from "react";
+import "./App.css";
+import LoadArtworks from "./components/DisplayArtworks.jsx";
+import Stats from "./pages/profile/Stats.jsx";
 
 function App() {
 
@@ -45,6 +49,8 @@ function App() {
             <Route path="all" element={<DisplayArtworks/>}/>
             <Route path='contacts' element={<Contact/>} />
             <Route path='give' element={<Give/>} />
+            <SRoute path="stats" element={<Stats/>}/>
+
 
           </Routes>
             </Layout>
