@@ -14,7 +14,7 @@ import java.util.Set;
 @Repository
 public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long> {
 
-	@Query(value = "SELECT DISTINCT a.artist_title " +
+	@Query(value = "SELECT DISTINCT a.title " +
 			"FROM liked_artworks d " +
 			"JOIN artists a ON d.artist_id = a.id " +
 			"WHERE d.owner_id = :ownerId " +
@@ -22,24 +22,24 @@ public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long
 			nativeQuery = true)
 	Set<String> findDistinctArtistTitleByOwner(@Param("ownerId") Long ownerId);
 
-	@Query(value = "SELECT DISTINCT a.style_title " +
+	@Query(value = "SELECT DISTINCT d.style_title " +
 			"FROM liked_artworks d " +
 			"WHERE d.owner_id = :ownerId " +
-			"AND a.style_title IS NOT NULL",
+			"AND d.style_title IS NOT NULL",
 			nativeQuery = true)
 	Set<String> findDistinctArtMovementByOwner(@Param("ownerId") Long ownerId);
 
-	@Query(value = "SELECT DISTINCT a.art_type " +
+	@Query(value = "SELECT DISTINCT d.art_type " +
 			"FROM liked_artworks d " +
 			"WHERE d.owner_id = :ownerId " +
-			"AND a.art_type IS NOT NULL",
+			"AND d.art_type IS NOT NULL",
 			nativeQuery = true)
 	Set<String> findDistinctArtTypeByOwner(@Param("ownerId") Long ownerId);
 
-	@Query(value = "SELECT DISTINCT a.art_year_finished " +
+	@Query(value = "SELECT DISTINCT d.art_year_finished " +
 			"FROM liked_artworks d " +
 			"WHERE d.owner_id = :ownerId " +
-			"AND a.art_year_finished IS NOT NULL",
+			"AND d.art_year_finished IS NOT NULL",
 			nativeQuery = true)
 	Set<String> findDistinctArtYearFinishedByOwner(@Param("ownerId") Long ownerId);
 

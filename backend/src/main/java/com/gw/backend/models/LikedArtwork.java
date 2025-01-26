@@ -28,6 +28,8 @@ public class LikedArtwork extends AbstractIdentifiableModel {
 
     private String artworkTitle;
     private String placeOfOrigin;
+
+    @Column(name = "art_type")
     private String artType;
 
     @ManyToOne

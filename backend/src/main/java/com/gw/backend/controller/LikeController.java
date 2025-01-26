@@ -61,21 +61,21 @@ public class LikeController {
 		}
 
 		//TEST VALUE FOR USER
-//		User owner = userRepository.findById(1L).orElseThrow(() -> new RuntimeException("user not found"));
+		User owner = userRepository.findById(1L).orElseThrow(() -> new RuntimeException("user not found"));
 
-		User owner = getUserFromSession(session);
+//		User owner = getUserFromSession(session);
 		if (owner == null) {
 			return new ResponseEntity<>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
 		}
 
 		Optional<Artist> artist = artistRepository.findById(artworkDto.getArtistId());
-		if (artist.isEmpty()) {
-			artistRepository.save(new Artist(artworkDto));
-		}
+
 		LikedArtwork likedArtwork = new LikedArtwork(artworkDto);
-
-
+		likedArtwork.setOwner(owner);
 		try {
+			if (artist.isEmpty()) {
+				artistRepository.save(new Artist(artworkDto));
+			}
 			likedArtworkRepository.save(likedArtwork);
 			List<Long> matchingArtistIds = checkForMatchingArtistIds(owner);
 
