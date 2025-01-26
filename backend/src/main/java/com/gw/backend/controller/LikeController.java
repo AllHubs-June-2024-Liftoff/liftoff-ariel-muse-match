@@ -8,7 +8,6 @@ import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -110,8 +109,6 @@ public class LikeController {
 
         }
     }
-
-
 
             private List<String> checkForMatchingArtistIds(User owner) {
         List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
