@@ -10,7 +10,7 @@ export default function MainNavbar() {
   const {isAuthenticated} = useAuth();
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
+      <Navbar expand="lg" className="bg-body-tertiary" sticky="top">
       <Container>
         <Navbar.Brand href="/">MuseMatch</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

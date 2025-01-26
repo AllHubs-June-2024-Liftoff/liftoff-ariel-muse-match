@@ -25,8 +25,9 @@ function App() {
     <Router>
       <AuthProvider>
           <ThemeProvider>
-        <Layout>
+            <Layout>
           <Routes>
+
             <Route path='/' element={<Home/>}/>
             <Route path="/profile" element={<UserProfile/>}/>
             <Route path="/profile/matches" element={<Matches/>}/>
@@ -44,8 +45,9 @@ function App() {
             <Route path="all" element={<DisplayArtworks/>}/>
             <Route path='contacts' element={<Contact/>} />
             <Route path='give' element={<Give/>} />
+
           </Routes>
-        </Layout>
+            </Layout>
         </ThemeProvider>
       </AuthProvider>
     </Router>

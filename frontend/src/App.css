@@ -1,7 +1,7 @@
 #root {
   text-align: center;
-  display: flex;
-  justify-content: center;
+display: flex;
+       justify-content: center;
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
