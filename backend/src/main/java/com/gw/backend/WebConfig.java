@@ -19,6 +19,9 @@ public class WebConfig {
 //                .allowCredentials(true);
 //    }
 
+
+    //Allows all traffic from 5173 (GET POST PUT DELETE OPTIONS)
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

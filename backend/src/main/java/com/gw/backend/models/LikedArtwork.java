@@ -5,7 +5,6 @@ import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.*;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 
@@ -17,44 +16,52 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
-    @Column(name = "artwork_id", nullable = false)
+    @Column(name = "artwork_id", columnDefinition = "VARCHAR(255)", nullable = false)
     private String artworkId;
 
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+    @Column(name = "alt_text", columnDefinition = "TEXT")
+    private String altText;
 
     private String artworkTitle;
-    private String artworkThumbnail;
-    private String altText;
     private String placeOfOrigin;
-    private String description;
     private String artworkTypeTitle;
-    private Long artworkTypeId;
+    private String artistId;
     private String artistTitle;
-    private List<Long> artistIds;
     private String styleTitle;
+
+    @Column(name = "image_id")
     private String imageId;
 
     public LikedArtwork() {
-
     };
 
-    public LikedArtwork(User owner, String artworkId, String artworkTitle, String artworkThumbnail, String altText, String placeOfOrigin, String description, String artworkTypeTitle, Long artworkTypeId, String artistTitle, List<Long> artistIds, String styleTitle, String imageId) {
+    public LikedArtwork(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistId, String artistTitle, String styleTitle, String imageId) {
         this.owner = owner;
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;
-        this.artworkThumbnail = artworkThumbnail;
         this.altText = altText;
         this.placeOfOrigin = placeOfOrigin;
         this.description = description;
         this.artworkTypeTitle = artworkTypeTitle;
-        this.artworkTypeId = artworkTypeId;
+        this.artistId = artistId;
         this.artistTitle = artistTitle;
-        this.artistIds = artistIds;
         this.styleTitle = styleTitle;
         this.imageId = imageId;
     };
 
-    //Getters and Settters
+    //Getters and Setters
 
+
+    public String getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(String artistId) {
+        this.artistId = artistId;
+    }
 
     public User getOwner() {
         return owner;
@@ -78,14 +85,6 @@ public class LikedArtwork extends AbstractIdentifiableModel {
 
     public void setArtworkTitle(String artworkTitle) {
         this.artworkTitle = artworkTitle;
-    }
-
-    public String getArtworkThumbnail() {
-        return artworkThumbnail;
-    }
-
-    public void setArtworkThumbnail(String artworkThumbnail) {
-        this.artworkThumbnail = artworkThumbnail;
     }
 
     public String getAltText() {
@@ -120,28 +119,12 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.artworkTypeTitle = artworkTypeTitle;
     }
 
-    public Long getArtworkTypeId() {
-        return artworkTypeId;
-    }
-
-    public void setArtworkTypeId(Long artworkTypeId) {
-        this.artworkTypeId = artworkTypeId;
-    }
-
     public String getArtistTitle() {
         return artistTitle;
     }
 
     public void setArtistTitle(String artistTitle) {
         this.artistTitle = artistTitle;
-    }
-
-    public List<Long> getArtistIds() {
-        return artistIds;
-    }
-
-    public void setArtistIds(List<Long> artistIds) {
-        this.artistIds = artistIds;
     }
 
     public String getStyleTitle() {

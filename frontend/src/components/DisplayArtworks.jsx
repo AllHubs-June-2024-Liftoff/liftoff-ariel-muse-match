@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import getImage from "./image/GetImage";
 import fetchArtworks from "./match/FetchArtworks";
-import "../styles/ArtCard.css";
+import "../styles/Swipe.css";
 import TinderCard from "react-tinder-card";
 
 
@@ -16,13 +16,13 @@ function DisplayArtworks() {
 
     const loadArtwork = async () => {
         try {
-          const data = await fetchArtworks(); //This is the data from the fetchArtworks function
-          if (data && data.data) {
-            setArtworks(data.data); //This sets the artworks to the data from the fetchArtworks function
-    
-            const sources = {}; //Key is artwork ID, Value is the returned URL from the getImage() function (link to image source)
-            await Promise.all(  //Must execute all of the promises before setting the image sources
-              data.data.map(async (artwork) => {
+          const data = await fetchArtworks();
+          console.log(data);
+          if (Array.isArray(data) && data.length > 0) { //makes sure the data is an array before being able to map it and set it to the state
+            setArtworks(data); //This sets the artworks to the data from the fetchArtworks function
+            const sources = {}; //Key: artwork ID, Value: the returned URL from the getImage() function (the image source)
+            await Promise.all(
+              data.map(async (artwork) => {
                 if (artwork.image_id) {
                   try {
                     sources[artwork.id] = await getImage(artwork.image_id); //This is creating an object where every artwork Id is the key and the value is the image source (Link)
@@ -31,6 +31,8 @@ function DisplayArtworks() {
                   } catch (e) {
                     console.error(`Failed to fetch image for ${artwork.id}`, e); //If there is an error, the image source will be null
                     sources[artwork.id] = null;
+                    delete sources[artwork.id]; //If there is an error, the key will be deleted from the object
+                    console.log(`Deleted artwork ID: ${artwork.id}`); //This is just a console log to show that the key was deleted
                 }
                 }
               })
@@ -62,14 +64,13 @@ function DisplayArtworks() {
         console.log("You swiped: " + direction + " on " + swipedArtwork.id);
         
         if (direction === "right" && swipedArtwork) {
-          console.log("You liked the artwork");
+          console.log(`You liked ${swipedArtwork.title}`);
           sendLike(swipedArtwork);
         } else if (direction === "left" && swipedArtwork) {
-          console.log("You disliked the artwork");
+          console.log(`You disliked ${swipedArtwork.title}`);
           sendDislike(swipedArtwork);
 
         }
-        setCurrentIndex((prevIndex) => prevIndex + 1);
       };
 
 
@@ -77,19 +78,18 @@ function DisplayArtworks() {
       const sendLike = (artwork) => {
         if (!artwork) return;
 
+
         const likedArtwork = {
           artworkId: artwork.id,
           artworkTitle: artwork.title,
-          artworkThumbnail: artwork.thumbnail.lqip,
           altText: artwork.thumbnail?.alt_text,
           placeOfOrigin: artwork.place_of_origin,
           description: artwork.description,
           artworkTypeTitle: artwork.artwork_type_title,
-          artworkTypeId: artwork.artwork_type_id,
+          artistId: artwork.artist_id,
           artistTitle: artwork.artist_title,
-          artistIds: artwork.artist_ids,
           styleTitle: artwork.style_title,
-          ImageId: artwork.image_id,
+          imageId: artwork.image_id,
         };
 
         console.log(JSON.stringify(likedArtwork));
@@ -99,7 +99,7 @@ function DisplayArtworks() {
             "Content-Type": "application/json",
           },
           credentials: "include", 
-          body: JSON.stringify(likedArtwork), //better to serialize on the front end rather than the backend (more efficient)
+          body: JSON.stringify(likedArtwork), //better to deserialize on the front end rather than the backend (more efficient)
         })
           .then((response) => {
             if (!response.ok) {
@@ -122,16 +122,14 @@ function DisplayArtworks() {
         const dislikedArtwork = {
           artworkId: artwork.id,
           artworkTitle: artwork.title,
-          artworkThumbnail: artwork.thumbnail.lqip,
           altText: artwork.thumbnail?.alt_text,
           placeOfOrigin: artwork.place_of_origin,
           description: artwork.description,
           artworkTypeTitle: artwork.artwork_type_title,
-          artworkTypeId: artwork.artwork_type_id,
+          artistId: artwork.artist_id, 
           artistTitle: artwork.artist_title,
-          artistIds: artwork.artist_ids,
           styleTitle: artwork.style_title,
-          ImageId: artwork.image_id,
+          imageId: artwork.image_id,
       };
 
       fetch("http://localhost:8080/api/dislike/save", {
@@ -156,39 +154,59 @@ function DisplayArtworks() {
         });
       }
 
-      const outOfFrame = (artworkId) => {
-        console.log(`${artworkId} left the screen`);
-      };
+      const outOfFrame = () => {
+        setCurrentIndex((prevIndex) => {
+        return prevIndex + 1;
+      });
+    };
+
+    const handleMouseDown = (event) => {
+      event.preventDefault();
+    };
+
+    const handleDragStart = (event) => {
+      event.preventDefault();
+    }
     
-      
       return (
         <>
           <div>
-            <h1>Test Artworks</h1>
-            <div className="artwork-container">
+            <div 
+            className="cardContainer"
+            onMouseDown={handleMouseDown} 
+            >
               {artworks.map((artwork, index) => (
+                <div
+                  key={artwork.id}
+                  style={{ display: index === currentIndex ? "block" : "none" }}
+                  >
+                    <div className="tinderCardWrapper"> 
                 <TinderCard 
-                key={artwork.id}
+                className="swipe"
                 onSwipe={(dir) => swiped(dir, artwork)}
                 onCardLeftScreen={() => outOfFrame(artwork.id)}
-              preventSwipe={["up", "down"]}
-              swipeRequirementType="position"
-              swipeThreshold={10}
+                preventSwipe={["up", "down"]}
+                swipeRequirementType="position"
+                swipeThreshold={10}
+                onDragStart={handleDragStart}
             >
-                 <div className={`card ${index === currentIndex ? "active" : "inactive"}`}>
-                  <h2>{artwork.classification_title}</h2>
-                  <p>Title: {artwork.title}</p>
+                 <div className="card">
                   <img
+                    className="artwork-image"
                     src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
-                    alt={artwork.thumbnail?.alt_text} //Optional chaining to prevent undefined error
+                    alt={artwork.thumbnail?.alt_text} 
                   />
+                  <h2>{artwork.title}</h2>
+                  <p>{artwork.classification_title}</p>
                 </div>
                 </TinderCard>
+                </div>
+                </div>
               ))}
             </div>
           </div>
         </>
-      )
-      };
+      );
+      }
     
       export default DisplayArtworks;
