@@ -3,6 +3,8 @@ import getImage from "./image/GetImage";
 import fetchArtworks from "./match/FetchArtworks";
 import "../App.css";
 import TinderCard from "react-tinder-card";
+import { useAuth } from "../components/auth/AuthContext";
+
 
 
 function DisplayArtworks() {
@@ -11,6 +13,7 @@ function DisplayArtworks() {
   const [error, setError] = useState(null);
   const [imageSources, setImageSources] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
+  const {getCsrfToken} = useAuth();
     
     useEffect(() => {
 
@@ -75,7 +78,7 @@ function DisplayArtworks() {
 
 
       //Logic for sending a like to the backend
-      const sendLike = (artwork) => {
+      const sendLike =  async(artwork) => {
         if (!artwork) return;
 
 
@@ -91,12 +94,14 @@ function DisplayArtworks() {
           styleTitle: artwork.style_title,
           imageId: artwork.image_id,
         };
-
         console.log(JSON.stringify(likedArtwork));
+        const token = await getCsrfToken();
+        console.log(token)
         fetch("http://localhost:8080/api/like/save", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            "X-XSRF-TOKEN": token,
           },
           credentials: "include", 
           body: JSON.stringify(likedArtwork), //better to deserialize on the front end rather than the backend (more efficient)

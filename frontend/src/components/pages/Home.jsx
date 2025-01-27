@@ -14,17 +14,17 @@ export default function Home(params) {
   const [data, setData] = useState('');
   const {isAuthenticated} = useAuth()
 
-  useEffect(() => {
-    fetch('http://localhost:8080/api/hello')
-    .then((response) =>{
-      if(!response.ok) {
-        throw new Error("Not ok")
-      }
-      return response.text();
-    })
-    .then((data) => setData(data))
-    .catch((e)=> console.error("Couldn't fetch!"));
-  },[]);
+  // useEffect(() => {
+  //   fetch('http://localhost:8080/api/hello')
+  //   .then((response) =>{
+  //     if(!response.ok) {
+  //       throw new Error("Not ok")
+  //     }
+  //     return response.text();
+  //   })
+  //   .then((data) => setData(data))
+  //   .catch((e)=> console.error("Couldn't fetch!"));
+  // },[]);
 
   return (
     <div className="container mt-5">

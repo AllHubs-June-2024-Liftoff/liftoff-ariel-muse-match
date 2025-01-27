@@ -14,12 +14,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/like")
+
 public class LikeController {
 
     private static final String userSessionKey = "user";
@@ -51,18 +54,22 @@ public class LikeController {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
+    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session, Authentication authentication) {
         if (errors.hasErrors()) {
+            System.out.println("Got here: ");
+
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
         //TEST VALUE FOR USER
-        User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
-
+        //User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
+        String username = authentication.getName();
+        System.out.println("Usernamee: " + username);
+        User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
         //User owner = getUserFromSession(session);
-            if (owner == null) {
-                return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
-            }
+//            if (owner == null) {
+//                return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
+//            }
 
             LikedArtwork likedArtwork = new LikedArtwork();
 

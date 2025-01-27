@@ -15,16 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class BackendApplication {
 	@Autowired
 	private UserRepository userRepository;
-
-//	@Bean
-//	CommandLineRunner runner(){
-//		return args -> {
-//			userRepository.save(new User("midas",
-//					"$2a$10$QWSzCJbF0Za/2v.aA2wcGuRMCZMyqC226Db5A89UeELwjryrCuA3a",
-//					null, "midas@touch.com", "user"));
-//		};
-//	}
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
 	}
