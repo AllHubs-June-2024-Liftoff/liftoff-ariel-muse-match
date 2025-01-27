@@ -173,28 +173,30 @@ function DisplayArtworks() {
           <div>
             <div 
             className="cardContainer"
+            style={{maxWidth:"30%"}}
             onMouseDown={handleMouseDown} 
             >
               {artworks.map((artwork, index) => (
                 <div
                   key={artwork.id}
                   style={{ display: index === currentIndex ? "block" : "none" }}
+                >
+                <div className="tinderCardWrapper"> 
+                  <TinderCard 
+                  className="swipe"
+                  onSwipe={(dir) => swiped(dir, artwork)}
+                  onCardLeftScreen={() => outOfFrame(artwork.id)}
+                  preventSwipe={["up", "down"]}
+                  swipeRequirementType="positon"
+                  swipeThreshold={100}
+                  onDragStart={handleDragStart}
                   >
-                    <div className="tinderCardWrapper"> 
-                <TinderCard 
-                className="swipe"
-                onSwipe={(dir) => swiped(dir, artwork)}
-                onCardLeftScreen={() => outOfFrame(artwork.id)}
-                preventSwipe={["up", "down"]}
-                swipeRequirementType="position"
-                swipeThreshold={10}
-                onDragStart={handleDragStart}
-            >
                  <div className="card">
                   <img
                     className="artwork-image"
                     src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
                     alt={artwork.thumbnail?.alt_text} 
+                    style={{maxWidth: "inherit", maxHeight:"inherit"}}
                   />
                   <h2>{artwork.title}</h2>
                   <p>{artwork.classification_title}</p>

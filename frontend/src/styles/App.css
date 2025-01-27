@@ -1,3 +1,15 @@
 #main-container {
   margin-top: 30px;
 }
+
+.card {
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  will-change: transform, opacity;
+}
+
+.cardContainer {
+  display: block;
+  width: 500px;
+  height: 500px;
+  margin: auto; 
+}

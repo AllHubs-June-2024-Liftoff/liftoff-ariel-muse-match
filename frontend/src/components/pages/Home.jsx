@@ -3,7 +3,7 @@ import { Image } from "react-bootstrap";
 import Login from "./Login";
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-import LoadArtworks from '../DisplayArtworks'
+import DisplayArtworks from '../DisplayArtworks'
 import { useAuth } from "../auth/AuthContext";
 
 
@@ -38,7 +38,7 @@ export default function Home(params) {
         </>
       : 
         <>
-          <LoadArtworks />
+          <DisplayArtworks />
         </>
       }
       {/* <h1>{data}</h1> */}
