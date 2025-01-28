@@ -25,8 +25,6 @@ import java.util.*;
 
 public class LikeController {
 
-    private static final String userSessionKey = "user";
-
     private final UserRepository userRepository;
     private final LikedArtworkRepository likedArtworkRepository;
     private final MatchRepository matchRepository;
@@ -40,19 +38,6 @@ public class LikeController {
         this.matchRepository = matchRepository;
     }
 
-
-    public User getUserFromSession(HttpSession session) {
-        Long userId = (Long) session.getAttribute(userSessionKey);
-        if (userId == null) {
-            return null;
-        }
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            return null;
-        }
-        return user.get();
-    }
-
     @PutMapping("/save")
     public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session, Authentication authentication) {
         if (errors.hasErrors()) {
@@ -64,12 +49,11 @@ public class LikeController {
         //TEST VALUE FOR USER
         //User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
         String username = authentication.getName();
-        System.out.println("Usernamee: " + username);
         User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
-        //User owner = getUserFromSession(session);
-//            if (owner == null) {
-//                return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
-//            }
+
+        if (owner == null) {
+            return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
+        }
 
             LikedArtwork likedArtwork = new LikedArtwork();
 

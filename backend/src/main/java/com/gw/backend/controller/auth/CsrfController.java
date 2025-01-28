@@ -1,4 +1,4 @@
-package com.gw.backend.controller;
+package com.gw.backend.controller.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;

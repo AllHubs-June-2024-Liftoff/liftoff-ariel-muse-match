@@ -4,11 +4,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useAuth } from "../auth/AuthContext";
 export default function Login(params) {
-  const {login} = useAuth();
+  const {login, registerUser} = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-    const [data, setData] = useState('');
   
   const navigate = useNavigate();
 
@@ -18,12 +16,15 @@ export default function Login(params) {
     
   }
 
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    registerUser();
+  };
+
   const handleChange = (e) => {
     const {name, value} = e.target;
-    setUsername(username);
     if (name === "username") setUsername(value);
     if (name === "password") setPassword(value); 
-    console.log(name, value); // Log the input'
   }
 
   return (
