@@ -8,7 +8,7 @@ export default function Give(params) {
 
   return(
     <>
-      <h1>Give</h1>
+      <h1 style={{marginBottom:"40px"}}>Give</h1>
       <Carousel>
         <Carousel.Item>
           <Image className="d-block w-100" text="First slide" src="muse.png"/>
