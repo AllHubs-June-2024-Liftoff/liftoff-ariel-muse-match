@@ -16,46 +16,50 @@ import Matches from './components/pages/Matches'
 import Match from './components/pages/Match'
 import Contact from './components/pages/Contact'
 import Give from './components/pages/Give'
-import { useEffect, useState } from "react";
-import "./App.css";
-import LoadArtworks from "./components/DisplayArtworks.jsx";
-import Stats from "./pages/profile/Stats.jsx";
+
 
 function App() {
 
 
   return (
-
     <Router>
-      <AuthProvider>
-          <ThemeProvider>
-            <Layout>
-          <Routes>
-
-            <Route path='/' element={<Home/>}/>
+      <ThemeProvider>
+        <AuthProvider>
+          <Layout>
+            <Routes>
+              <Route path='/' element={<Home/>}/>
+              <Route path='my-profile'
+              element={
+                <ProtectedRoute>
             <Route path="/profile" element={<UserProfile/>}/>
-            <Route path="/profile/matches" element={<Matches/>}/>
-            {/* <Route path='my-profile' element={<UserProfile/>}/> */}
-{/*             <Route path='settings' */}
-{/*             element={ */}
-{/*               <ProtectedRoute> */}
-{/*                 <MySettings/> */}
-{/*               </ProtectedRoute>} */}
-{/*             /> */}
-            {/* <Route path='settings' element={<MySettings/>}/> */}
-            <Route path='sign-up' element={<SignUp/>}/>
-            <Route path='login' element={<Login/>} />
-            <Route path='match' element={<Match/>}/>
-            <Route path="all" element={<DisplayArtworks/>}/>
-            <Route path='contacts' element={<Contact/>} />
-            <Route path='give' element={<Give/>} />
-            <SRoute path="stats" element={<Stats/>}/>
+
+                <Route path="/profile/matches" element={<Matches/>}/>
+
+                  <UserProfile/>
+                </ProtectedRoute>}
+              />
+              {/* <Route path='my-profile' element={<UserProfile/>}/> */}
+              <Route path='settings'
+              element={
+                <ProtectedRoute>
+                  <MySettings/>
+                </ProtectedRoute>}
+              />
+              {/* <Route path='settings' element={<MySettings/>}/> */}
+              <Route path='sign-up' element={<SignUp/>}/>
+              <Route path='login' element={<Login/>} />
+              <Route path='match' element={<Match/>} />
+              <Route path='contacts' element={<Contact/>} />
+              <Route path='give' element={<Give/>} />
+                          <Route path="stats" element={<Stats/>}/>
+                                      <Route path="all" element={<DisplayArtworks/>}/>
 
 
-          </Routes>
-            </Layout>
-        </ThemeProvider>
-      </AuthProvider>
+
+            </Routes>
+          </Layout>
+        </AuthProvider>
+      </ThemeProvider>
     </Router>
   )
 }

@@ -167,4 +167,50 @@ img.artwork-image {
 
 #main-container {
   margin-top: 30px;
+  
+}
+
+#home-container {
+  margin-top: 30px;
+  margin: auto;
+}
+
+#home-description {
+  display: flex;
+  justify-content: center;
+}
+
+#home-hero {
+  display: flex;
+  margin: auto;
+}
+
+#auth-group {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-button {
+  margin-right: 7px;
+}
+
+.card {
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  will-change: transform, opacity;
+}
+
+.cardContainer {
+  display: block;
+  width: 500px;
+  height: 500px;
+  margin: auto; 
+}
+
+.nav-container.container {
+  max-width: fit-content;
+}
+
+h1 {
+  justify-content: center;
+  display:flex;
 }

@@ -3,6 +3,8 @@ import getImage from "./image/GetImage";
 import fetchArtworks from "./match/FetchArtworks";
 import "../styles/Swipe.css";
 import TinderCard from "react-tinder-card";
+import { useAuth } from "../components/auth/AuthContext";
+
 
 
 function DisplayArtworks() {
@@ -11,6 +13,7 @@ function DisplayArtworks() {
   const [error, setError] = useState(null);
   const [imageSources, setImageSources] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
+  const {getCsrfToken} = useAuth();
     
     useEffect(() => {
 
@@ -75,7 +78,7 @@ function DisplayArtworks() {
 
 
       //Logic for sending a like to the backend
-      const sendLike = (artwork) => {
+      const sendLike =  async(artwork) => {
         if (!artwork) return;
 
 
@@ -91,12 +94,14 @@ function DisplayArtworks() {
           styleTitle: artwork.style_title,
           imageId: artwork.image_id,
         };
-
         console.log(JSON.stringify(likedArtwork));
+        const token = await getCsrfToken();
+        console.log(token)
         fetch("http://localhost:8080/api/like/save", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            "X-XSRF-TOKEN": token,
           },
           credentials: "include", 
           body: JSON.stringify(likedArtwork), //better to deserialize on the front end rather than the backend (more efficient)
@@ -177,28 +182,30 @@ function DisplayArtworks() {
           <div>
             <div 
             className="cardContainer"
+            style={{maxWidth:"30%"}}
             onMouseDown={handleMouseDown} 
             >
               {artworks.map((artwork, index) => (
                 <div
                   key={artwork.id}
                   style={{ display: index === currentIndex ? "block" : "none" }}
+                >
+                <div className="tinderCardWrapper"> 
+                  <TinderCard 
+                  className="swipe"
+                  onSwipe={(dir) => swiped(dir, artwork)}
+                  onCardLeftScreen={() => outOfFrame(artwork.id)}
+                  preventSwipe={["up", "down"]}
+                  swipeRequirementType="positon"
+                  swipeThreshold={100}
+                  onDragStart={handleDragStart}
                   >
-                    <div className="tinderCardWrapper"> 
-                <TinderCard 
-                className="swipe"
-                onSwipe={(dir) => swiped(dir, artwork)}
-                onCardLeftScreen={() => outOfFrame(artwork.id)}
-                preventSwipe={["up", "down"]}
-                swipeRequirementType="position"
-                swipeThreshold={10}
-                onDragStart={handleDragStart}
-            >
                  <div className="card">
                   <img
                     className="artwork-image"
                     src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
                     alt={artwork.thumbnail?.alt_text} 
+                    style={{maxWidth: "inherit", maxHeight:"inherit"}}
                   />
                   <h2>{artwork.title}</h2>
                   <p>{artwork.classification_title}</p>

@@ -1,11 +1,14 @@
 #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
   text-align: center;
-display: flex;
-       justify-content: center;
+  display: flex;
+  justify-content: center;
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
-  /* background: linear-gradient(#fff, #999); */
+  background: linear-gradient(#fff, #999); */
   background: linear-gradient(#57534e, #808080);
 }
 
@@ -93,6 +96,9 @@ h2 {
   color: #fff;
 }
 
+.read-the-docs {
+  color: #888;
+} */
 .cardContent {
   width: 300px;
   height: auto;

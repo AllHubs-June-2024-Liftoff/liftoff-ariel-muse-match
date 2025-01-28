@@ -3,6 +3,7 @@ package com.gw.backend.models.user;
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.image.ProfilePicture;
 import jakarta.persistence.*;
+import org.hibernate.annotations.NaturalId;
 
 import java.util.HashMap;
 
@@ -10,34 +11,46 @@ import java.util.HashMap;
 @Table(name="users")
 public class User extends AbstractIdentifiableModel {
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String role;
 
     @OneToOne
     private ProfilePicture profilePicture;
 
-    @Column
+    @NaturalId
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column
+    private HashMap userLikes;
+
+    @Column
+    private HashMap userDislikes;
+
+    @Column
+    private HashMap matches;
+
 
     public User() {
     }
 
-    public User(String username, String password, ProfilePicture profilePicture, String email, HashMap userLikes, HashMap userDislikes, HashMap matches) {
+    public User(String username, String password, ProfilePicture profilePicture, String email, String role) {
         this.username = username;
         this.password = password;
         this.profilePicture = profilePicture;
         this.email = email;
-
+        this.role = role;
     }
 
     //Getters and Setters
 
-
-
-    public String  getUserName() {
+    public String getUserName() {
         return username;
     }
 
@@ -77,6 +90,23 @@ public class User extends AbstractIdentifiableModel {
         this.username = username;
     }
 
-
+    public HashMap getUserLikes() {
+        return userLikes;
     }
 
+    public void setUserLikes(HashMap userLikes) {
+        this.userLikes = userLikes;
+    }
+
+    public HashMap getUserDislikes() {
+        return userDislikes;
+    }
+
+    public void setUserDislikes(HashMap userDislikes) {
+        this.userDislikes = userDislikes;
+    }
+
+    public String getRole() { return role; }
+
+    public void setRole(String role) { this.role = role;}
+}

@@ -14,15 +14,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/like")
-public class LikeController {
 
-    private static final String userSessionKey = "user";
+public class LikeController {
 
     private final UserRepository userRepository;
     private final LikedArtworkRepository likedArtworkRepository;
@@ -37,34 +38,24 @@ public class LikeController {
         this.matchRepository = matchRepository;
     }
 
-
-    public User getUserFromSession(HttpSession session) {
-        Long userId = (Long) session.getAttribute(userSessionKey);
-        if (userId == null) {
-            return null;
-        }
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            return null;
-        }
-        return user.get();
-    }
-
     @PutMapping("/save")
-    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
+    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session, Authentication authentication) {
         if (errors.hasErrors()) {
+            System.out.println("Got here: ");
+
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
         //TEST VALUE FOR USER
-        User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
+        //User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
+        String username = authentication.getName();
+        User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
 
-        //User owner = getUserFromSession(session);
         if (owner == null) {
             return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
         }
 
-        LikedArtwork likedArtwork = new LikedArtwork();
+            LikedArtwork likedArtwork = new LikedArtwork();
 
         likedArtwork.setOwner(owner);
         likedArtwork.setArtworkId(ArtworkDto.getArtworkId());
@@ -113,7 +104,7 @@ public class LikeController {
 
 
 
-    private List<String> checkForMatchingArtistIds(User owner) {
+            private List<String> checkForMatchingArtistIds(User owner) {
         List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
 
         //This HashMap stores the counts of artist IDs

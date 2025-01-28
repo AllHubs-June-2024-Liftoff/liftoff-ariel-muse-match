@@ -1,13 +1,15 @@
 package com.gw.backend.repository.user;
 
-import com.gw.backend.models.user.UserModel;
+import com.gw.backend.models.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface UserRepository extends JpaRepository<UserModel, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    UserModel findByUsername (String username);
-
+    Optional<User> findByUsername (String username);
+    Optional<User> findByEmail (String email);
 
 }
