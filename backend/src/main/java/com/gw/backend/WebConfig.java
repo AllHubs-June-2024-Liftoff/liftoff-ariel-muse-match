@@ -10,15 +10,6 @@ import static org.springframework.http.CacheControl.maxAge;
 @Configuration
 public class WebConfig {
 
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("api/**")
-//                .allowedOrigins("http://localhost:5173")
-//                .allowedMethods("GET", "POST", "PUT", "DELETE")
-//                .allowedHeaders("*")
-//                .allowCredentials(true);
-//    }
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

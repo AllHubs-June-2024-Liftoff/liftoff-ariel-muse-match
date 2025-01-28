@@ -1,8 +1,7 @@
 package com.gw.backend.controller;
 
 
-import com.gw.backend.dto.DislikedArtworkDto;
-import com.gw.backend.dto.LikedArtworkDto;
+import com.gw.backend.dto.ArtworkDto;
 import com.gw.backend.models.DislikedArtwork;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.DislikedArtworkRepository;
@@ -46,7 +45,7 @@ public class DislikeController {
 
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveDislike (@RequestBody DislikedArtworkDto dislikedArtworkDto, Errors errors, HttpSession session) {
+    public ResponseEntity<?> saveDislike (@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -63,31 +62,16 @@ public class DislikeController {
         DislikedArtwork dislikedArtwork = new DislikedArtwork();
 
         dislikedArtwork.setOwner(owner);
-        System.out.println(owner);//Setting properties individually and saving in order to pass in the owner (User)
-        dislikedArtwork.setArtworkId(dislikedArtworkDto.getArtworkId());
-        System.out.println(dislikedArtworkDto.getArtworkId());
-        dislikedArtwork.setArtworkTitle(dislikedArtworkDto.getArtworkTitle());
-        System.out.println(dislikedArtworkDto.getArtworkTitle());
-        dislikedArtwork.setArtworkThumbnail(dislikedArtworkDto.getArtworkThumbnail());
-        System.out.println(dislikedArtworkDto.getArtworkThumbnail());
-        dislikedArtwork.setAltText(dislikedArtworkDto.getAltText());
-        System.out.println(dislikedArtworkDto.getAltText());
-        dislikedArtwork.setPlaceOfOrigin(dislikedArtworkDto.getPlaceOfOrigin());
-        System.out.println(dislikedArtworkDto.getPlaceOfOrigin());
-        dislikedArtwork.setDescription(dislikedArtworkDto.getDescription());
-        System.out.println(dislikedArtworkDto.getDescription());
-        dislikedArtwork.setArtworkTypeTitle(dislikedArtworkDto.getArtworkTypeTitle());
-        System.out.println(dislikedArtworkDto.getArtworkTypeTitle());
-        dislikedArtwork.setArtworkTypeId(dislikedArtworkDto.getArtworkTypeId());
-        System.out.println(dislikedArtworkDto.getArtworkTypeId());
-        dislikedArtwork.setArtistTitle(dislikedArtworkDto.getArtistTitle());
-        System.out.println(dislikedArtworkDto.getArtistTitle());
-        dislikedArtwork.setArtistIds(dislikedArtworkDto.getArtistIds());
-        System.out.println(dislikedArtworkDto.getArtistIds());
-        dislikedArtwork.setStyleTitle(dislikedArtworkDto.getStyleTitle());
-        System.out.println(dislikedArtworkDto.getStyleTitle());
-        dislikedArtwork.setImageId(dislikedArtworkDto.getImageId());
-        System.out.println(dislikedArtworkDto.getImageId());
+        dislikedArtwork.setArtworkId(ArtworkDto.getArtworkId());
+        dislikedArtwork.setArtworkTitle(ArtworkDto.getArtworkTitle());
+        dislikedArtwork.setAltText(ArtworkDto.getAltText());
+        dislikedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
+        dislikedArtwork.setDescription(ArtworkDto.getDescription());
+        dislikedArtwork.setArtworkTypeTitle(ArtworkDto.getArtworkTypeTitle());
+        dislikedArtwork.setArtistId(ArtworkDto.getArtistId());
+        dislikedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
+        dislikedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
+        dislikedArtwork.setImageId(ArtworkDto.getImageId());
 
         try {
             dislikedArtworkRepository.save(dislikedArtwork);
@@ -97,5 +81,4 @@ public class DislikeController {
             return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 };
