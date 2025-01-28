@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class ArtworkDto {
 
-	private Long artworkId;
+	private String id;
 	private String title;
 	private String altText;
 	private String placeOfOrigin;
@@ -20,8 +20,8 @@ public class ArtworkDto {
 	public ArtworkDto() {
 	}
 
-	public ArtworkDto(Long artworkId, String title, String altText, String placeOfOrigin, String description, String artType, int artworkTypeId, Long artistId, String artistTitle, String artMovement, UUID imageId, Integer artYearFinished) {
-		this.artworkId = artworkId;
+	public ArtworkDto(String artworkId, String title, String altText, String placeOfOrigin, String description, String artType, int artworkTypeId, Long artistId, String artistTitle, String artMovement, UUID imageId, Integer artYearFinished) {
+		this.id = id;
 		this.title = title;
 		this.altText = altText;
 		this.placeOfOrigin = placeOfOrigin;
@@ -35,11 +35,11 @@ public class ArtworkDto {
 		this.artYearFinished = artYearFinished;
 	}
 
-	public Long getArtworkId() {
+	public String getArtworkId() {
 		return artworkId;
 	}
 
-	public void setArtworkId(Long artworkId) {
+	public void setArtworkId(String artworkId) {
 		this.artworkId = artworkId;
 	}
 

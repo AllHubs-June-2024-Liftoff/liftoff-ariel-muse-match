@@ -17,7 +17,7 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     private User owner;
 
     @Column(name = "artwork_id", columnDefinition = "VARCHAR(255)", nullable = false)
-    private Long artworkId;
+    private String artworkId;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
@@ -56,7 +56,7 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.artYearFinished = artworkDto.getArtYearFinished();
     }
 
-    public LikedArtwork(User owner, Long artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artType, String artMovement, UUID imageId, Integer artYearFinished) {
+    public LikedArtwork(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artType, String artMovement, UUID imageId, Integer artYearFinished) {
         this.owner = owner;
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;
@@ -78,11 +78,11 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.owner = owner;
     }
 
-    public Long getArtworkId() {
+    public String getArtworkId() {
         return artworkId;
     }
 
-    public void setArtworkId(Long artworkId) {
+    public void setArtworkId(String artworkId) {
         this.artworkId = artworkId;
     }
 
