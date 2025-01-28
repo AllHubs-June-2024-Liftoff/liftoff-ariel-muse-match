@@ -3,7 +3,7 @@ import { Image } from "react-bootstrap";
 import Login from "./Login";
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-import LoadArtworks from '../DisplayArtworks'
+import DisplayArtworks from '../DisplayArtworks'
 import { useAuth } from "../auth/AuthContext";
 
 
@@ -14,17 +14,17 @@ export default function Home(params) {
   const [data, setData] = useState('');
   const {isAuthenticated} = useAuth()
 
-  useEffect(() => {
-    fetch('http://localhost:8080/api/hello')
-    .then((response) =>{
-      if(!response.ok) {
-        throw new Error("Not ok")
-      }
-      return response.text();
-    })
-    .then((data) => setData(data))
-    .catch((e)=> console.error("Couldn't fetch!"));
-  },[]);
+  // useEffect(() => {
+  //   fetch('http://localhost:8080/api/hello')
+  //   .then((response) =>{
+  //     if(!response.ok) {
+  //       throw new Error("Not ok")
+  //     }
+  //     return response.text();
+  //   })
+  //   .then((data) => setData(data))
+  //   .catch((e)=> console.error("Couldn't fetch!"));
+  // },[]);
 
   return (
     <div className="container mt-5">
@@ -38,7 +38,7 @@ export default function Home(params) {
         </>
       : 
         <>
-          <LoadArtworks />
+          <DisplayArtworks />
         </>
       }
       {/* <h1>{data}</h1> */}
