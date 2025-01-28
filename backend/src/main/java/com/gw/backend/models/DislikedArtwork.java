@@ -44,7 +44,8 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 	public DislikedArtwork() {
 	}
 
-	public DislikedArtwork(ArtworkDto artworkDto) {
+	public DislikedArtwork(User owner, ArtworkDto artworkDto) {
+		this.owner = owner;
 		this.artworkId = artworkDto.getArtworkId();
 		this.artworkTitle = artworkDto.getTitle();
 		this.altText = artworkDto.getAltText();
@@ -79,11 +80,11 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 		this.owner = owner;
 	}
 
-	public Long getArtworkId() {
+	public String getArtworkId() {
 		return artworkId;
 	}
 
-	public void setArtworkId(Long artworkId) {
+	public void setArtworkId(String artworkId) {
 		this.artworkId = artworkId;
 	}
 

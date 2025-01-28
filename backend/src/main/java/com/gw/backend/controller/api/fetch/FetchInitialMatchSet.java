@@ -76,6 +76,9 @@ public class FetchInitialMatchSet {
             JsonNode artworks = root.path("data");
             List<JsonNode> filteredArtworks = new ArrayList<>();
             for (JsonNode artwork : artworks) {
+                if (artwork.path("artist_id").asText() == (null)) {
+                    return null;
+                }
                 String id = artwork.path("id").asText();
                 if (!likedArtworkIds.contains(id)) {
                     filteredArtworks.add(artwork);

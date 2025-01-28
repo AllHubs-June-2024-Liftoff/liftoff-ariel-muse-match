@@ -43,7 +43,8 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     public LikedArtwork() {
     }
 
-    public LikedArtwork(ArtworkDto artworkDto) {
+    public LikedArtwork(User owner, ArtworkDto artworkDto) {
+        this.owner = owner;
         this.artworkId = artworkDto.getArtworkId();
         this.artworkTitle = artworkDto.getTitle();
         this.altText = artworkDto.getAltText();

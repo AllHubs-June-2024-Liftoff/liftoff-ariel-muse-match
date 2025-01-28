@@ -82,7 +82,7 @@ function DisplayArtworks() {
         if (!artwork) return;
 
         const likedArtwork = {
-            id: artwork.id,
+            artworkId: artwork.id,
             title: artwork.title,
             altText: artwork.thumbnail?.alt_text,
             placeOfOrigin: artwork.place_of_origin,
@@ -124,7 +124,7 @@ function DisplayArtworks() {
         if (!artwork) return;
 
         const dislikedArtwork = {
-            id: artwork.id,
+            artworkId: artwork.id,
             title: artwork.title,
             altText: artwork.thumbnail?.alt_text,
             placeOfOrigin: artwork.place_of_origin,
@@ -132,7 +132,6 @@ function DisplayArtworks() {
             artType: artwork.artwork_type_title,
             artistId: artwork.artist_id,
             artistTitle: artwork.artist_title,
-            styleTitle: artwork.style_title,
             artMovement: artwork.style_title,
             imageId: artwork.image_id,
             artYearFinished: artwork.date_end,

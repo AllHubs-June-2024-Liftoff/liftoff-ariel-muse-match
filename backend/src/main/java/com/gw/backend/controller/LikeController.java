@@ -70,8 +70,7 @@ public class LikeController {
 
 		Optional<Artist> artist = artistRepository.findById(artworkDto.getArtistId());
 
-		LikedArtwork likedArtwork = new LikedArtwork(artworkDto);
-		likedArtwork.setOwner(owner);
+		LikedArtwork likedArtwork = new LikedArtwork(owner, artworkDto);
 		try {
 			if (artist.isEmpty()) {
 				artistRepository.save(new Artist(artworkDto));

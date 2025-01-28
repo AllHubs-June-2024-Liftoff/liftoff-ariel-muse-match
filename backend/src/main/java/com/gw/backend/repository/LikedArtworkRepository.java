@@ -22,10 +22,10 @@ public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long
 			nativeQuery = true)
 	Set<String> findDistinctArtistTitleByOwner(@Param("ownerId") Long ownerId);
 
-	@Query(value = "SELECT DISTINCT d.style_title " +
+	@Query(value = "SELECT DISTINCT d.art_movement " +
 			"FROM liked_artworks d " +
 			"WHERE d.owner_id = :ownerId " +
-			"AND d.style_title IS NOT NULL",
+			"AND d.art_movement IS NOT NULL",
 			nativeQuery = true)
 	Set<String> findDistinctArtMovementByOwner(@Param("ownerId") Long ownerId);
 

@@ -69,7 +69,7 @@ public class DislikeController {
 		if (artist.isEmpty()) {
 			artistRepository.save(new Artist(artworkDto));
 		}
-		DislikedArtwork dislikedArtwork = new DislikedArtwork(artworkDto);
+		DislikedArtwork dislikedArtwork = new DislikedArtwork(owner, artworkDto);
 
 		try {
 			dislikedArtworkRepository.save(dislikedArtwork);
