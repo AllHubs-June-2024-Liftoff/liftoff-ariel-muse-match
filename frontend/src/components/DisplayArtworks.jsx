@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import getImage from "./image/GetImage";
 import fetchArtworks from "./match/FetchArtworks";
-import "../App.css";
+import "../styles/App.css";
 import TinderCard from "react-tinder-card";
 import { useAuth } from "../components/auth/AuthContext";
 
@@ -84,15 +84,16 @@ function DisplayArtworks() {
 
         const likedArtwork = {
           artworkId: artwork.id,
-          artworkTitle: artwork.title,
+          title: artwork.title,
           altText: artwork.thumbnail?.alt_text,
           placeOfOrigin: artwork.place_of_origin,
           description: artwork.description,
-          artworkTypeTitle: artwork.artwork_type_title,
+          artType: artwork.artwork_type_title,
           artistId: artwork.artist_id,
           artistTitle: artwork.artist_title,
-          styleTitle: artwork.style_title,
+          artMovement: artwork.style_title,
           imageId: artwork.image_id,
+          artYearFinished: artwork.date_end,
         };
         console.log(JSON.stringify(likedArtwork));
         const token = await getCsrfToken();
@@ -126,15 +127,16 @@ function DisplayArtworks() {
 
         const dislikedArtwork = {
           artworkId: artwork.id,
-          artworkTitle: artwork.title,
+          title: artwork.title,
           altText: artwork.thumbnail?.alt_text,
           placeOfOrigin: artwork.place_of_origin,
           description: artwork.description,
-          artworkTypeTitle: artwork.artwork_type_title,
-          artistId: artwork.artist_id, 
+          artType: artwork.artwork_type_title,
+          artistId: artwork.artist_id,
           artistTitle: artwork.artist_title,
-          styleTitle: artwork.style_title,
+          artMovement: artwork.style_title,
           imageId: artwork.image_id,
+          artYearFinished: artwork.date_end,
       };
 
       fetch("http://localhost:8080/api/dislike/save", {
@@ -159,7 +161,7 @@ function DisplayArtworks() {
         });
       }
 
-      const outOfFrame = (artworkId) => {
+      const outOfFrame = () => {
         setCurrentIndex((prevIndex) => {
         return prevIndex + 1;
       });
