@@ -26,7 +26,6 @@ import java.util.*;
 
 public class LikeController {
 
-	private static final String USERSESSIONKEY = "user";
 
 	private final UserRepository userRepository;
 	private final LikedArtworkRepository likedArtworkRepository;
@@ -45,15 +44,13 @@ public class LikeController {
 	}
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session, Authentication authentication) {
+    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto artworkDto, Errors errors, Authentication authentication) {
         if (errors.hasErrors()) {
             System.out.println("Got here: ");
 
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        //TEST VALUE FOR USER
-        //User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
         String username = authentication.getName();
         User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
 
@@ -72,7 +69,7 @@ public class LikeController {
 			List<Long> matchingArtistIds = checkForMatchingArtistIds(owner);
 
                 //Create new matches for the matching artist IDs
-                for (String artistId : matchingArtistIds) {
+                for (Long artistId : matchingArtistIds) {
                     createMatch(owner, artistId);
                 }
 
@@ -89,7 +86,7 @@ public class LikeController {
             }
     }
 
-    private void createMatch(User owner, String artistId) {
+    private void createMatch(User owner, Long artistId) {
         //Check if match exists already for that user/artist ID
         if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
             Match match = new Match(owner, artistId);
@@ -101,21 +98,21 @@ public class LikeController {
 
 
 
-            private List<String> checkForMatchingArtistIds(User owner) {
+            private List<Long> checkForMatchingArtistIds(User owner) {
         List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
 
         //This HashMap stores the counts of artist IDs
-                Map<String, Integer> artistIdCounts = new HashMap<>();
+                Map<Long, Integer> artistIdCounts = new HashMap<>();
 
         //Loop through artworks, iterating the counts in the HashMap
         for (LikedArtwork artwork : likedArtworks) {
-            String artistId = artwork.getArtistId();
+            Long artistId = artwork.getArtist().getId();
             artistIdCounts.put(artistId, artistIdCounts.getOrDefault(artistId, 0) + 1);
         }
 
         //Filter down to just the artist IDs with 3+
-                List<String> matchingArtistIds = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
+                List<Long> matchingArtistIds = new ArrayList<>();
+        for (Map.Entry<Long, Integer> entry : artistIdCounts.entrySet()) {
             if (entry.getValue() >= 3) {
                 matchingArtistIds.add(entry.getKey());
             }

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,15 +54,14 @@ public class DislikeController {
 
 
 	@PutMapping("/save")
-	public ResponseEntity<?> saveDislike(@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
+	public ResponseEntity<?> saveDislike(@RequestBody ArtworkDto artworkDto, Errors errors, Authentication authentication) {
 		if (errors.hasErrors()) {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 
-		//TEST VALUE
-		User owner = userRepository.findById(1L).orElseThrow(() -> new RuntimeException("user not found"));
+		String username = authentication.getName();
+		User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
 
-//		User owner = getUserFromSession(session);
 		if (owner == null) {
 			return new ResponseEntity<String>("You must be logged in to dislike artworks", HttpStatus.UNAUTHORIZED);
 		}
