@@ -23,7 +23,7 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     @Column(name = "alt_text", columnDefinition = "TEXT")
     private String altText;
 
-    private String artworkTitle;
+    private String title;
     private String placeOfOrigin;
     private String artType;
     private String artistId;
@@ -38,10 +38,10 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     public LikedArtwork() {
     };
 
-    public LikedArtwork(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artType, String artistId, String artistTitle, String artMovement, String imageId, Integer artYearFinished) {
+    public LikedArtwork(User owner, String artworkId, String title, String altText, String placeOfOrigin, String description, String artType, String artistId, String artistTitle, String artMovement, String imageId, Integer artYearFinished) {
         this.owner = owner;
         this.artworkId = artworkId;
-        this.artworkTitle = artworkTitle;
+        this.title = title;
         this.altText = altText;
         this.placeOfOrigin = placeOfOrigin;
         this.description = description;
@@ -80,12 +80,12 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.artworkId = artworkId;
     }
 
-    public String getArtworkTitle() {
-        return artworkTitle;
+    public String title() {
+        return title;
     }
 
-    public void setArtworkTitle(String artworkTitle) {
-        this.artworkTitle = artworkTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAltText() {
