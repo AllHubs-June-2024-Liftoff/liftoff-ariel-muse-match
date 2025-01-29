@@ -64,10 +64,10 @@ public class DislikeController {
         dislikedArtwork.setAltText(ArtworkDto.getAltText());
         dislikedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
         dislikedArtwork.setDescription(ArtworkDto.getDescription());
-        dislikedArtwork.setArtworkTypeTitle(ArtworkDto.getArtworkTypeTitle());
+        dislikedArtwork.setArtworkType(ArtworkDto.getArtworkType());
         dislikedArtwork.setArtistId(ArtworkDto.getArtistId());
         dislikedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
-        dislikedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
+        dislikedArtwork.setStyleTitle(ArtworkDto.getArtMovement());
         dislikedArtwork.setImageId(ArtworkDto.getImageId());
 
         try {

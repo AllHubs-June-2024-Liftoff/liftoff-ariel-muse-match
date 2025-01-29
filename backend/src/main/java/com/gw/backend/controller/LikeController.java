@@ -71,11 +71,12 @@ public class LikeController {
         likedArtwork.setAltText(ArtworkDto.getAltText());
         likedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
         likedArtwork.setDescription(ArtworkDto.getDescription());
-        likedArtwork.setArtworkTypeTitle(ArtworkDto.getArtworkTypeTitle());
+        likedArtwork.setArtType(ArtworkDto.getArtType());
         likedArtwork.setArtistId(ArtworkDto.getArtistId());
         likedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
-        likedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
+        likedArtwork.setArtMovement(ArtworkDto.getArtMovement());
         likedArtwork.setImageId(ArtworkDto.getImageId());
+        likedArtwork.setArtYearFinished(ArtworkDto.getArtYearFinished());
 
             try {
                 likedArtworkRepository.save(likedArtwork);

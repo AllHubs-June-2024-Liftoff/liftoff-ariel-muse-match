@@ -11,8 +11,6 @@
 #root>div {
   display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
 }
 
 .app {
@@ -82,7 +80,7 @@ h2 {
 }
 
 .card p {
-  position: be;
+  position: below;
   bottom: 0;
   margin: 10px;
   color: #fff;
@@ -91,10 +89,6 @@ h2 {
 .cardContent {
   width: 300px;
   height: auto;
-}
-
-.swipe:last-of-type {
-
 }
 
 .card h3 {
@@ -168,3 +162,68 @@ img.artwork-image {
 #main-container {
   margin-top: 30px;
 }
+
+
+  /* common styles */
+
+  h1 {
+    font-family: 'Arial';
+    color: #fff;
+    text-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30);
+  }
+  
+  h2 {
+    font-family: Arial;
+    color: #fff;
+    text-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30);
+  }
+  
+
+/*below are the styles for light and dark mode*/
+
+
+  /* light-theme styles */
+  [data-theme="light"] {
+    background-color: #f3eedd;
+    color: #000;
+  }
+
+[data-theme="light"] h2 {
+    font-family: 'Arial';
+    color: #000;
+    text-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30);
+  }
+
+[data-theme="light"] h1 {
+    font-family: 'Arial';
+    color: #000;
+    text-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30);
+  }
+
+[data-theme="light"] p {
+    color: darkgrey;
+  }
+  
+  /* dark-theme styles */
+[light-theme="dark"] {
+    background-color: #292929;
+    color: #fff;
+  }
+
+[light-theme="dark"] h2 {
+    font-family: 'Arial';
+    color: #fff;
+    text-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30);
+
+}
+
+[light-theme="dark"] h1 {
+    font-family: 'Arial';
+    color: #fff;
+    text-shadow:0px 0px 60px 0px rgba(0,0,0,0.30);
+}
+
+[light-theme="dark"] p {
+    color: #fff;
+    text-shadow:0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+  }
