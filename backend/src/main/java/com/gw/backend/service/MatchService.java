@@ -61,7 +61,7 @@ public class MatchService {
                     Optional<Artist> optionalArtist = artistRepository.findById(matchedArtistId);
                     if (optionalArtist.isPresent()){
                         Artist artist = optionalArtist.get();
-                        LikedArtwork latestLikedArtwork = likedArtworkRepository.findByOwner(user).getLast();
+                        LikedArtwork latestLikedArtwork = likedArtworkRepository.findByOwner(user).get(0);
                         logger.warn("Value of getArtistId: *****" + artist.getId());
                         Muse muse = new Muse();
                         muse.setArtistId(artist.getId());

@@ -13,7 +13,8 @@ public class Match extends AbstractIdentifiableModel {
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
 
-    @Column(name = "artist_id") //There are some artworks that are not associated with an artist
+    @ManyToOne
+    @JoinColumn(name = "artist_id") //There are some artworks that are not associated with an artist
     private Artist artist;
 
     public Match() {

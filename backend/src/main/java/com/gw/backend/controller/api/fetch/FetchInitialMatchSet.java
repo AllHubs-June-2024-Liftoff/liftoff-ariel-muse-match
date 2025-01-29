@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/match")
+@RequestMapping("/api/match")
 public class FetchInitialMatchSet {
     //any interactions with API regarding fetching artworks
 

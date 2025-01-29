@@ -86,7 +86,6 @@ function DisplayArtworks() {
 			artistId: artwork.artist_id,
 			artistTitle: artwork.artist_title,
 			artMovement: artwork.style_title,
-			artMovement: artwork.style_title,
 			imageId: artwork.image_id,
 			artYearFinished: artwork.date_end,
 		};
