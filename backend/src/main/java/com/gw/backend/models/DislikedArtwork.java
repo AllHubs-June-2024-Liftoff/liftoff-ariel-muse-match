@@ -38,6 +38,8 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 	private Artist artist;
 
 	private String artMovement;
+
+	@Column(name = "image_id", columnDefinition = "VARCHAR(36)")
 	private UUID imageId;
 	private Integer artYearFinished;
 
