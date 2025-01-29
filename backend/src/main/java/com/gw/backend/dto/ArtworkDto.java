@@ -14,13 +14,13 @@ public class ArtworkDto {
 	private Long artistId;
 	private String artistTitle;
 	private String artMovement;
-	private UUID imageId;
+	private String imageId;
 	private Integer artYearFinished;
 
 	public ArtworkDto() {
 	}
 
-	public ArtworkDto(String artworkId, String title, String altText, String placeOfOrigin, String description, String artType, int artworkTypeId, Long artistId, String artistTitle, String artMovement, UUID imageId, Integer artYearFinished) {
+	public ArtworkDto(String artworkId, String title, String altText, String placeOfOrigin, String description, String artType, int artworkTypeId, Long artistId, String artistTitle, String artMovement, String imageId, Integer artYearFinished) {
 		this.artworkId = artworkId;
 		this.title = title;
 		this.altText = altText;
@@ -115,11 +115,11 @@ public class ArtworkDto {
 		this.artMovement = artMovement;
 	}
 
-	public UUID getImageId() {
+	public String getImageId() {
 		return imageId;
 	}
 
-	public void setImageId(UUID imageId) {
+	public void setImageId(String imageId) {
 		this.imageId = imageId;
 	}
 

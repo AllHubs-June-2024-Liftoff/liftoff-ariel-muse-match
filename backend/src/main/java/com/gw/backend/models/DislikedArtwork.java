@@ -40,7 +40,7 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 	private String artMovement;
 
 	@Column(name = "image_id", columnDefinition = "VARCHAR(36)")
-	private UUID imageId;
+	private String imageId;
 	private Integer artYearFinished;
 
 	public DislikedArtwork() {
@@ -60,7 +60,7 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 		this.artYearFinished = artworkDto.getArtYearFinished();
 	}
 
-	public DislikedArtwork(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artType, String artMovement, UUID imageId, Integer artYearFinished) {
+	public DislikedArtwork(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artType, String artMovement, String imageId, Integer artYearFinished) {
 		this.owner = owner;
 		this.artworkId = artworkId;
 		this.artworkTitle = artworkTitle;
@@ -146,11 +146,11 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 		this.artMovement = artMovement;
 	}
 
-	public UUID getImageId() {
+	public String getImageId() {
 		return imageId;
 	}
 
-	public void setImageId(UUID imageId) {
+	public void setImageId(String imageId) {
 		this.imageId = imageId;
 	}
 
@@ -158,5 +158,7 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 		return artYearFinished;
 	}
 
-
+	public void setArtYearFinished(Integer artYearFinished) {
+		this.artYearFinished = artYearFinished;
+	}
 }
