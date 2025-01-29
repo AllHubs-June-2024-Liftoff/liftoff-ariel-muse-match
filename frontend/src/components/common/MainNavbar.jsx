@@ -29,10 +29,18 @@ export default function MainNavbar() {
             {isAuthenticated ?
             <>
               <NavDropdown title="My Account" id="profile-dropdown">
-                <NavDropdown.Item href="my-profile">View profile</NavDropdown.Item>
+                <NavDropdown.Item href="profile">View profile</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="settings">
-                  Settings
+                  View Settings
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                 <NavDropdown.Item href="matches">
+                  View Matches
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                 <NavDropdown.Item href="stats">
+                  View Stats
                 </NavDropdown.Item>
               </NavDropdown>
               <Button variant="primary" type="submit" onClick={handleLogout} >

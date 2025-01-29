@@ -5,6 +5,7 @@ import DisplayArtworks from './components/DisplayArtworks.jsx'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import Home from './components/pages/Home'
+import Stats from './pages/profile/Stats.jsx'
 import './styles/App.css'
 import UserProfile from './components/pages/UserProfile'
 import MySettings from './components/pages/MySettings'
@@ -27,42 +28,28 @@ function App() {
         <AuthProvider>
           <Layout>
             <Routes>
-              <Route path='/' element={<Home/>}/>
-              <Route path='my-profile'
-              element={
-                <ProtectedRoute>
-            <Route path="/profile" element={<UserProfile/>}/>
+             <Route path="/" element={<Home />} />
+             <Route path="/login" element={<Login />} />
+             <Route path="/sign-up" element={<SignUp />} />
 
-                <Route path="/profile/matches" element={<Matches/>}/>
+             <Route element={<ProtectedRoute />}>
+               <Route path="profile" element={<UserProfile />} />
+               <Route path="matches" element={<Matches />} />
+               <Route path="settings" element={<MySettings />} />
+             </Route>
 
-                  <UserProfile/>
-                </ProtectedRoute>}
-              />
-              {/* <Route path='my-profile' element={<UserProfile/>}/> */}
-              <Route path='settings'
-              element={
-                <ProtectedRoute>
-                  <MySettings/>
-                </ProtectedRoute>}
-              />
-              {/* <Route path='settings' element={<MySettings/>}/> */}
-              <Route path='sign-up' element={<SignUp/>}/>
-              <Route path='login' element={<Login/>} />
-              <Route path='match' element={<Match/>} />
-              <Route path='contacts' element={<Contact/>} />
-              <Route path='give' element={<Give/>} />
-                          <Route path="stats" element={<Stats/>}/>
-                                      <Route path="all" element={<DisplayArtworks/>}/>
+             <Route path="/match" element={<Match />} />
+             <Route path="/contacts" element={<Contact />} />
+             <Route path="/give" element={<Give />} />
+             <Route path="/stats" element={<Stats />} />
+             <Route path="/all" element={<DisplayArtworks />} />
+           </Routes>
 
-
-
-            </Routes>
           </Layout>
         </AuthProvider>
       </ThemeProvider>
     </Router>
   )
 }
-
 export default App;
 

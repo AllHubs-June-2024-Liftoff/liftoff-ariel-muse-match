@@ -5,8 +5,6 @@ import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.*;
 
-import java.util.List;
-
 
 @Entity
 @Table(name = "disliked_artworks")
@@ -25,19 +23,21 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
     @Column(name = "alt_text", columnDefinition = "TEXT")
     private String altText;
 
-
     private String artworkTitle;
     private String placeOfOrigin;
     private String artworkTypeTitle;
     private String artistId;
     private String artistTitle;
     private String styleTitle;
+
+    @Column(name = "image_id")
     private String imageId;
 
     public DislikedArtwork() {
     };
 
-    public DislikedArtwork(String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistId, String artistTitle, String styleTitle, String imageId) {
+    public DislikedArtwork(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artworkTypeTitle, String artistId, String artistTitle, String styleTitle, String imageId) {
+        this.owner = owner;
         this.artworkId = artworkId;
         this.artworkTitle = artworkTitle;
         this.altText = altText;
@@ -52,6 +52,14 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
 
     //Getters and Setters
 
+
+    public String getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(String artistId) {
+        this.artistId = artistId;
+    }
 
     public User getOwner() {
         return owner;
@@ -133,9 +141,20 @@ public class DislikedArtwork extends AbstractIdentifiableModel {
         this.imageId = imageId;
     }
 
-    public String getArtistId() {
-        return artistId;
+    @Override
+    public String toString() {
+        return "LikedArtwork{" +
+                "owner=" + owner +
+                ", artworkId='" + artworkId + '\'' +
+                ", description='" + description + '\'' +
+                ", altText='" + altText + '\'' +
+                ", artworkTitle='" + artworkTitle + '\'' +
+                ", placeOfOrigin='" + placeOfOrigin + '\'' +
+                ", artworkTypeTitle='" + artworkTypeTitle + '\'' +
+                ", artistId='" + artistId + '\'' +
+                ", artistTitle='" + artistTitle + '\'' +
+                ", styleTitle='" + styleTitle + '\'' +
+                ", imageId='" + imageId + '\'' +
+                '}';
     }
-
-    public void setArtistId(String artistId) { this.artistId = artistId; }
 }

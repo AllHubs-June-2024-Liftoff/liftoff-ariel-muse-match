@@ -48,6 +48,8 @@ public class User extends AbstractIdentifiableModel {
         this.role = role;
     }
 
+
+
     //Getters and Setters
 
     public String getUserName() {

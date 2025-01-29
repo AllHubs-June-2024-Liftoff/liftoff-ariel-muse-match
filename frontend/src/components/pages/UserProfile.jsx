@@ -14,22 +14,15 @@ import Accordion from 'react-bootstrap/Accordion';
 export default function UserProfile(params) {
   const {userName, email} = useAuth();
 
-  //const [userName, setUserName] = useState("");
-  const [myEmail, setMyEmail] = useState("");
 
-  // useEffect(()=>{
-  //   setUserName("John Doe");
-  //   setMyEmail("john@placeholder.com")
-  // }, []);
+
 
   
   return (
     <>
       <h1>Your Profile</h1>
-      {/* <h4>@{userName}</h4>
-      <h5>Email: {email}</h5> */}
-
-
+    <h4>@{userName}</h4>
+    <h5>Email: {email}</h5>
       <Row>
         <Col xs={3}>
           <Card style={{ marginTop:"50px", width: '18rem' }}>

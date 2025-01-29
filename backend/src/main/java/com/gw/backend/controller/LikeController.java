@@ -8,16 +8,17 @@ import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -39,35 +40,27 @@ public class LikeController {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session, Authentication authentication) {
+    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session, Authentication authentication) {
         if (errors.hasErrors()) {
-            System.out.println("Got here: ");
-
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-
-        //TEST VALUE FOR USER
-        //User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
         String username = authentication.getName();
         User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
-
         if (owner == null) {
             return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
         }
-
-            LikedArtwork likedArtwork = new LikedArtwork();
-
+        LikedArtwork likedArtwork = new LikedArtwork();
         likedArtwork.setOwner(owner);
-        likedArtwork.setArtworkId(ArtworkDto.getArtworkId());
-        likedArtwork.setArtworkTitle(ArtworkDto.getArtworkTitle());
-        likedArtwork.setAltText(ArtworkDto.getAltText());
-        likedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
-        likedArtwork.setDescription(ArtworkDto.getDescription());
-        likedArtwork.setArtworkTypeTitle(ArtworkDto.getArtworkTypeTitle());
-        likedArtwork.setArtistId(ArtworkDto.getArtistId());
-        likedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
-        likedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
-        likedArtwork.setImageId(ArtworkDto.getImageId());
+        likedArtwork.setArtworkId(artworkDto.getArtworkId());
+        likedArtwork.setArtworkTitle(artworkDto.getArtworkTitle());
+        likedArtwork.setAltText(artworkDto.getAltText());
+        likedArtwork.setPlaceOfOrigin(artworkDto.getPlaceOfOrigin());
+        likedArtwork.setDescription(artworkDto.getDescription());
+        likedArtwork.setArtworkTypeTitle(artworkDto.getArtworkTypeTitle());
+        likedArtwork.setArtistId(artworkDto.getArtistId());
+        likedArtwork.setArtistTitle(artworkDto.getArtistTitle());
+        likedArtwork.setStyleTitle(artworkDto.getStyleTitle());
+        likedArtwork.setImageId(artworkDto.getImageId());
 
             try {
                 likedArtworkRepository.save(likedArtwork);

@@ -125,7 +125,7 @@ function DisplayArtworks() {
       }
 
       //Logic for sending a dislike to the backend
-      const sendDislike = (artwork) => {
+      const sendDislike = async (artwork) => {
         if (!artwork) return;
 
         const dislikedArtwork = {

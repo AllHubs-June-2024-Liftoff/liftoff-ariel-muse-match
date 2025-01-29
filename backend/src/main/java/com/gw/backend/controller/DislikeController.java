@@ -1,6 +1,5 @@
 package com.gw.backend.controller;
 
-
 import com.gw.backend.dto.ArtworkDto;
 import com.gw.backend.models.DislikedArtwork;
 import com.gw.backend.models.user.User;
@@ -10,69 +9,61 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/dislike")
+
 public class DislikeController {
 
-    private static final String userSessionKey = "user";
-
-    private final DislikedArtworkRepository dislikedArtworkRepository;
     private final UserRepository userRepository;
+    private final DislikedArtworkRepository dislikedArtworkRepository;
 
 
     @Autowired
-    public DislikeController(UserRepository userRepository, DislikedArtworkRepository dislikedArtworkRepository) {
-        this.userRepository = userRepository;
+    public DislikeController(DislikedArtworkRepository dislikedArtworkRepository, UserRepository userRepository) {
         this.dislikedArtworkRepository = dislikedArtworkRepository;
+        this.userRepository = userRepository;
     }
-
-    public User getUserFromSession(HttpSession session) {
-        Long userId = (Long) session.getAttribute(userSessionKey);
-        if (userId == null) {
-            return null;
-        }
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            return null;
-        }
-        return user.get();
-    }
-
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveDislike (@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session) {
+    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session, Authentication authentication) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-
-        User owner = getUserFromSession(session);
+        String username = authentication.getName();
+        User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
         if (owner == null) {
-            return new ResponseEntity<String>("You must be logged in to dislike artworks", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
         }
-
-
         DislikedArtwork dislikedArtwork = new DislikedArtwork();
-
         dislikedArtwork.setOwner(owner);
-        dislikedArtwork.setArtworkId(ArtworkDto.getArtworkId());
-        dislikedArtwork.setArtworkTitle(ArtworkDto.getArtworkTitle());
-        dislikedArtwork.setAltText(ArtworkDto.getAltText());
-        dislikedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
-        dislikedArtwork.setDescription(ArtworkDto.getDescription());
-        dislikedArtwork.setArtworkTypeTitle(ArtworkDto.getArtworkTypeTitle());
-        dislikedArtwork.setArtistId(ArtworkDto.getArtistId());
-        dislikedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
-        dislikedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
-        dislikedArtwork.setImageId(ArtworkDto.getImageId());
+        dislikedArtwork.setArtworkId(artworkDto.getArtworkId());
+        dislikedArtwork.setArtworkTitle(artworkDto.getArtworkTitle());
+        dislikedArtwork.setAltText(artworkDto.getAltText());
+        dislikedArtwork.setPlaceOfOrigin(artworkDto.getPlaceOfOrigin());
+        dislikedArtwork.setDescription(artworkDto.getDescription());
+        dislikedArtwork.setArtworkTypeTitle(artworkDto.getArtworkTypeTitle());
+        dislikedArtwork.setArtistId(artworkDto.getArtistId());
+        dislikedArtwork.setArtistTitle(artworkDto.getArtistTitle());
+        dislikedArtwork.setStyleTitle(artworkDto.getStyleTitle());
+        dislikedArtwork.setImageId(artworkDto.getImageId());
 
         try {
             dislikedArtworkRepository.save(dislikedArtwork);
-            return new ResponseEntity<>(dislikedArtwork, HttpStatus.OK);
+
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("dislikedArtwork", dislikedArtwork);
+
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
