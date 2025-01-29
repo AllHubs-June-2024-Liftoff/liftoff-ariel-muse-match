@@ -8,10 +8,12 @@ import { Row } from "react-bootstrap";
 export default function Layout({ children }) {
   return (
     <>
-      <MainNavbar />
+    <MainNavbar />
       <main>
         <Container id="main-container">{children}</Container>
       </main>
-    </>
+      </>
+
+
   );
 }

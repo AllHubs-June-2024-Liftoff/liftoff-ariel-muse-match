@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/match")
 public class FetchInitialMatchSet {
     //any interactions with API regarding fetching artworks
 
@@ -37,7 +37,7 @@ public class FetchInitialMatchSet {
     }
 
     //Responds to front-end calls
-    @GetMapping("match/all")
+    @GetMapping("/all")
     public ResponseEntity<Object> getArt() {
         Random random = new Random();
         int totalPages = 1270;
@@ -67,6 +67,7 @@ public class FetchInitialMatchSet {
         } catch (Exception error) {
             return ResponseEntity.status(500).body("Error finding artworks: " + error.getMessage());
         }
+
     }
 
     private List<JsonNode> parseAndFilterArtworks(String responseBody, Set<String> likedArtworkIds) {

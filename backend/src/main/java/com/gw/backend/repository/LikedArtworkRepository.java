@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -68,4 +69,7 @@ public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long
 	                                      @Param("ownerId") Long ownerId);
 
 	List<LikedArtwork> findByOwner(User owner);
+
+	@Query("select l from LikedArtwork l where l.owner.id = :id")
+	Optional<String> findByOwner_Id(@Param("id") Long id);
 }

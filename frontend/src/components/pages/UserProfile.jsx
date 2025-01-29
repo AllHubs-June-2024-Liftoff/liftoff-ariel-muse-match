@@ -11,13 +11,8 @@ import Accordion from "react-bootstrap/Accordion";
 export default function UserProfile(params) {
   const { userName, email } = useAuth();
 
-  //const [userName, setUserName] = useState("");
-  const [myEmail, setMyEmail] = useState("");
 
-  // useEffect(()=>{
-  //   setUserName("John Doe");
-  //   setMyEmail("john@placeholder.com")
-  // }, []);
+
 
   return (
     <>

@@ -14,14 +14,14 @@ public class Match extends AbstractIdentifiableModel {
     private User owner;
 
     @Column(name = "artist_id") //There are some artworks that are not associated with an artist
-    private Long artistId;
+    private Artist artist;
 
     public Match() {
     }
 
-    public Match(User owner, Long artistId) {
+    public Match(User owner, Artist artist) {
         this.owner = owner;
-        this.artistId = artistId;
+        this.artist = artist;
     }
 
     //Getters and Setters
@@ -34,11 +34,19 @@ public class Match extends AbstractIdentifiableModel {
         this.owner = owner;
     }
 
-    public Long getArtistId() {
-        return artistId;
+    public Artist getArtist() {
+        return artist;
     }
 
-    public void setArtistId(Long artistId) {
-        this.artistId = artistId;
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "owner=" + owner +
+                ", artist='" + artist + '\'' +
+                '}';
     }
 }
