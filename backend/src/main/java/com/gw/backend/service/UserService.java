@@ -1,24 +1,33 @@
 package com.gw.backend.service;
 
+import com.gw.backend.dto.UserRegistrationDto;
+import com.gw.backend.models.user.User;
 import com.gw.backend.repository.user.UserRepository;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
-import org.springframework.boot.autoconfigure.pulsar.PulsarProperties;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public Long getAuthenticatedUserId () {
-        long hellong = 12345;
-        return hellong;
+    public User registerUser(UserRegistrationDto userRegistrationDto) {
+        if (userRepository.findByUsername(userRegistrationDto.getUsername()).isPresent()) {
+            throw new RuntimeException("Username is already taken.");
+        }
 
+        if(userRepository.findByEmail(userRegistrationDto.getEmail()).isPresent()) {
+            throw new RuntimeException("Email is already registered");
+        }
+        User user = new User();
+        user.setUsername(userRegistrationDto.getUsername());
+        user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
+        user.setEmail(userRegistrationDto.getEmail());
+        user.setRole("user");
+        return userRepository.save(user);
     }
-
-
-
 }

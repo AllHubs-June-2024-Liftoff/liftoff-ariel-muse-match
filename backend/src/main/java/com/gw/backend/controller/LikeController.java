@@ -15,12 +15,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/like")
+
 public class LikeController {
 
 	private static final String USERSESSIONKEY = "user";
@@ -41,32 +44,22 @@ public class LikeController {
 		this.artistRepository = artistRepository;
 	}
 
+    @PutMapping("/save")
+    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session, Authentication authentication) {
+        if (errors.hasErrors()) {
+            System.out.println("Got here: ");
 
-	public User getUserFromSession(HttpSession session) {
-		Long userId = (Long) session.getAttribute(USERSESSIONKEY);
-		if (userId == null) {
-			return null;
-		}
-		Optional<User> user = userRepository.findById(userId);
-		if (user.isEmpty()) {
-			return null;
-		}
-		return user.get();
-	}
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
 
-	@PutMapping("/save")
-	public ResponseEntity<?> saveLike(@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
-		if (errors.hasErrors()) {
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		}
+        //TEST VALUE FOR USER
+        //User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
+        String username = authentication.getName();
+        User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
 
-		//TEST VALUE FOR USER
-		User owner = userRepository.findById(1L).orElseThrow(() -> new RuntimeException("user not found"));
-
-//		User owner = getUserFromSession(session);
-		if (owner == null) {
-			return new ResponseEntity<>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
-		}
+        if (owner == null) {
+            return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
+        }
 
 		Optional<Artist> artist = artistRepository.findById(artworkDto.getArtistId());
 
@@ -78,56 +71,57 @@ public class LikeController {
 			likedArtworkRepository.save(likedArtwork);
 			List<Long> matchingArtistIds = checkForMatchingArtistIds(owner);
 
-			//Create new matches for the matching artist IDs
-			for (Long artistId : matchingArtistIds) {
-				createMatch(owner, artistId);
-			}
+                //Create new matches for the matching artist IDs
+                for (String artistId : matchingArtistIds) {
+                    createMatch(owner, artistId);
+                }
 
-			Map<String, Object> response = new HashMap<>();
-			response.put("likedArtwork", likedArtwork);
-			if (matched) {
-				response.put("matched", matched);
-			}
+                Map<String, Object> response = new HashMap<>();
+                response.put("likedArtwork", likedArtwork);
+                if (matched) {
+                    response.put("matched", matched);
+                }
 
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (Exception e) {
-			System.out.println(e);
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } catch (Exception e) {
+                System.out.println(e);
+                return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+    }
 
-	private void createMatch(User owner, Long artistId) {
-		//Check if match exists already for that user/artist ID
-		if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
-			Match match = new Match(owner, artistId);
-			matchRepository.save(match);
-			matched = true;
+    private void createMatch(User owner, String artistId) {
+        //Check if match exists already for that user/artist ID
+        if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
+            Match match = new Match(owner, artistId);
+            matchRepository.save(match);
+            matched = true;
 
-		}
-	}
+        }
+    }
 
 
-	private List<Long> checkForMatchingArtistIds(User owner) {
-		List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
 
-		//This HashMap stores the counts of artist IDs
-		Map<Long, Integer> artistIdCounts = new HashMap<>();
+            private List<String> checkForMatchingArtistIds(User owner) {
+        List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
 
-		//Loop through artworks, iterating the counts in the HashMap
-		for (LikedArtwork artwork : likedArtworks) {
-			Long artistId = artwork.getArtist().getId();
-			artistIdCounts.put(artistId, artistIdCounts.getOrDefault(artistId, 0) + 1);
-		}
+        //This HashMap stores the counts of artist IDs
+                Map<String, Integer> artistIdCounts = new HashMap<>();
 
-		//Filter down to just the artist IDs with 3+
-		List<Long> matchingArtistIds = new ArrayList<>();
-		for (Map.Entry<Long, Integer> entry : artistIdCounts.entrySet()) {
-			if (entry.getValue() >= 3) {
-				matchingArtistIds.add(entry.getKey());
-			}
-		}
+        //Loop through artworks, iterating the counts in the HashMap
+        for (LikedArtwork artwork : likedArtworks) {
+            String artistId = artwork.getArtistId();
+            artistIdCounts.put(artistId, artistIdCounts.getOrDefault(artistId, 0) + 1);
+        }
 
-		return matchingArtistIds;
-	}
+        //Filter down to just the artist IDs with 3+
+                List<String> matchingArtistIds = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
+            if (entry.getValue() >= 3) {
+                matchingArtistIds.add(entry.getKey());
+            }
+        }
 
-}
+        return matchingArtistIds;
+    }
+
+};
