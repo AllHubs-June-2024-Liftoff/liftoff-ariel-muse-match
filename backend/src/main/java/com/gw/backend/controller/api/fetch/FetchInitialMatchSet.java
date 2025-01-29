@@ -80,7 +80,8 @@ public class FetchInitialMatchSet {
                     return null;
                 }
                 String id = artwork.path("id").asText();
-                if (!likedArtworkIds.contains(id)) {
+                String artistId = artwork.path("artist_id").asText(null);
+                if (!likedArtworkIds.contains(id) && artistId != null) { //Filter out liked artworks and artworks without an artist
                     filteredArtworks.add(artwork);
                 }
             }

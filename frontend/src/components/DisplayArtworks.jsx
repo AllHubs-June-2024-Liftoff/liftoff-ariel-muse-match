@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import getImage from "./image/GetImage";
 import fetchArtworks from "./match/FetchArtworks";
-import "../App.css";
+import "../styles/App.css";
 import TinderCard from "react-tinder-card";
 import { useAuth } from "../components/auth/AuthContext";
 
@@ -85,7 +85,7 @@ function DisplayArtworks() {
 			artType: artwork.artwork_type_title,
 			artistId: artwork.artist_id,
 			artistTitle: artwork.artist_title,
-			styleTitle: artwork.style_title,
+			artMovement: artwork.style_title,
 			artMovement: artwork.style_title,
 			imageId: artwork.image_id,
 			artYearFinished: artwork.date_end,
@@ -120,20 +120,19 @@ function DisplayArtworks() {
 	const sendDislike = async (artwork) => {
 		if (!artwork) return;
 
-		const dislikedArtwork = {
-			artworkId: artwork.id,
-			title: artwork.title,
-			altText: artwork.thumbnail?.alt_text,
-			placeOfOrigin: artwork.place_of_origin,
-			description: artwork.description,
-			artType: artwork.artwork_type_title,
-			artistId: artwork.artist_id,
-			artistTitle: artwork.artist_title,
-			artMovement: artwork.style_title,
-			imageId: artwork.image_id,
-			artYearFinished: artwork.date_end,
-		};
-		const token = await getCsrfToken();
+        const dislikedArtwork = {
+          artworkId: artwork.id,
+          title: artwork.title,
+          altText: artwork.thumbnail?.alt_text,
+          placeOfOrigin: artwork.place_of_origin,
+          description: artwork.description,
+          artType: artwork.artwork_type_title,
+          artistId: artwork.artist_id,
+          artistTitle: artwork.artist_title,
+          artMovement: artwork.style_title,
+          imageId: artwork.image_id,
+          artYearFinished: artwork.date_end,
+      };
 
 		fetch("http://localhost:8080/api/dislike/save", {
 			method: "PUT",
@@ -158,7 +157,7 @@ function DisplayArtworks() {
 			});
 	};
 
-	const outOfFrame = (artworkId) => {
+	const outOfFrame = () => {
 		setCurrentIndex((prevIndex) => {
 			return prevIndex + 1;
 		});

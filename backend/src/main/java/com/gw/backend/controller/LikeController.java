@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
@@ -95,8 +94,6 @@ public class LikeController {
 
         }
     }
-
-
 
             private List<Long> checkForMatchingArtistIds(User owner) {
         List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);

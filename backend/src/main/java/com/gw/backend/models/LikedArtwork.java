@@ -6,7 +6,6 @@ import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.*;
 
-import java.util.UUID;
 
 @Entity
 @Table(name = "liked_artworks")
@@ -25,15 +24,14 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     @Column(name = "alt_text", columnDefinition = "TEXT")
     private String altText;
 
-
-    private String artworkTitle;
+    private String title;
     private String placeOfOrigin;
 
     @Column(name = "art_type")
     private String artType;
 
     @ManyToOne
-    @JoinColumn(name = "artist_id", nullable = false)
+    @JoinColumn(name = "artist_id")
     private Artist artist;
 
     private String artMovement;
@@ -48,7 +46,7 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     public LikedArtwork(User owner, ArtworkDto artworkDto) {
         this.owner = owner;
         this.artworkId = artworkDto.getArtworkId();
-        this.artworkTitle = artworkDto.getTitle();
+        this.title = artworkDto.getTitle();
         this.altText = artworkDto.getAltText();
         this.placeOfOrigin = artworkDto.getPlaceOfOrigin();
         this.description = artworkDto.getDescription();
@@ -58,20 +56,6 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.imageId = artworkDto.getImageId();
         this.artYearFinished = artworkDto.getArtYearFinished();
     }
-
-    public LikedArtwork(User owner, String artworkId, String artworkTitle, String altText, String placeOfOrigin, String description, String artType, String artMovement, String imageId, Integer artYearFinished) {
-        this.owner = owner;
-        this.artworkId = artworkId;
-        this.artworkTitle = artworkTitle;
-        this.altText = altText;
-        this.placeOfOrigin = placeOfOrigin;
-        this.description = description;
-        this.artType = artType;
-        this.artMovement = artMovement;
-        this.imageId = imageId;
-        this.artYearFinished = artYearFinished;
-    }
-    //Getters and Setters
 
     public User getOwner() {
         return owner;
@@ -105,12 +89,12 @@ public class LikedArtwork extends AbstractIdentifiableModel {
         this.altText = altText;
     }
 
-    public String getArtworkTitle() {
-        return artworkTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setArtworkTitle(String artworkTitle) {
-        this.artworkTitle = artworkTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getPlaceOfOrigin() {
@@ -160,5 +144,4 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     public void setArtYearFinished(Integer artYearFinished) {
         this.artYearFinished = artYearFinished;
     }
-
 }
