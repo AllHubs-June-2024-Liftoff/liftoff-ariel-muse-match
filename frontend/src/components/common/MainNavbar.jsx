@@ -34,7 +34,10 @@ export default function MainNavbar() {
                 <NavDropdown.Item href="settings">
                   Settings
                 </NavDropdown.Item>
-              </NavDropdown> 
+                <NavDropdown.Item href="matches">
+                  View Muses
+                </NavDropdown.Item>
+              </NavDropdown>
               <Button variant="primary" type="submit" onClick={handleLogout} >
                 Logout
               </Button>
