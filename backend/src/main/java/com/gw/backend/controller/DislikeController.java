@@ -14,8 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/dislike")
@@ -43,7 +41,7 @@ public class DislikeController {
 
         if (owner == null) {
             return new ResponseEntity<String>("You must be logged in to dislike artworks", HttpStatus.UNAUTHORIZED);
-
+        }
 
             DislikedArtwork dislikedArtwork = new DislikedArtwork();
 
@@ -69,4 +67,3 @@ public class DislikeController {
             }
         }
     }
-};
