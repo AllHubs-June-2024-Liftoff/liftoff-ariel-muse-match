@@ -9,7 +9,6 @@ import com.gw.backend.repository.ArtistRepository;
 import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,19 +56,21 @@ public class LikeController {
             return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
         }
 
-		Optional<Artist> artist = artistRepository.findById(artworkDto.getArtistId());
+		Optional<Artist> optionalArtist = artistRepository.findById(artworkDto.getArtistId());
 
 		LikedArtwork likedArtwork = new LikedArtwork(owner, artworkDto);
 		try {
-			if (artist.isEmpty()) {
+			if (optionalArtist.isEmpty()) {
 				artistRepository.save(new Artist(artworkDto));
 			}
 			likedArtworkRepository.save(likedArtwork);
+			Optional<Artist> createdArtist = artistRepository.findById(artworkDto.getArtistId());
+			Artist artist = createdArtist.get();
 			List<Long> matchingArtistIds = checkForMatchingArtistIds(owner);
 
                 //Create new matches for the matching artist IDs
                 for (Long artistId : matchingArtistIds) {
-                    createMatch(owner, artistId);
+                    createMatch(owner, artist);
                 }
 
                 Map<String, Object> response = new HashMap<>();
@@ -85,10 +86,10 @@ public class LikeController {
             }
     }
 
-    private void createMatch(User owner, Long artistId) {
+    private void createMatch(User owner, Artist artist) {
         //Check if match exists already for that user/artist ID
-        if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
-            Match match = new Match(owner, artistId);
+        if (!matchRepository.existsByOwnerAndArtist(owner, artist)) {
+            Match match = new Match(owner, artist);
             matchRepository.save(match);
             matched = true;
 

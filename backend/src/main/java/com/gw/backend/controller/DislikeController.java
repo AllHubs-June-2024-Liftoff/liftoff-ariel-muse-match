@@ -38,7 +38,7 @@ public class DislikeController {
 	}
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveDislike(@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session, Authentication authentication) {
+    public ResponseEntity<?> saveDislike(@RequestBody ArtworkDto artworkDto, Errors errors, Authentication authentication) {
         if (errors.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }

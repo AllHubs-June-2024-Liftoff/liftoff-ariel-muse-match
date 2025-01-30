@@ -86,7 +86,6 @@ function DisplayArtworks() {
 			artistId: artwork.artist_id,
 			artistTitle: artwork.artist_title,
 			artMovement: artwork.style_title,
-			artMovement: artwork.style_title,
 			imageId: artwork.image_id,
 			artYearFinished: artwork.date_end,
 		};
@@ -120,19 +119,21 @@ function DisplayArtworks() {
 	const sendDislike = async (artwork) => {
 		if (!artwork) return;
 
-        const dislikedArtwork = {
-          artworkId: artwork.id,
-          title: artwork.title,
-          altText: artwork.thumbnail?.alt_text,
-          placeOfOrigin: artwork.place_of_origin,
-          description: artwork.description,
-          artType: artwork.artwork_type_title,
-          artistId: artwork.artist_id,
-          artistTitle: artwork.artist_title,
-          artMovement: artwork.style_title,
-          imageId: artwork.image_id,
-          artYearFinished: artwork.date_end,
-      };
+		const dislikedArtwork = {
+			artworkId: artwork.id,
+			title: artwork.title,
+			altText: artwork.thumbnail?.alt_text,
+			placeOfOrigin: artwork.place_of_origin,
+			description: artwork.description,
+			artType: artwork.artwork_type_title,
+			artistId: artwork.artist_id,
+			artistTitle: artwork.artist_title,
+			artMovement: artwork.style_title,
+			imageId: artwork.image_id,
+			artYearFinished: artwork.date_end,
+		};
+
+		const token = await getCsrfToken();
 
 		fetch("http://localhost:8080/api/dislike/save", {
 			method: "PUT",

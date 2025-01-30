@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "_comment": "Must run start script from inside of the frontend directory=\"npm start\"",
   "scripts": {
     "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
     "start-backend": "cd ../backend && mvn spring-boot:run",
@@ -13,13 +14,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.4.2",
     "@react-spring/web": "^9.5.5",
-    "react-tinder-card": "^1.6.4",
     "bootstrap": "^5.3.3",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.7",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.0"
+    "react-router-dom": "^7.1.0",
+    "react-share": "^5.1.2",
+    "react-tinder-card": "^1.6.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",

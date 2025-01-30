@@ -1,6 +1,20 @@
 {
+  "name": "musematch",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && ./mvnw spring-boot:run",
+    "server-gradle": "cd backend && ./gradlew bootRun",
+    "client": "cd frontend && npm run dev"
+  },
   "dependencies": {
     "bootstrap": "^5.3.3",
-    "react-bootstrap": "^2.10.8"
+    "react-bootstrap": "^2.10.8",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.4.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }

@@ -10,7 +10,7 @@ import jakarta.persistence.Lob;
 public class ProfilePicture extends AbstractIdentifiableModel {
 
     @Lob
-    @Column(name = "content", columnDefinition = "BLOB")
+    @Column(name = "content", columnDefinition = "LONGBLOB")
     byte[] content;
 
     @Column(name = "name", nullable = false)
