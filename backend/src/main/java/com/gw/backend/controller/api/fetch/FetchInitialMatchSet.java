@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,7 +40,10 @@ public class FetchInitialMatchSet {
     //Responds to front-end calls
     @GetMapping("match/all")
     public ResponseEntity<Object> getArt() {
-        String apiUrl = "https://api.artic.edu/api/v1/artworks?limit=100";
+        Random random = new Random();
+        int totalPages = 1270;
+        int page = random.nextInt(totalPages) + 1;
+        String apiUrl = "https://api.artic.edu/api/v1/artworks?page=" + page + "&limit=100";
         RestTemplate restTemplate = new RestTemplate();
 
         try {
@@ -52,7 +56,7 @@ public class FetchInitialMatchSet {
             //Get the liked artwork IDs of the user
             List<LikedArtwork> likedArtworks = likedArtworkRepository.findByUser(user);
             Set<String> likedArtworkIds = likedArtworks.stream()
-                    .map(artwork -> String.valueOf(artwork.getArtwork().getArtistId())) //Transforms each LikedArtwork object to its artworkId value
+                    .map(artwork -> String.valueOf(artwork.getArtistId())) //Transforms each LikedArtwork object to its artworkId value
                     .collect(Collectors.toSet()); //Convert artworkId values to a set
 
             //Parse through response body to extract artwork objects
@@ -69,11 +73,13 @@ public class FetchInitialMatchSet {
     private List<JsonNode> parseAndFilterArtworks(String responseBody, Set<String> likedArtworkIds) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            JsonNode artworks = objectMapper.readTree(responseBody).path("data");
+            JsonNode root = objectMapper.readTree(responseBody);
+            JsonNode artworks = root.path("data");
             List<JsonNode> filteredArtworks = new ArrayList<>();
             for (JsonNode artwork : artworks) {
                 String id = artwork.path("id").asText();
-                if (!likedArtworkIds.contains(id)) {
+                String artistId = artwork.path("artist_id").asText(null);
+                if (!likedArtworkIds.contains(id) && artistId != null) { //Filter out liked artworks and artworks without an artist
                     filteredArtworks.add(artwork);
                 }
             }

@@ -1,11 +1,9 @@
 package com.gw.backend.controller;
 
 import com.gw.backend.dto.ArtworkDto;
-import com.gw.backend.models.Artwork;
 import com.gw.backend.models.LikedArtwork;
 import com.gw.backend.models.Match;
 import com.gw.backend.models.user.User;
-import com.gw.backend.repository.ArtworkRepository;
 import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
@@ -15,116 +13,113 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/like")
+
 public class LikeController {
 
-	private static final String USERSESSIONKEY = "user";
-
-	private final UserRepository userRepository;
-	private final LikedArtworkRepository likedArtworkRepository;
-	private final ArtworkRepository artworkRepository;
-	private final MatchRepository matchRepository;
-	private boolean matched = false;
+    private final UserRepository userRepository;
+    private final LikedArtworkRepository likedArtworkRepository;
+    private final MatchRepository matchRepository;
+    private boolean matched = false;
 
 
-	@Autowired
-	public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, ArtworkRepository artworkRepository, MatchRepository matchRepository) {
-		this.likedArtworkRepository = likedArtworkRepository;
-		this.userRepository = userRepository;
-		this.artworkRepository = artworkRepository;
-		this.matchRepository = matchRepository;
-	}
+    @Autowired
+    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MatchRepository matchRepository) {
+        this.likedArtworkRepository = likedArtworkRepository;
+        this.userRepository = userRepository;
+        this.matchRepository = matchRepository;
+    }
 
+    @PutMapping("/save")
+    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session, Authentication authentication) {
+        if (errors.hasErrors()) {
+            System.out.println("Got here: ");
 
-	public User getUserFromSession(HttpSession session) {
-		Long userId = (Long) session.getAttribute(USERSESSIONKEY);
-		if (userId == null) {
-			return null;
-		}
-		Optional<User> user = userRepository.findById(userId);
-		return user.orElse(null);
-	}
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
 
-	@PutMapping("/save")
-	public ResponseEntity<?> saveLike(@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session) {
-		if (errors.hasErrors()) {
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		}
+        String username = authentication.getName();
+        User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
 
-		//TEST VALUE
-		User user = userRepository.findById(1L).orElseThrow(() -> new RuntimeException("user not found"));
+        if (owner == null) {
+            return new ResponseEntity<String>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
+        }
 
-		//User user = getUserFromSession(session);
-		if (user == null) {
-			return new ResponseEntity<>("You must be logged in to like artworks", HttpStatus.UNAUTHORIZED);
-		}
-		Artwork artwork = new Artwork(artworkDto);
-		LikedArtwork likedArtwork = new LikedArtwork(artwork, user);
+            LikedArtwork likedArtwork = new LikedArtwork();
 
+        likedArtwork.setOwner(owner);
+        likedArtwork.setArtworkId(ArtworkDto.getArtworkId());
+        likedArtwork.setTitle(ArtworkDto.getTitle());
+        likedArtwork.setAltText(ArtworkDto.getAltText());
+        likedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
+        likedArtwork.setDescription(ArtworkDto.getDescription());
+        likedArtwork.setArtType(ArtworkDto.getArtType());
+        likedArtwork.setArtistId(ArtworkDto.getArtistId());
+        likedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
+        likedArtwork.setArtMovement(ArtworkDto.getArtMovement());
+        likedArtwork.setImageId(ArtworkDto.getImageId());
+        likedArtwork.setArtYearFinished(ArtworkDto.getArtYearFinished());
 
-		try {
-			likedArtworkRepository.save(likedArtwork);
-			artworkRepository.save(artwork);
+            try {
+                likedArtworkRepository.save(likedArtwork);
 
-			List<Long> matchingArtistIds = checkForMatchingArtistIds(user);
+                List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
 
-			//Create new matches for the matching artist IDs
-			for (Long artistId : matchingArtistIds) {
-				createMatch(user, artistId);
-			}
+                //Create new matches for the matching artist IDs
+                for (String artistId : matchingArtistIds) {
+                    createMatch(owner, artistId);
+                }
 
-			Map<String, Object> response = new HashMap<>();
-			response.put("likedArtwork", likedArtwork);
-			if (matched) {
-				response.put("matched", matched);
-			}
+                Map<String, Object> response = new HashMap<>();
+                response.put("likedArtwork", likedArtwork);
+                if (matched) {
+                    response.put("matched", matched);
+                }
 
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (Exception e) {
-			System.out.println(e);
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } catch (Exception e) {
+                System.out.println(e);
+                return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+    }
 
-	private void createMatch(User user, Long artistId) {
-		//Check if match exists already for that user/artist ID
-		if (!matchRepository.existsByUserAndArtistId(user, artistId)) {
-			Match match = new Match(user, artistId);
-			matchRepository.save(match);
-			matched = true;
+    private void createMatch(User owner, String artistId) {
+        //Check if match exists already for that user/artist ID
+        if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
+            Match match = new Match(owner, artistId);
+            matchRepository.save(match);
+            matched = true;
 
-		}
-	}
+        }
+    }
 
+            private List<String> checkForMatchingArtistIds(User owner) {
+        List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
 
-	private List<Long> checkForMatchingArtistIds(User user) {
-		List<LikedArtwork> likedArtworks = likedArtworkRepository.findByUser(user);
+        //This HashMap stores the counts of artist IDs
+                Map<String, Integer> artistIdCounts = new HashMap<>();
 
-		//This HashMap stores the counts of artist IDs
-		Map<Long, Integer> artistIdCounts = new HashMap<>();
+        //Loop through artworks, iterating the counts in the HashMap
+        for (LikedArtwork artwork : likedArtworks) {
+            String artistId = artwork.getArtistId();
+            artistIdCounts.put(artistId, artistIdCounts.getOrDefault(artistId, 0) + 1);
+        }
 
-		//Loop through artworks, iterating the counts in the HashMap
-		for (LikedArtwork artwork : likedArtworks) {
-			Long artistId = artwork.getArtwork().getArtistId();
-			artistIdCounts.put(artistId, artistIdCounts.getOrDefault(artistId, 0) + 1);
-		}
+        //Filter down to just the artist IDs with 3+
+                List<String> matchingArtistIds = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : artistIdCounts.entrySet()) {
+            if (entry.getValue() >= 3) {
+                matchingArtistIds.add(entry.getKey());
+            }
+        }
 
-		//Filter down to just the artist IDs with 3+
-		List<Long> matchingArtistIds = new ArrayList<>();
-		for (Map.Entry<Long, Integer> entry : artistIdCounts.entrySet()) {
-			if (entry.getValue() >= 3) {
-				matchingArtistIds.add(entry.getKey());
-			}
-		}
+        return matchingArtistIds;
+    }
 
-		return matchingArtistIds;
-	}
-
-}
-
-
+};

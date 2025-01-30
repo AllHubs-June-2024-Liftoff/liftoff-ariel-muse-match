@@ -1,12 +1,9 @@
 package com.gw.backend.models.user;
 
-
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.image.ProfilePicture;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.NaturalId;
 
 import java.util.HashMap;
 
@@ -14,16 +11,20 @@ import java.util.HashMap;
 @Table(name="users")
 public class User extends AbstractIdentifiableModel {
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String role;
 
     @OneToOne
     private ProfilePicture profilePicture;
 
-    @Column
+    @NaturalId
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column
@@ -39,11 +40,12 @@ public class User extends AbstractIdentifiableModel {
     public User() {
     }
 
-    public User(String username, String password, ProfilePicture profilePicture, String email) {
+    public User(String username, String password, ProfilePicture profilePicture, String email, String role) {
         this.username = username;
         this.password = password;
         this.profilePicture = profilePicture;
         this.email = email;
+        this.role = role;
     }
 
     //Getters and Setters
@@ -79,4 +81,32 @@ public class User extends AbstractIdentifiableModel {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public HashMap getUserLikes() {
+        return userLikes;
+    }
+
+    public void setUserLikes(HashMap userLikes) {
+        this.userLikes = userLikes;
+    }
+
+    public HashMap getUserDislikes() {
+        return userDislikes;
+    }
+
+    public void setUserDislikes(HashMap userDislikes) {
+        this.userDislikes = userDislikes;
+    }
+
+    public String getRole() { return role; }
+
+    public void setRole(String role) { this.role = role;}
 }

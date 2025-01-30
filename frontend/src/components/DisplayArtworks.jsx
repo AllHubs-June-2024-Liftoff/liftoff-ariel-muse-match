@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react";
 import getImage from "./image/GetImage";
 import fetchArtworks from "./match/FetchArtworks";
-import "../App.css";
+import "../styles/App.css";
 import TinderCard from "react-tinder-card";
+import { useAuth } from "../components/auth/AuthContext";
+
 
 
 function DisplayArtworks() {
@@ -11,6 +13,7 @@ function DisplayArtworks() {
   const [error, setError] = useState(null);
   const [imageSources, setImageSources] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
+  const {getCsrfToken} = useAuth();
     
     useEffect(() => {
 
@@ -75,97 +78,97 @@ function DisplayArtworks() {
 
 
       //Logic for sending a like to the backend
-      const sendLike = (artwork) => {
+      const sendLike =  async(artwork) => {
         if (!artwork) return;
 
 
         const likedArtwork = {
-            id: artwork.id,
-            title: artwork.title,
-            altText: artwork.thumbnail?.alt_text,
-            placeOfOrigin: artwork.place_of_origin,
-            description: artwork.description,
-            artType: artwork.artwork_type_title,
-            artistId: artwork.artist_id,
-            artistTitle: artwork.artist_title,
-            styleTitle: artwork.style_title,
-            artMovement: artwork.style_title,
-            imageId: artwork.image_id,
-            artYearFinished: artwork.date_end,
+          artworkId: artwork.id,
+          title: artwork.title,
+          altText: artwork.thumbnail?.alt_text,
+          placeOfOrigin: artwork.place_of_origin,
+          description: artwork.description,
+          artType: artwork.artwork_type_title,
+          artistId: artwork.artist_id,
+          artistTitle: artwork.artist_title,
+          artMovement: artwork.style_title,
+          imageId: artwork.image_id,
+          artYearFinished: artwork.date_end,
         };
-
         console.log(JSON.stringify(likedArtwork));
+        const token = await getCsrfToken();
+        console.log(token)
         fetch("http://localhost:8080/api/like/save", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify(likedArtwork), //better to deserialize on the front end rather than the backend (more efficient)
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-XSRF-TOKEN": token,
+          },
+          credentials: "include", 
+          body: JSON.stringify(likedArtwork), //better to deserialize on the front end rather than the backend (more efficient)
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to save like");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log("Like saved successfully:", data);
-            })
-            .catch((error) => {
-                console.error("Error saving like:", error);
-            });
-    };
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to save like");
+            }
+            return response.json(); 
+          })
+          .then((data) => {
+            console.log("Like saved successfully:", data);
+          })
+          .catch((error) => {
+            console.error("Error saving like:", error);
+          });
+      }
 
-    //Logic for sending a dislike to the backend
-    const sendDislike = (artwork) => {
+      //Logic for sending a dislike to the backend
+      const sendDislike = (artwork) => {
         if (!artwork) return;
 
         const dislikedArtwork = {
-            id: artwork.id,
-            title: artwork.title,
-            altText: artwork.thumbnail?.alt_text,
-            placeOfOrigin: artwork.place_of_origin,
-            description: artwork.description,
-            artType: artwork.artwork_type_title,
-            artistId: artwork.artist_id,
-            artistTitle: artwork.artist_title,
-            styleTitle: artwork.style_title,
-            artMovement: artwork.style_title,
-            imageId: artwork.image_id,
-            artYearFinished: artwork.date_end,
-        };
+          artworkId: artwork.id,
+          title: artwork.title,
+          altText: artwork.thumbnail?.alt_text,
+          placeOfOrigin: artwork.place_of_origin,
+          description: artwork.description,
+          artType: artwork.artwork_type_title,
+          artistId: artwork.artist_id,
+          artistTitle: artwork.artist_title,
+          artMovement: artwork.style_title,
+          imageId: artwork.image_id,
+          artYearFinished: artwork.date_end,
+      };
 
-        fetch("http://localhost:8080/api/dislike/save", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify(dislikedArtwork),
+      fetch("http://localhost:8080/api/dislike/save", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(dislikedArtwork),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to save dislike");
+          }
+          return response.json();
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to save dislike");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log("dislike saved successfully:", data);
-            })
-            .catch((error) => {
-                console.error("Error saving dislike:", error);
-            });
-    };
-
-    const outOfFrame = () => {
-        setCurrentIndex((prevIndex) => {
-            return prevIndex + 1;
+        .then((data) => {
+          console.log("dislike saved successfully:", data);
+        })
+        .catch((error) => {
+          console.error("Error saving dislike:", error);
         });
+      }
+
+      const outOfFrame = () => {
+        setCurrentIndex((prevIndex) => {
+        return prevIndex + 1;
+      });
     };
 
     const handleMouseDown = (event) => {
-        event.preventDefault();
+      event.preventDefault();
     };
 
     const handleDragStart = (event) => {
@@ -177,28 +180,30 @@ function DisplayArtworks() {
           <div>
             <div 
             className="cardContainer"
+            style={{maxWidth:"30%"}}
             onMouseDown={handleMouseDown} 
             >
               {artworks.map((artwork, index) => (
                 <div
                   key={artwork.id}
                   style={{ display: index === currentIndex ? "block" : "none" }}
+                >
+                <div className="tinderCardWrapper"> 
+                  <TinderCard 
+                  className="swipe"
+                  onSwipe={(dir) => swiped(dir, artwork)}
+                  onCardLeftScreen={() => outOfFrame(artwork.id)}
+                  preventSwipe={["up", "down"]}
+                  swipeRequirementType="positon"
+                  swipeThreshold={100}
+                  onDragStart={handleDragStart}
                   >
-                    <div className="tinderCardWrapper"> 
-                <TinderCard 
-                className="swipe"
-                onSwipe={(dir) => swiped(dir, artwork)}
-                onCardLeftScreen={() => outOfFrame(artwork.id)}
-                preventSwipe={["up", "down"]}
-                swipeRequirementType="position"
-                swipeThreshold={10}
-                onDragStart={handleDragStart}
-            >
                  <div className="card">
                   <img
                     className="artwork-image"
                     src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
-                    alt={artwork.thumbnail?.alt_text}
+                    alt={artwork.thumbnail?.alt_text} 
+                    style={{maxWidth: "inherit", maxHeight:"inherit"}}
                   />
                   <h2>{artwork.title}</h2>
                   <p>{artwork.classification_title}</p>
@@ -210,7 +215,7 @@ function DisplayArtworks() {
             </div>
           </div>
         </>
-    );
-}
-
-export default DisplayArtworks;
+      );
+      }
+    
+      export default DisplayArtworks;

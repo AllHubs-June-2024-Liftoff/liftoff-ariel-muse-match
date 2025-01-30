@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import { ThemeProvider } from './components/Themes.jsx'
+import DisplayArtworks from './components/DisplayArtworks.jsx'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { useState } from 'react'
 import Layout from './components/layout/Layout'
 import Home from './components/pages/Home'
 import './styles/App.css'
@@ -19,33 +20,35 @@ function App() {
 
   return (
     <Router>
-      <AuthProvider>
-        <Layout>
-          <Routes>
-            <Route path='/' element={<Home/>}/>
-            <Route path='my-profile'
-            element={
-              <ProtectedRoute>
-                <UserProfile/>
-              </ProtectedRoute>}
-            />
-            {/* <Route path='my-profile' element={<UserProfile/>}/> */}
-            <Route path='settings'
-            element={
-              <ProtectedRoute>
-                <MySettings/>
-              </ProtectedRoute>}
-            />
-            {/* <Route path='settings' element={<MySettings/>}/> */}
-            <Route path='sign-up' element={<SignUp/>}/>
-            <Route path='login' element={<Login/>} />
-            <Route path='match' element={<Match/>} />
-            <Route path='contacts' element={<Contact/>} />
-            <Route path='give' element={<Give/>} />
+      <ThemeProvider>
+        <AuthProvider>
+          <Layout>
+            <Routes>
+              <Route path='/' element={<Home/>}/>
+              <Route path='my-profile'
+              element={
+                <ProtectedRoute>
+                  <UserProfile/>
+                </ProtectedRoute>}
+              />
+              {/* <Route path='my-profile' element={<UserProfile/>}/> */}
+              <Route path='settings'
+              element={
+                <ProtectedRoute>
+                  <MySettings/>
+                </ProtectedRoute>}
+              />
+              {/* <Route path='settings' element={<MySettings/>}/> */}
+              <Route path='sign-up' element={<SignUp/>}/>
+              <Route path='login' element={<Login/>} />
+              <Route path='match' element={<Match/>} />
+              <Route path='contacts' element={<Contact/>} />
+              <Route path='give' element={<Give/>} />
 
-          </Routes>
-        </Layout>
-      </AuthProvider>
+            </Routes>
+          </Layout>
+        </AuthProvider>
+      </ThemeProvider>
     </Router>
   )
 }

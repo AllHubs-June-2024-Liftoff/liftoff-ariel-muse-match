@@ -14,61 +14,41 @@ import java.util.Set;
 @Repository
 public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long> {
 
-	@Query(value = "SELECT DISTINCT a.artist_title " +
-			"FROM liked_artworks d " +
-			"JOIN artworks a ON d.artwork_id = a.id " +
-			"WHERE d.user_id = :userId " +
-			"AND a.artist_title IS NOT NULL",
-			nativeQuery = true)
-	Set<String> findDistinctArtistTitleByUser(@Param("userId") Long userId);
+	@Query()
+	Set<String> findDistinctArtistTitleByOwner(@Param("ownerId") Long ownerId);
 
-	@Query(value = "SELECT DISTINCT a.style_title " +
-			"FROM liked_artworks d " +
-			"JOIN artworks a ON d.artwork_id = a.id " +
-			"WHERE d.user_id = :userId " +
-			"AND a.style_title IS NOT NULL",
-			nativeQuery = true)
-	Set<String> findDistinctArtMovementByUser(@Param("userId") Long userId);
+	@Query()
+	Set<String> findDistinctArtMovementByOwner(@Param("ownerId") Long ownerId);
 
-	@Query(value = "SELECT DISTINCT a.artwork_type_title " +
-			"FROM liked_artworks d " +
-			"JOIN artworks a ON d.artwork_id = a.id " +
-			"WHERE d.user_id = :userId " +
-			"AND a.artwork_type_title IS NOT NULL",
-			nativeQuery = true)
-	Set<String> findDistinctArtTypeByUser(@Param("userId") Long userId);
+	@Query()
+	Set<String> findDistinctArtTypeByOwner(@Param("ownerId") Long ownerId);
 
-	@Query(value = "SELECT DISTINCT a.art_year_finished " +
-			"FROM liked_artworks d " +
-			"JOIN artworks a ON d.artwork_id = a.id " +
-			"WHERE d.user_id = :userId " +
-			"AND a.art_year_finished IS NOT NULL",
-			nativeQuery = true)
-	Set<String> findDistinctArtYearFinishedByUser(@Param("userId") Long userId);
+	@Query()
+	Set<String> findDistinctArtYearFinishedByOwner(@Param("ownerId") Long ownerId);
 
 	@Query("SELECT COUNT(d) FROM LikedArtwork d " +
 			"WHERE d.artwork.artistTitle = :artistTitle " +
-			"AND d.user.id = :userId")
-	long countByArtistTitleAndUserId(@Param("artistTitle") String artistTitle,
-	                                 @Param("userId") Long userId);
+			"AND d.owner.id = :ownerId")
+	long countByArtistTitleAndOwnerId(@Param("artistTitle") String artistTitle,
+	                                 @Param("ownerId") Long ownerId);
 
 	@Query("SELECT COUNT(d) FROM LikedArtwork d " +
 			"WHERE d.artwork.artMovement = :artMovement " +
-			"AND d.user.id = :userId")
-	long countByArtMovementAndUserId(@Param("artMovement") String artMovement,
-	                                 @Param("userId") Long userId);
+			"AND d.owner.id = :ownerId")
+	long countByArtMovementAndOwnerId(@Param("artMovement") String artMovement,
+	                                 @Param("ownerId") Long ownerId);
 
 	@Query("SELECT COUNT(d) FROM LikedArtwork d " +
 			"WHERE d.artwork.artType = :artType " +
-			"AND d.user.id = :userId")
-	long countByArtTypeAndUserId(@Param("artType") String artType,
-	                             @Param("userId") Long userId);
+			"AND d.owner.id = :ownerId")
+	long countByArtTypeAndOwnerId(@Param("artType") String artType,
+	                             @Param("ownerId") Long ownerId);
 
 	@Query("SELECT COUNT(d) FROM LikedArtwork d " +
 			"WHERE d.artwork.artYearFinished = :artYearFinished " +
-			"AND d.user.id = :userId")
-	long countByArtYearFinishedAndUserId(@Param("artYearFinished") String artYearFinished,
-	                                     @Param("userId") Long userId);
+			"AND d.owner.id = :ownerId")
+	long countByArtYearFinishedAndOwnerId(@Param("artYearFinished") String artYearFinished,
+	                                     @Param("ownerId") Long userId);
 
-	List<LikedArtwork> findByUser(User user);
+	List<LikedArtwork> findByOwner(User owner);
 }
