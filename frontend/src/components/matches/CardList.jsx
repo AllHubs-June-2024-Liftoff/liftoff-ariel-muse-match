@@ -1,38 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import CustomCard from './CustomCard';
+import ShareMuseButton from './ShareMuseButton.jsx';
+import { useAuth } from "../auth/AuthContext";
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import CustomCard from './CustomCard.jsx';
 
-function CardList() {
+
+export default function CardList() {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-          console.log("Got here: cardlist")
 
-    const fetchMatches = async () => {
+    const fetchMatches = async (q) => {
       try {
-          console.log("got here #2");
-          const userId = 1;
-        const response = await fetch(`http://localhost:8080/api/matches/${userId}`, {
+        const response = await fetch(`http://localhost:8080/matches`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
           credentials: "include",
         });
-    console.log("got here #3");
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch matches');
-        }
         const data = await response.json();
-        console.log("Fetched matches data:", data);
-        console.log("got here #4");
         setMatches(data);
         setLoading(false);
-        console.log(data);
         }
         catch (error){
-            console.log("got here: #5");
-        console.error('Error fetching matches:', error);
         setLoading(false);
         }
 
@@ -46,19 +39,23 @@ function CardList() {
   }
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-      {matches.map((match) => (
-        <CustomCard
-          artistId={match.artistId}
-          artistName={match.artistTitle}
-          artworkTypeTitle={match.artType}
-          picture={match.imageId}
-          placeOfOrigin={match.placeOfOrigin}
-          styleTitle={match.artMovement}
-        />
+      <>
+    <h1 style={{ textAlign: 'center' }}>Matches</h1>
+    <Row xs={1} md={2} lg={3}className="g-4">
+      {matches.map((match, idx) => (
+        <Col key={idx}>
+          <CustomCard
+           key={match.id}
+           artistName={match.artistTitle}
+           styleTitle={match.artMovement}
+           artType={match.artType}
+           placeOfOrigin={match.placeOfOrigin}
+           imageId={match.imageId}
+          >
+          </CustomCard>
+        </Col>
       ))}
-    </div>
+    </Row>
+    </>
   );
 }
-
-export default CardList;

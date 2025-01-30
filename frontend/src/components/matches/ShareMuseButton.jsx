@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import Popper from '@mui/material/Popper';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from "react-share";
+import { FacebookIcon, TwitterIcon, LinkedinIcon } from "react-share";
 
-function ShareMuseButton({ shareUrl }) {
+
+export default function ShareMuseButton({ shareUrl }) {
     console.log("got here share muse botton");
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -15,36 +14,39 @@ function ShareMuseButton({ shareUrl }) {
   };
 
   const id = open ? 'social-share-popper' : undefined;
+  const title = "Check out my Muse!";
 
   const shareMessage = 'Musematch for real';
 
   return (
     <>
-      <Button aria-describedby={id} type="button" variant="contained" onClick={handleClick}>
-        Share
-      </Button>
-      <Popper id={id} open={open} anchorEl={anchorEl}>
-        <Box sx={{ border: 1, p: 2, bgcolor: 'background.paper', textAlign: 'center' }}>
-          <p>Share on:</p>
-          <FacebookShareButton url={shareUrl} quote={shareMessage}>
-            <Button variant="outlined" color="primary" sx={{ m: 1 }}>
-              Facebook
-            </Button>
-          </FacebookShareButton>
-          <TwitterShareButton url={shareUrl} title={shareMessage}>
-            <Button variant="outlined" color="primary" sx={{ m: 1 }}>
-              Twitter
-            </Button>
-          </TwitterShareButton>
-          <LinkedinShareButton url={shareUrl} summary={shareMessage}>
-            <Button variant="outlined" color="primary" sx={{ m: 1 }}>
-              LinkedIn
-            </Button>
-          </LinkedinShareButton>
-        </Box>
-      </Popper>
+
+       <Dropdown className="d-inline mx-2">
+          <Dropdown.Toggle id="dropdown-autoclose-true">
+            Share Muse
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item href="#">
+                <FacebookShareButton url={shareUrl} quote={title}>
+                    <FacebookIcon size={32} round />
+                </FacebookShareButton>
+            </Dropdown.Item>
+            <Dropdown.Item href="#">
+                <TwitterShareButton url={shareUrl} title={title}>
+                    <TwitterIcon size={32} round />
+                </TwitterShareButton></Dropdown.Item>
+            <Dropdown.Item href="#">
+                <LinkedinShareButton url={shareUrl} title={title}>
+                    <LinkedinIcon size={32} round />
+                </LinkedinShareButton>
+                </Dropdown.Item>
+            </Dropdown.Menu>
+       </Dropdown>
     </>
-  );
+    )
 }
 
-export default ShareMuseButton;
+
+
+
+

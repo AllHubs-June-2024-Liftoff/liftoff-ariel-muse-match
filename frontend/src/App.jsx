@@ -14,7 +14,7 @@ import { AuthProvider, useAuth } from './components/auth/AuthContext'
 import Match from './components/pages/Match'
 import Contact from './components/pages/Contact'
 import Give from './components/pages/Give'
-import CardList from './components/matches/Cardlist.jsx'
+import CardList from './components/matches/CardList'
 
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
                   <MySettings/>
                 </ProtectedRoute>}
               />
-              <Route path='settings'
+              <Route path='matches'
               element={
                   <ProtectedRoute>
                       <CardList/>

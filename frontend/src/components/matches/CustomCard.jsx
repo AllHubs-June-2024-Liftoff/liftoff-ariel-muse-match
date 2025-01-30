@@ -1,35 +1,64 @@
-import React from 'react';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import ShareMuseButton from './ShareMuseButton';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+import ShareMuseButton from './ShareMuseButton.jsx';
+import MenuAlignExample from './Dropdown.jsx';
+import getImage from '../image/GetImage.jsx';
+import React, { useRef, useEffect, useState } from "react";
 
-function CustomCard({ artistId, artistName, artType, picture, placeOfOrigin, artMovement }) {
+export default function CustomCard(match) {
+ const [imageUrl, setImageUrl] = useState(null);
+ const [loading, setLoading] = useState(true);
 
-    let id = 1;
-  const shareUrl = `localhost:5173/match/${id}`;
+  useEffect(() => {
+    console.log('This is a matched.picture' + match.imageId);
 
+    const fetchImage = async(picture) => {
+      const fetchedImageUrl = await getImage(picture);
+      console.log("Fetched image URL:", fetchedImageUrl);
+      setImageUrl(fetchedImageUrl);
+      setLoading(false);
+    };
+
+    fetchImage(match.imageId);
+
+  }, [match.imageId]); // figure this one out
+   if (loading) {
+      return (
+        <Card style={{ width: '18rem' }}>
+          <Card.Body>
+            <Card.Text>Loading image...</Card.Text>
+          </Card.Body>
+        </Card>
+      );
+    }
   return (
-    <Card sx={{ maxWidth: 300, margin: 2 }}>
-      <CardMedia component="img" height="140" image={picture} alt={`${artistName}`} />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {artistName}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {artworkTypeTitle}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {placeOfOrigin}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {styleTitle}
-        </Typography>
-        <ShareMuseButton shareUrl={shareUrl} />
-      </CardContent>
+    <Card style={{ width: '18rem' }}>
+        <Card.Title>
+            <Link to={`https://api.artic.edu/api/v1/artworks?artist_id=${match.artistId}`} style={{ textDecoration: 'none' }}>
+                        {match.artistName || "Could not find artist"}
+                      </Link>
+            </Card.Title>
+  <Card.Img
+    style={{
+      objectFit: 'contain',
+      height: '200px',
+      width: '100%'
+    }}
+    variant="top"
+    src={imageUrl}
+  />
+      <Card.Body>
+
+        <Card.Title>{match.styleTitle || "Could not find style"}</Card.Title>
+        <Card.Title>{match.artType || "Could not find art type"}</Card.Title>
+        <Card.Title>{match.placeOfOrigin || "Could not find place of origin"}</Card.Title>
+        <Card.Text>
+          Description
+        </Card.Text>
+        <Button variant="primary"><MenuAlignExample/></Button>
+      </Card.Body>
     </Card>
   );
 }
 
-export default CustomCard;
