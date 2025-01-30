@@ -11,5 +11,5 @@ import java.util.List;
 public interface MatchRepository extends JpaRepository<Match, Long> {
 	List<Match> findByUser(User user);
 
-	boolean existsByOwnerAndArtistId(User user, Long artistId);
+	boolean existsByOwnerAndArtistId(User user, String artistId);
 }
