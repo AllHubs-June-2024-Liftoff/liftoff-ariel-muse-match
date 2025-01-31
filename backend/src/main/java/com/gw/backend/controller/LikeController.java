@@ -39,13 +39,9 @@ public class LikeController {
     @PutMapping("/save")
     public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session, Authentication authentication) {
         if (errors.hasErrors()) {
-            System.out.println("Got here: ");
-
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        //TEST VALUE FOR USER
-        //User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
         String username = authentication.getName();
         User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
 
@@ -96,7 +92,7 @@ public class LikeController {
         if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
             Match match = new Match(owner, artistId);
             matchRepository.save(match);
-            matched = true;
+            matched = true; //ADDRESS ME
 
         }
     }
@@ -124,4 +120,4 @@ public class LikeController {
         return matchingArtistIds;
     }
 
-};
+}

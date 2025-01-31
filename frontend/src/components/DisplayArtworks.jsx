@@ -122,7 +122,7 @@ function DisplayArtworks() {
       }
 
       //Logic for sending a dislike to the backend
-      const sendDislike = (artwork) => {
+      const sendDislike = async (artwork) => {
         if (!artwork) return;
 
         const dislikedArtwork = {
@@ -139,10 +139,13 @@ function DisplayArtworks() {
           artYearFinished: artwork.date_end,
       };
 
+      const token = await getCsrfToken();
+        console.log(token)
       fetch("http://localhost:8080/api/dislike/save", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "X-XSRF-TOKEN": token,
         },
         credentials: "include",
         body: JSON.stringify(dislikedArtwork),
@@ -180,7 +183,7 @@ function DisplayArtworks() {
           <div>
             <div 
             className="cardContainer"
-            style={{maxWidth:"30%"}}
+           // style={{maxWidth:"30%"}}
             onMouseDown={handleMouseDown} 
             >
               {artworks.map((artwork, index) => (

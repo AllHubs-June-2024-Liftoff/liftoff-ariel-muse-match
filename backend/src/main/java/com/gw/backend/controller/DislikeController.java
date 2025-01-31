@@ -43,6 +43,7 @@ public class DislikeController {
 
         if (owner == null) {
             return new ResponseEntity<String>("You must be logged in to dislike artworks", HttpStatus.UNAUTHORIZED);
+        }
 
 
             DislikedArtwork dislikedArtwork = new DislikedArtwork();
@@ -69,4 +70,3 @@ public class DislikeController {
             }
         }
     }
-};
