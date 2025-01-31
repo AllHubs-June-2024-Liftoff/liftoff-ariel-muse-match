@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Repository
 public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long> {
-    List<LikedArtwork> findByOwner(User owner);
+
     boolean existsByOwnerAndArtworkId(User owner, String artworkId);
 
     LikedArtwork findFirstByArtistId(String matchedArtistId);

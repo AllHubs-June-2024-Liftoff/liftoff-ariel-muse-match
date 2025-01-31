@@ -59,7 +59,6 @@ public class MatchService {
                     muse.setArtType(artist.getArtType());
                     muse.setImageId(artist.getImageId());
                     muse.setPlaceOfOrigin(artist.getPlaceOfOrigin());
-                    muse.
                     muses.add(muse);
                 }
                 return muses;

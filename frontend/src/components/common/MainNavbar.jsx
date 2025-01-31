@@ -23,7 +23,7 @@ export default function MainNavbar() {
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="me-auto">
 							<Nav.Link href="/">Home</Nav.Link>
-							<Nav.Link href="match">Matches</Nav.Link>
+							<Nav.Link href="matches">Matches</Nav.Link>
 							<Nav.Link href="contacts">Contacts</Nav.Link>
 							<Nav.Link href="give">Give</Nav.Link>
 							{isAuthenticated ? (

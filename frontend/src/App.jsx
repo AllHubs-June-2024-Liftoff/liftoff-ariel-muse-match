@@ -15,6 +15,7 @@ import Match from "./components/pages/Match";
 import Contact from "./components/pages/Contact";
 import Give from "./components/pages/Give";
 import Stats from "./components/pages/Stats";
+import Matches from "./components/pages/Matches";
 
 function App() {
 	return (
@@ -53,7 +54,7 @@ function App() {
 							"
 							<Route path="sign-up" element={<SignUp />} />
 							<Route path="login" element={<Login />} />
-							<Route path="match" element={<Match />} />
+							<Route path="matches" element={<Matches />} />
 							<Route path="contacts" element={<Contact />} />
 							<Route path="give" element={<Give />} />
 						</Routes>
