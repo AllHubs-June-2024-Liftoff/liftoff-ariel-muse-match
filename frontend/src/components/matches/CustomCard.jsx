@@ -25,7 +25,7 @@ export default function CustomCard(match) {
   }, [match.imageId]); // figure this one out
    if (loading) {
       return (
-        <Card style={{ width: '18rem' }}>
+        <Card  className="custom-card" style={{ width: '18rem' }}>
           <Card.Body>
             <Card.Text>Loading image...</Card.Text>
           </Card.Body>
@@ -33,7 +33,7 @@ export default function CustomCard(match) {
       );
     }
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card className="custom-card" style={{ width: '18rem' }}>
         <Card.Title>
             <Link to={`https://api.artic.edu/api/v1/artworks?artist_id=${match.artistId}`} style={{ textDecoration: 'none' }}>
                         {match.artistName || "Could not find artist"}
