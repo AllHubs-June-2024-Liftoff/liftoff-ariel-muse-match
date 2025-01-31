@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MatchRepository extends JpaRepository<Match, Long> {
-	List<Match> findByOwner(User owner);
-
-	boolean existsByOwnerAndArtistId(User user, String artistId);
+public interface MatchRepository extends JpaRepository<Match, Long>{
+        List<Match> findByOwner(User owner);
+        boolean existsByOwnerAndArtistId(User owner, String artistId);
+        List<Match> findAllByOwner(User user);
 }

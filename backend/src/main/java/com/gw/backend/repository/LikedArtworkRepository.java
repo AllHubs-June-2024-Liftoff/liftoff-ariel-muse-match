@@ -14,6 +14,10 @@ import java.util.Set;
 @Repository
 public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long> {
 
+    boolean existsByOwnerAndArtworkId(User owner, String artworkId);
+
+    LikedArtwork findFirstByArtistId(String matchedArtistId);
+
 	@Query("SELECT DISTINCT d.artistTitle " +
 			"FROM LikedArtwork d " +
 			"WHERE d.owner.id = :ownerId " +
