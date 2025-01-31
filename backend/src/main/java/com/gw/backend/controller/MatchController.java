@@ -1,8 +1,8 @@
 package com.gw.backend.controller;
 
-import com.gw.backend.dto.ArtworkDto;
 import com.gw.backend.models.Muse;
 import com.gw.backend.models.user.User;
+import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import com.gw.backend.service.MatchService;
 import org.slf4j.Logger;
@@ -23,13 +23,14 @@ public class MatchController {
     private Logger logger = LoggerFactory.getLogger(MatchController.class);
     private final MatchService matchService;
     private final UserRepository userRepository;
+    private final MatchRepository matchRepository;
 
 
     @Autowired
-    public MatchController(MatchService matchService, UserRepository userRepository) {
-
+    public MatchController(MatchService matchService, UserRepository userRepository, MatchRepository matchRepository) {
         this.matchService = matchService;
         this.userRepository = userRepository;
+        this.matchRepository = matchRepository;
     }
 
     @GetMapping("")
@@ -39,5 +40,18 @@ public class MatchController {
         muses = matchService.getListOfMusesFromUserMatches();
         return new ResponseEntity<>(muses, HttpStatus.OK);
     }
+    @PutMapping("/save/{id}")
+    public ResponseEntity<?> saveReflection(@RequestBody String reflection, @PathVariable Long id) {
+        try {
+            matchService.saveReflection(reflection, id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error saving reflection", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
 
 }

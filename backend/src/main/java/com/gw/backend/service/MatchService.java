@@ -11,6 +11,8 @@ import com.gw.backend.repository.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -22,50 +24,65 @@ import java.util.Optional;
 @Service
 public class MatchService {
 
-    private static final Logger logger = LoggerFactory.getLogger(MatchService.class);
+	private static final Logger logger = LoggerFactory.getLogger(MatchService.class);
 
-    private final LikedArtworkRepository likedArtworkRepository;
-    private final MatchRepository matchRepository;
-    private final UserRepository userRepository;
-    private final MuseRepository museRepository;
-    @Autowired
-    public MatchService(MatchRepository matchRepository, LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MuseRepository museRepository)
-    {
-        this.matchRepository = matchRepository;
-        this.likedArtworkRepository = likedArtworkRepository;
-        this.userRepository = userRepository;
-        this.museRepository = museRepository;
-    }
+	private final LikedArtworkRepository likedArtworkRepository;
+	private final MatchRepository matchRepository;
+	private final UserRepository userRepository;
+	private final MuseRepository museRepository;
 
-    public List<Muse> getListOfMusesFromUserMatches()
-    {
+	@Autowired
+	public MatchService(MatchRepository matchRepository, LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MuseRepository museRepository) {
+		this.matchRepository = matchRepository;
+		this.likedArtworkRepository = likedArtworkRepository;
+		this.userRepository = userRepository;
+		this.museRepository = museRepository;
+	}
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Optional<User> optionalUser = userRepository.findByUsername(username);
-        try{
-            if(optionalUser.isPresent())
-            {
-                User user = optionalUser.get();
-                List<Muse> muses = new ArrayList<>();
-                List<Match> scopedMatches = matchRepository.findAllByOwner(user);
-                for(Match match : scopedMatches){
-                    String matchedArtistId = match.getArtistId();
-                    LikedArtwork artist = likedArtworkRepository.findFirstByArtistId(matchedArtistId);
-                    Muse muse = new Muse();
-                    muse.setArtistId(artist.getArtistId());
-                    muse.setArtistTitle(artist.getArtistTitle());
-                    muse.setArtMovement(artist.getArtMovement());
-                    muse.setArtType(artist.getArtType());
-                    muse.setImageId(artist.getImageId());
-                    muse.setPlaceOfOrigin(artist.getPlaceOfOrigin());
-                    muses.add(muse);
-                }
-                return muses;
-            }
-        }catch(Exception e){
-            logger.debug("User was not found in the database when searching for matches" + e.getMessage());
-        }
-        return null;
-    }
+	public List<Muse> getListOfMusesFromUserMatches() {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Optional<User> optionalUser = userRepository.findByUsername(username);
+		try {
+			if (optionalUser.isPresent()) {
+				User user = optionalUser.get();
+				List<Muse> muses = new ArrayList<>();
+				List<Match> scopedMatches = matchRepository.findAllByOwner(user);
+				for (Match match : scopedMatches) {
+					String matchedArtistId = match.getArtistId();
+					LikedArtwork artist = likedArtworkRepository.findFirstByArtistId(matchedArtistId);
+					Muse muse = new Muse();
+					muse.setArtistId(artist.getArtistId());
+					muse.setArtistTitle(artist.getArtistTitle());
+					muse.setArtMovement(artist.getArtMovement());
+					muse.setArtType(artist.getArtType());
+					muse.setImageId(artist.getImageId());
+					muse.setPlaceOfOrigin(artist.getPlaceOfOrigin());
+					muse.setReflection(match.getReflection());
+					muses.add(muse);
+				}
+				return muses;
+			}
+		} catch (Exception e) {
+			logger.debug("User was not found in the database when searching for matches" + e.getMessage());
+		}
+		return null;
+	}
+
+	public ResponseEntity<?> saveReflection(String reflection, Long id) {
+		Optional<Match> optionalMatch = matchRepository.findById(id);
+		try {
+			if (optionalMatch.isPresent()) {
+				Match match = optionalMatch.get();
+				match.setReflection(reflection);
+				matchRepository.save(match);
+				return new ResponseEntity<>(HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			logger.error("Error saving reflection", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }

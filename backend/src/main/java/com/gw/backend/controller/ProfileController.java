@@ -7,6 +7,8 @@ import com.gw.backend.models.user.User;
 import com.gw.backend.repository.user.UserRepository;
 import com.gw.backend.service.stats.StatsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +29,14 @@ public class ProfileController {
 	}
 
 	@GetMapping("/stats/{category}/{sortBy}")
-	public List<? extends StatsCategory> deliverSortedStats(@PathVariable String category, @PathVariable String sortBy, Authentication authentication) {
+	public ResponseEntity<List<? extends StatsCategory>> deliverSortedStats(@PathVariable String category, @PathVariable String sortBy, Authentication authentication) {
 		String username = authentication.getName();
 		User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
-		return (
-				StatCategories.valueOf(category.toUpperCase())
-						.convert(statsService)
-						.getStats(SortingCriteria
-								.valueOf(sortBy.toUpperCase()), owner.getId())
-		);
+		List<? extends StatsCategory> stats = StatCategories.valueOf(category.toUpperCase())
+				.convert(statsService)
+				.getStats(SortingCriteria
+						.valueOf(sortBy.toUpperCase()), owner.getId());
+		return new ResponseEntity<>(stats, HttpStatus.OK);
 	}
 
 }

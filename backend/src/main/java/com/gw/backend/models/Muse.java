@@ -1,6 +1,7 @@
 package com.gw.backend.models;
 
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 @Entity
@@ -12,16 +13,20 @@ public class Muse  extends AbstractIdentifiableModel {
     private String artMovement;
     private String imageId;
 
+    @Column(name = "reflection", nullable = true, columnDefinition = "TEXT")
+    private String reflection;
+
     public Muse() {
     }
 
-    public Muse(String artistId, String placeOfOrigin, String artType, String artistTitle, String artMovement, String imageId) {
+    public Muse(String artistId, String placeOfOrigin, String artType, String artistTitle, String artMovement, String imageId, String reflection) {
         this.artistId = artistId;
         this.placeOfOrigin = placeOfOrigin;
         this.artType = artType;
         this.artistTitle = artistTitle;
         this.artMovement = artMovement;
         this.imageId = imageId;
+        this.reflection = reflection;
     }
 
     public void setArtistId(String artistId) {
@@ -70,5 +75,13 @@ public class Muse  extends AbstractIdentifiableModel {
 
     public String getImageId() {
         return imageId;
+    }
+
+    public String getReflection() {
+        return reflection;
+    }
+
+    public void setReflection(String reflection) {
+        this.reflection = reflection;
     }
 }
