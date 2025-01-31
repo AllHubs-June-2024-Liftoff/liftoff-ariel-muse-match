@@ -50,9 +50,9 @@ export default function CustomCard(match) {
   />
       <Card.Body>
 
-        <Card.Title>{match.styleTitle || "Could not find style"}</Card.Title>
-        <Card.Title>{match.artType || "Could not find art type"}</Card.Title>
-        <Card.Title>{match.placeOfOrigin || "Could not find place of origin"}</Card.Title>
+        <Card.Subtitle>{match.styleTitle || "Could not find style"}</Card.Title>
+        <Card.Subtitle>{match.artType || "Could not find art type"}</Card.Title>
+        <Card.Subtitle>{match.placeOfOrigin || "Could not find place of origin"}</Card.Title>
         <Card.Text>
           Description
         </Card.Text>
