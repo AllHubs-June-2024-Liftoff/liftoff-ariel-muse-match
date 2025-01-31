@@ -8,14 +8,12 @@ import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
@@ -46,8 +44,6 @@ public class LikeController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        //TEST VALUE FOR USER
-        //User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("user not found"));
         String username = authentication.getName();
         User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
 
@@ -59,15 +55,16 @@ public class LikeController {
 
         likedArtwork.setOwner(owner);
         likedArtwork.setArtworkId(ArtworkDto.getArtworkId());
-        likedArtwork.setArtworkTitle(ArtworkDto.getArtworkTitle());
+        likedArtwork.setTitle(ArtworkDto.getTitle());
         likedArtwork.setAltText(ArtworkDto.getAltText());
         likedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
         likedArtwork.setDescription(ArtworkDto.getDescription());
-        likedArtwork.setArtworkTypeTitle(ArtworkDto.getArtworkTypeTitle());
+        likedArtwork.setArtType(ArtworkDto.getArtType());
         likedArtwork.setArtistId(ArtworkDto.getArtistId());
         likedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
-        likedArtwork.setStyleTitle(ArtworkDto.getStyleTitle());
+        likedArtwork.setArtMovement(ArtworkDto.getArtMovement());
         likedArtwork.setImageId(ArtworkDto.getImageId());
+        likedArtwork.setArtYearFinished(ArtworkDto.getArtYearFinished());
 
             try {
                 likedArtworkRepository.save(likedArtwork);
@@ -101,8 +98,6 @@ public class LikeController {
 
         }
     }
-
-
 
             private List<String> checkForMatchingArtistIds(User owner) {
         List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);

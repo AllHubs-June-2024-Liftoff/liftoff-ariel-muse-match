@@ -146,7 +146,7 @@ export const  AuthProvider = ({children}) => {
       console.error(error);
     }
   };
-  
+
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, loading, getCsrfToken, userName, email, logout, registerUser}}>

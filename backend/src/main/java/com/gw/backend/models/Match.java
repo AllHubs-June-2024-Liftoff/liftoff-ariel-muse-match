@@ -41,4 +41,12 @@ public class Match extends AbstractIdentifiableModel {
     public void setArtistId(String artistId) {
         this.artistId = artistId;
     }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "owner=" + owner +
+                ", artistId='" + artistId + '\'' +
+                '}';
+    }
 }
