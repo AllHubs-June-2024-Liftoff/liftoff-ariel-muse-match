@@ -71,7 +71,7 @@ function Stats() {
 				value={uri.category}
 				className="buttons"
 			>
-				<ToggleButton>Category</ToggleButton>
+				<ToggleButton disabled>Category</ToggleButton>
 				<ToggleButton onClick={() => changeCategoryPath("type")} value="type">
 					Art Type
 				</ToggleButton>
@@ -98,7 +98,7 @@ function Stats() {
 				className="buttons
 			 "
 			>
-				<ToggleButton>Sort</ToggleButton>
+				<ToggleButton disabled>Sort</ToggleButton>
 				<ToggleButton onClick={() => changeSortPath("total")} value="total">
 					Total
 				</ToggleButton>
