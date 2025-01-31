@@ -50,12 +50,12 @@ public class FetchInitialMatchSet {
             String responseBody = response.getBody();
 
             //Get the current user
-            User owner = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("User not found"));
+            User user = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("User not found"));
 
             //Get the liked artwork IDs of the user
-            List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
+            List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(user);
             Set<String> likedArtworkIds = likedArtworks.stream()
-                    .map(LikedArtwork::getArtworkId) //Transforms each LikedArtwork object to its artworkId value
+                    .map(artwork -> String.valueOf(artwork.getArtistId())) //Transforms each LikedArtwork object to its artworkId value
                     .collect(Collectors.toSet()); //Convert artworkId values to a set
 
             //Parse through response body to extract artwork objects
