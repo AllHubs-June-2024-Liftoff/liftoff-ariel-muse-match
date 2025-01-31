@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface MatchRepository extends JpaRepository<Match, Long> {
-	List<Match> findByUser(User user);
+	List<Match> findByOwner(User owner);
 
 	boolean existsByOwnerAndArtistId(User user, String artistId);
 }

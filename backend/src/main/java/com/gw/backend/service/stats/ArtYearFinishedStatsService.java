@@ -24,19 +24,19 @@ public class ArtYearFinishedStatsService extends StatsService {
 
 
 	@Override
-	public List<ArtYearFinished> getStats(SortingCriteria sortBy, Long userId) {
-		Set<String> distinctSet = likedArtworkRepository.findDistinctArtYearFinishedByUser(userId);
-		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtYearFinishedByUser(userId));
+	public List<ArtYearFinished> getStats(SortingCriteria sortBy, Long ownerId) {
+		Set<Integer> distinctSet = likedArtworkRepository.findDistinctArtYearFinishedByOwner(ownerId);
+		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtYearFinishedByOwner(ownerId));
 		return distinctSet.stream()
-				.map(value -> createStats(value, userId))
+				.map(value -> createStats(String.valueOf(value), ownerId))
 				.sorted(sortBy.getComparator())
 				.toList();
 	}
 
 	@Override
-	public ArtYearFinished createStats(String value, Long userId) {
-		long likes = likedArtworkRepository.countByArtYearFinishedAndUserId(value, userId);
-		long dislikes = dislikedArtworkRepository.countByArtYearFinishedAndUserId(value, userId);
+	public ArtYearFinished createStats(String value, Long ownerId) {
+		long likes = likedArtworkRepository.countByArtYearFinishedAndOwnerId(value, ownerId);
+		long dislikes = dislikedArtworkRepository.countByArtYearFinishedAndOwnerId(value, ownerId);
 		long total = likes + dislikes;
 		Integer percentage = this.findPercentage(likes, dislikes);
 

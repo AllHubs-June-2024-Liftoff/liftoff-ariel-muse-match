@@ -24,19 +24,19 @@ public class ArtMovementStatsService extends StatsService{
 	}
 
 	@Override
-	public List<ArtMovement> getStats(SortingCriteria sortBy, Long userId) {
-		Set<String> distinctSet = likedArtworkRepository.findDistinctArtMovementByUser(userId);
-		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtMovementByUser(userId));
+	public List<ArtMovement> getStats(SortingCriteria sortBy, Long ownerId) {
+		Set<String> distinctSet = likedArtworkRepository.findDistinctArtMovementByOwner(ownerId);
+		distinctSet.addAll(dislikedArtworkRepository.findDistinctArtMovementByOwner(ownerId));
 		return distinctSet.stream()
-				.map(value -> createStats(value, userId))
+				.map(value -> createStats(value, ownerId))
 				.sorted(sortBy.getComparator())
 				.toList();
 	}
 
 	@Override
-	public ArtMovement createStats(String value, Long userId) {
-		long likes = likedArtworkRepository.countByArtMovementAndUserId(value, userId);
-		long dislikes = dislikedArtworkRepository.countByArtMovementAndUserId(value, userId);
+	public ArtMovement createStats(String value, Long ownerId) {
+		long likes = likedArtworkRepository.countByArtMovementAndOwnerId(value, ownerId);
+		long dislikes = dislikedArtworkRepository.countByArtMovementAndOwnerId(value, ownerId);
 		long total = likes + dislikes;
 		Integer percentage = this.findPercentage(likes, dislikes);
 
