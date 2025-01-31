@@ -5,6 +5,7 @@ import ShareMuseButton from "./ShareMuseButton.jsx";
 import MenuAlignExample from "./Dropdown.jsx";
 import getImage from "../image/GetImage.jsx";
 import React, { useRef, useEffect, useState } from "react";
+import Reflection from "./Reflection.jsx";
 
 export default function CustomCard(match) {
 	const [imageUrl, setImageUrl] = useState(null);
@@ -60,7 +61,7 @@ export default function CustomCard(match) {
 				<Button variant="primary">
 					<MenuAlignExample />
 				</Button>
-				<Button>Reflections</Button>
+				<Reflection match={match} />
 			</Card.Body>
 		</Card>
 	);
