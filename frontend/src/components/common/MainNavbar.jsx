@@ -39,7 +39,7 @@ export default function MainNavbar() {
 										</NavDropdown.Item>
 									</NavDropdown>
 									<Button
-										variant="primary"
+										variant="dark"
 										type="submit"
 										onClick={handleLogout}
 									>

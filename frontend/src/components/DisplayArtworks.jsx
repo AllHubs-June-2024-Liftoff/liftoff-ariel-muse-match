@@ -4,6 +4,8 @@ import fetchArtworks from "./match/FetchArtworks";
 import "../styles/App.css";
 import TinderCard from "react-tinder-card";
 import { useAuth } from "../components/auth/AuthContext";
+import Card from 'react-bootstrap/Card';
+
 
 function DisplayArtworks() {
 	const [artworks, setArtworks] = useState([]);
@@ -194,7 +196,7 @@ function DisplayArtworks() {
 									swipeThreshold={100}
 									onDragStart={handleDragStart}
 								>
-									<div className="card">
+									<Card className="custom-card">
 										<img
 											className="artwork-image"
 											src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
@@ -203,7 +205,7 @@ function DisplayArtworks() {
 										/>
 										<h2>{artwork.title}</h2>
 										<p>{artwork.classification_title}</p>
-									</div>
+									</Card>
 								</TinderCard>
 							</div>
 						</div>
