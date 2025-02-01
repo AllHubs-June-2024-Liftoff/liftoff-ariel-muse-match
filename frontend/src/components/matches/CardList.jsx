@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ShareMuseButton from './ShareMuseButton.jsx';
 import { useAuth } from "../auth/AuthContext";
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -52,6 +51,7 @@ export default function CardList() {
            artType={match.artType}
            placeOfOrigin={match.placeOfOrigin}
            imageId={match.imageId}
+           artistId ={match.artistId}
           >
           </CustomCard>
         </Col>
