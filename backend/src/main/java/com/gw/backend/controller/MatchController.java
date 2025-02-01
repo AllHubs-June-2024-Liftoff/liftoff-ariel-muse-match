@@ -1,5 +1,6 @@
 package com.gw.backend.controller;
 
+import com.gw.backend.dto.ReflectionDto;
 import com.gw.backend.models.Muse;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.MatchRepository;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/matches")
 public class MatchController {
 
@@ -41,7 +43,7 @@ public class MatchController {
         return new ResponseEntity<>(muses, HttpStatus.OK);
     }
     @PutMapping("/save/{id}")
-    public ResponseEntity<?> saveReflection(@RequestBody String reflection, @PathVariable Long id) {
+    public ResponseEntity<?> saveReflection(@RequestBody ReflectionDto reflection, @PathVariable Long id) {
         try {
             matchService.saveReflection(reflection, id);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -50,6 +52,7 @@ public class MatchController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
 

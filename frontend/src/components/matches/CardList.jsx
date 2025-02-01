@@ -42,11 +42,13 @@ export default function CardList() {
 					<Col key={idx}>
 						<CustomCard
 							key={match.id}
+							matchId={match.id}
 							artistName={match.artistTitle}
 							styleTitle={match.artMovement}
 							artType={match.artType}
 							placeOfOrigin={match.placeOfOrigin}
 							imageId={match.imageId}
+							reflection={match.reflection}
 						></CustomCard>
 					</Col>
 				))}

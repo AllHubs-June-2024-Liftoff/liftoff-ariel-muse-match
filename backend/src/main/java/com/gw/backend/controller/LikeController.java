@@ -37,7 +37,7 @@ public class LikeController {
     }
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto artworkDto, Errors errors, HttpSession session, Authentication authentication) {
+    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto artworkDto, Errors errors, Authentication authentication) {
         if (errors.hasErrors()) {
             System.out.println("Got here: ");
 

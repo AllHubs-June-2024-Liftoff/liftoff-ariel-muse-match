@@ -6,6 +6,7 @@ import MenuAlignExample from "./Dropdown.jsx";
 import getImage from "../image/GetImage.jsx";
 import React, { useRef, useEffect, useState } from "react";
 import Reflection from "./Reflection.jsx";
+import { ButtonGroup } from "react-bootstrap";
 
 export default function CustomCard(match) {
 	const [imageUrl, setImageUrl] = useState(null);
@@ -58,10 +59,12 @@ export default function CustomCard(match) {
 					{match.placeOfOrigin || "Could not find place of origin"}
 				</Card.Title>
 				<Card.Text>Description</Card.Text>
-				<Button variant="primary">
-					<MenuAlignExample />
-				</Button>
-				<Reflection match={match} />
+				<ButtonGroup>
+					<Button variant="primary">
+						<MenuAlignExample />
+					</Button>
+					<Reflection matchId={match.matchId} reflection={match.reflection} />
+				</ButtonGroup>
 			</Card.Body>
 		</Card>
 	);

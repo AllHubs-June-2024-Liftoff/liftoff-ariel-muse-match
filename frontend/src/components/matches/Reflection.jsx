@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useAuth } from "../auth/AuthContext";
+import { useState } from "react";
 
 export default function Reflection(match) {
 	const { getCsrfToken } = useAuth();
@@ -9,11 +10,14 @@ export default function Reflection(match) {
 
 	const handleClose = () => setShow(false);
 
-	const handleSave = () => {
-		const token = getCsrfToken();
+	const handleSave = async () => {
+		console.log(match.reflection);
+		const token = await getCsrfToken();
+		console.log("token", token);
 		const reflection = document.getElementById("reflection").value;
-		if (reflection != match.reflection && reflection.isNotEmpty()) {
-			fetch(`http://localhost:8080/matches/save/${match.id}`, {
+		console.log("reflection", reflection);
+		if (reflection != match.reflection && reflection.trim() != "") {
+			await fetch(`http://localhost:8080/matches/save/${match.matchId}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
@@ -26,12 +30,14 @@ export default function Reflection(match) {
 		setShow(false);
 	};
 
-	const handleShow = () => setShow(true);
+	const handleShow = () => {
+		setShow(true);
+	};
 
 	return (
 		<>
 			<Button variant="primary" onClick={handleShow}>
-				Launch demo modal
+				Reflection
 			</Button>
 
 			<Modal show={show} onHide={handleClose}>
@@ -39,15 +45,14 @@ export default function Reflection(match) {
 					<Modal.Title>Leave a match reflection</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
+					<p>{match.reflection}</p>
 					<textarea
 						id="reflection"
 						name="reflection"
 						rows="4"
 						cols="50"
 						placeholder="Enter your reflection here"
-					>
-						{match.reflection}
-					</textarea>
+					></textarea>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleClose}>

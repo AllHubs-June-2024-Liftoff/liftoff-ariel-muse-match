@@ -1,18 +1,16 @@
 package com.gw.backend.service;
 
+import com.gw.backend.dto.ReflectionDto;
 import com.gw.backend.models.LikedArtwork;
 import com.gw.backend.models.Match;
 import com.gw.backend.models.Muse;
 import com.gw.backend.models.user.User;
 import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
-import com.gw.backend.repository.MuseRepository;
 import com.gw.backend.repository.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -29,14 +27,12 @@ public class MatchService {
 	private final LikedArtworkRepository likedArtworkRepository;
 	private final MatchRepository matchRepository;
 	private final UserRepository userRepository;
-	private final MuseRepository museRepository;
 
 	@Autowired
-	public MatchService(MatchRepository matchRepository, LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MuseRepository museRepository) {
+	public MatchService(MatchRepository matchRepository, LikedArtworkRepository likedArtworkRepository, UserRepository userRepository) {
 		this.matchRepository = matchRepository;
 		this.likedArtworkRepository = likedArtworkRepository;
 		this.userRepository = userRepository;
-		this.museRepository = museRepository;
 	}
 
 	public List<Muse> getListOfMusesFromUserMatches() {
@@ -53,6 +49,7 @@ public class MatchService {
 					String matchedArtistId = match.getArtistId();
 					LikedArtwork artist = likedArtworkRepository.findFirstByArtistId(matchedArtistId);
 					Muse muse = new Muse();
+					muse.setId(match.getId());
 					muse.setArtistId(artist.getArtistId());
 					muse.setArtistTitle(artist.getArtistTitle());
 					muse.setArtMovement(artist.getArtMovement());
@@ -70,19 +67,20 @@ public class MatchService {
 		return null;
 	}
 
-	public ResponseEntity<?> saveReflection(String reflection, Long id) {
+	public void saveReflection(ReflectionDto reflection, Long id) {
+		System.out.println("Reflection is: " + reflection.getReflection());
 		Optional<Match> optionalMatch = matchRepository.findById(id);
-		try {
-			if (optionalMatch.isPresent()) {
-				Match match = optionalMatch.get();
-				match.setReflection(reflection);
-				matchRepository.save(match);
-				return new ResponseEntity<>(HttpStatus.OK);
-			}
-		} catch (Exception e) {
-			logger.error("Error saving reflection", e);
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		System.out.println("Optional match is: " + optionalMatch);
+		if (optionalMatch.isPresent()) {
+			System.out.println("Match is present");
+			Match match = optionalMatch.get();
+			match.setReflection(reflection.getReflection());
+			System.out.println("Reflection is: " + reflection.getReflection());
+			matchRepository.save(match);
+			System.out.println("Match saved");
 		}
-		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
 	}
+
+
 }
