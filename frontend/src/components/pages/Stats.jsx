@@ -64,7 +64,7 @@ function Stats() {
 	}
 
 	return (
-		<>
+		<div key={"selectors"} style={{ justifyContent: "center" }}>
 			<ToggleButtonGroup
 				type="radio"
 				name="category"
@@ -112,20 +112,46 @@ function Stats() {
 					Likes
 				</ToggleButton>
 			</ToggleButtonGroup>
-			{data.map((datum) => {
-				const liked = datum.statistics.likes;
-				const total = datum.statistics.total;
-				const percentage = datum.statistics.percentage;
-				return (
-					<>
-						<h3>{datum.info}</h3>
-						<p>
-							Liked: {`${percentage}`}% {`(${liked}/${total})`}
-						</p>
-					</>
-				);
-			})}
-		</>
+			<div
+				key={uri.category}
+				style={{
+					flexFlow: "row wrap",
+					display: "flex",
+					maxWidth: "900px",
+					margin: "15px",
+				}}
+			>
+				{data.map((datum, idx) => {
+					const liked = datum.statistics.likes;
+					const total = datum.statistics.total;
+					const percentage = datum.statistics.percentage;
+					return (
+						<div
+							key={idx}
+							style={{
+								borderRadius: "10px",
+								boxShadow: " -5px 5px 8px grey ",
+								background: "white",
+								width: "30%",
+								margin: "10px",
+								padding: "5px",
+								minWidth: "200px",
+								maxWidth: "500px",
+								textAlign: "center",
+								alignContent: "center",
+							}}
+						>
+							<h3 style={{ textJustify: "center" }}>
+								{`${idx + 1}`}. {datum.info}
+							</h3>
+							<p>
+								Liked: {`${percentage}`}% {`(${liked}/${total})`}
+							</p>
+						</div>
+					);
+				})}
+			</div>
+		</div>
 	);
 }
 

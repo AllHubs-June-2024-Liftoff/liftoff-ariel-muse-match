@@ -10,12 +10,22 @@ export default function Reflection(match) {
 
 	const handleClose = () => setShow(false);
 
-	const handleSave = async () => {
-		console.log(match.reflection);
+	const handleDelete = async () => {
 		const token = await getCsrfToken();
-		console.log("token", token);
+		await fetch(`http://localhost:8080/matches/delete/${match.matchId}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				"X-XSRF-TOKEN": token,
+			},
+			credentials: "include",
+		});
+		setShow(false);
+	};
+
+	const handleSave = async () => {
+		const token = await getCsrfToken();
 		const reflection = document.getElementById("reflection").value;
-		console.log("reflection", reflection);
 		if (reflection != match.reflection && reflection.trim() != "") {
 			await fetch(`http://localhost:8080/matches/save/${match.matchId}`, {
 				method: "PUT",
@@ -57,6 +67,9 @@ export default function Reflection(match) {
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleClose}>
 						Close
+					</Button>
+					<Button varieant="danger" onClick={handleDelete}>
+						Delete Reflection
 					</Button>
 					<Button variant="primary" onClick={handleSave}>
 						Save Changes

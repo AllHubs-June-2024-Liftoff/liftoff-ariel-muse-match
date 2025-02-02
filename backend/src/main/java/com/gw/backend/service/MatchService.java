@@ -68,18 +68,17 @@ public class MatchService {
 	}
 
 	public void saveReflection(ReflectionDto reflection, Long id) {
-		System.out.println("Reflection is: " + reflection.getReflection());
 		Optional<Match> optionalMatch = matchRepository.findById(id);
-		System.out.println("Optional match is: " + optionalMatch);
 		if (optionalMatch.isPresent()) {
-			System.out.println("Match is present");
 			Match match = optionalMatch.get();
 			match.setReflection(reflection.getReflection());
-			System.out.println("Reflection is: " + reflection.getReflection());
 			matchRepository.save(match);
-			System.out.println("Match saved");
 		}
 
+	}
+
+	public void deleteMatch(Long id) {
+		matchRepository.deleteById(id);
 	}
 
 
