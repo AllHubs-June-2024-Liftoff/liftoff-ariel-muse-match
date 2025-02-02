@@ -59,17 +59,17 @@ public class LikeController {
             LikedArtwork likedArtwork = new LikedArtwork();
 
         likedArtwork.setOwner(owner);
-        likedArtwork.setArtworkId(ArtworkDto.getArtworkId());
-        likedArtwork.setTitle(ArtworkDto.getTitle());
-        likedArtwork.setAltText(ArtworkDto.getAltText());
-        likedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
-        likedArtwork.setDescription(ArtworkDto.getDescription());
-        likedArtwork.setArtType(ArtworkDto.getArtType());
-        likedArtwork.setArtistId(ArtworkDto.getArtistId());
-        likedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
-        likedArtwork.setArtMovement(ArtworkDto.getArtMovement());
-        likedArtwork.setImageId(ArtworkDto.getImageId());
-        likedArtwork.setArtYearFinished(ArtworkDto.getArtYearFinished());
+        likedArtwork.setArtworkId(artworkDto.getArtworkId());
+        likedArtwork.setTitle(artworkDto.getTitle());
+        likedArtwork.setAltText(artworkDto.getAltText());
+        likedArtwork.setPlaceOfOrigin(artworkDto.getPlaceOfOrigin());
+        likedArtwork.setDescription(artworkDto.getDescription());
+        likedArtwork.setArtType(artworkDto.getArtType());
+        likedArtwork.setArtistId(artworkDto.getArtistId());
+        likedArtwork.setArtistTitle(artworkDto.getArtistTitle());
+        likedArtwork.setArtMovement(artworkDto.getArtMovement());
+        likedArtwork.setImageId(artworkDto.getImageId());
+        likedArtwork.setArtYearFinished(artworkDto.getArtYearFinished());
         likedArtwork.setLikedAt(LocalDateTime.now());
 
             try {
