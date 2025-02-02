@@ -5,6 +5,9 @@ import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "liked_artworks")
@@ -34,6 +37,9 @@ public class LikedArtwork extends AbstractIdentifiableModel {
     private String imageId;
 
     private Integer artYearFinished;
+
+    @Column(name = "liked_at", nullable = false)
+    private LocalDateTime likedAt;
 
     public LikedArtwork() {
     };
@@ -150,5 +156,13 @@ public class LikedArtwork extends AbstractIdentifiableModel {
 
     public void setArtYearFinished(int artYearFinished) {
         this.artYearFinished = artYearFinished;
+    }
+
+    public LocalDateTime getLikedAt() {
+        return likedAt;
+    }
+
+    public void setLikedAt(LocalDateTime likedAt) {
+        this.likedAt = likedAt;
     }
 }

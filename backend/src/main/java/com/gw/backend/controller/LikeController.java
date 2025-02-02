@@ -7,6 +7,7 @@ import com.gw.backend.models.user.User;
 import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
+import com.gw.backend.service.achievements.StreakService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -27,13 +29,16 @@ public class LikeController {
     private final LikedArtworkRepository likedArtworkRepository;
     private final MatchRepository matchRepository;
     private boolean matched = false;
+    private final StreakService streakService;
 
 
     @Autowired
-    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MatchRepository matchRepository) {
+    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MatchRepository matchRepository,
+                          StreakService streakService) {
         this.likedArtworkRepository = likedArtworkRepository;
         this.userRepository = userRepository;
         this.matchRepository = matchRepository;
+        this.streakService = streakService;
     }
 
     @PutMapping("/save")
@@ -54,20 +59,22 @@ public class LikeController {
             LikedArtwork likedArtwork = new LikedArtwork();
 
         likedArtwork.setOwner(owner);
-        likedArtwork.setArtworkId(artworkDto.getArtworkId());
-        likedArtwork.setTitle(artworkDto.getTitle());
-        likedArtwork.setAltText(artworkDto.getAltText());
-        likedArtwork.setPlaceOfOrigin(artworkDto.getPlaceOfOrigin());
-        likedArtwork.setDescription(artworkDto.getDescription());
-        likedArtwork.setArtType(artworkDto.getArtType());
-        likedArtwork.setArtistId(artworkDto.getArtistId());
-        likedArtwork.setArtistTitle(artworkDto.getArtistTitle());
-        likedArtwork.setArtMovement(artworkDto.getArtMovement());
-        likedArtwork.setImageId(artworkDto.getImageId());
-        likedArtwork.setArtYearFinished(artworkDto.getArtYearFinished());
+        likedArtwork.setArtworkId(ArtworkDto.getArtworkId());
+        likedArtwork.setTitle(ArtworkDto.getTitle());
+        likedArtwork.setAltText(ArtworkDto.getAltText());
+        likedArtwork.setPlaceOfOrigin(ArtworkDto.getPlaceOfOrigin());
+        likedArtwork.setDescription(ArtworkDto.getDescription());
+        likedArtwork.setArtType(ArtworkDto.getArtType());
+        likedArtwork.setArtistId(ArtworkDto.getArtistId());
+        likedArtwork.setArtistTitle(ArtworkDto.getArtistTitle());
+        likedArtwork.setArtMovement(ArtworkDto.getArtMovement());
+        likedArtwork.setImageId(ArtworkDto.getImageId());
+        likedArtwork.setArtYearFinished(ArtworkDto.getArtYearFinished());
+        likedArtwork.setLikedAt(LocalDateTime.now());
 
             try {
                 likedArtworkRepository.save(likedArtwork);
+                streakService.updateStreakOnLike(owner);
 
                 List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
 

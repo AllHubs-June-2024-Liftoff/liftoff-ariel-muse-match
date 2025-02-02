@@ -1,11 +1,16 @@
 package com.gw.backend.models.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
+import com.gw.backend.models.achievements.LikeStreak;
+import com.gw.backend.models.achievements.Milestone;
 import com.gw.backend.models.user.image.ProfilePicture;
 import jakarta.persistence.*;
 import org.hibernate.annotations.NaturalId;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -14,6 +19,7 @@ public class User extends AbstractIdentifiableModel {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
@@ -35,6 +41,12 @@ public class User extends AbstractIdentifiableModel {
 
     @Column
     private HashMap matches;
+
+    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private LikeStreak likeStreak;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Milestone> milestones = new ArrayList<>();
 
 
     public User() {
@@ -109,4 +121,20 @@ public class User extends AbstractIdentifiableModel {
     public String getRole() { return role; }
 
     public void setRole(String role) { this.role = role;}
+
+    public LikeStreak getStreak() {
+        return likeStreak;
+    }
+
+    public void setStreak(LikeStreak likeStreak) {
+        this.likeStreak = likeStreak;
+    }
+
+    public List<Milestone> getMilestones() {
+        return milestones;
+    }
+
+    public void setMilestones(List<Milestone> milestones) {
+        this.milestones = milestones;
+    }
 }
