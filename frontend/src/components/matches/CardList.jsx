@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ShareMuseButton from './ShareMuseButton.jsx';
 import { useAuth } from "../auth/AuthContext";
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -12,7 +11,7 @@ export default function CardList() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
 
-    const fetchMatches = async (q) => {
+    const fetchMatches = async () => {
       try {
         const response = await fetch(`http://localhost:8080/matches`, {
           method: "GET",
@@ -28,11 +27,13 @@ export default function CardList() {
         catch (error){
         setLoading(false);
         }
-
     }
 
+
     fetchMatches();
+
   }, []);
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -42,15 +43,15 @@ export default function CardList() {
       <>
     <h1 style={{ textAlign: 'center' }}>Matches</h1>
     <Row xs={1} md={2} lg={3}className="g-4">
-      {matches.map((match, idx) => (
+      {matches.map((match, idx, matches) => (
         <Col key={idx}>
           <CustomCard
-           key={match.id}
            artistName={match.artistTitle}
            styleTitle={match.artMovement}
            artType={match.artType}
            placeOfOrigin={match.placeOfOrigin}
            imageId={match.imageId}
+           artistId ={match.artistId}
           >
           </CustomCard>
         </Col>
