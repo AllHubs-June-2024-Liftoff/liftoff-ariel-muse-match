@@ -67,4 +67,6 @@ public interface LikedArtworkRepository extends JpaRepository<LikedArtwork, Long
 	                                      @Param("ownerId") Long ownerId);
 
 	List<LikedArtwork> findByOwner(User owner);
+
+	long countByOwner(User owner);
 }
