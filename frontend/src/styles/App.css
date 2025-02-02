@@ -184,47 +184,47 @@ toggle-group {
 
 /*below are the styles for light and dark mode*/
 
-/* light-theme styles */
-[data-theme="light"] {
-	background-color: #f3eedd;
+/* isLight false */
+[isLight=true] {
+	background-color: #ffffff;
 	color: #000;
 }
 
-[data-theme="light"] h2 {
+[isLight=true] h2 {
 	font-family: "Arial";
 	color: #000;
 	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
 }
 
-[data-theme="light"] h1 {
+[isLight=true] h1 {
 	font-family: "Arial";
 	color: #000;
 	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
 }
 
-[data-theme="light"] p {
+[isLight=true] p {
 	color: darkgrey;
 }
 
 /* dark-theme styles */
-[light-theme="dark"] {
+[isLight=false] {
 	background-color: #292929;
 	color: #fff;
 }
 
-[light-theme="dark"] h2 {
+[isLight=false] h2 {
 	font-family: "Arial";
 	color: #fff;
 	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
 }
 
-[light-theme="dark"] h1 {
+[isLight=false] h1 {
 	font-family: "Arial";
 	color: #fff;
 	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
 }
 
-[light-theme="dark"] p {
+[isLight=false] p {
 	color: #fff;
 	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
 }

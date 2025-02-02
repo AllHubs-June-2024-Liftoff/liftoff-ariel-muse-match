@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Form } from "react-bootstrap";
 import React from "react";
 import Container from 'react-bootstrap/Container';
@@ -6,9 +6,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from "react-bootstrap/Button";
+import { useIsLight } from "../Themes.jsx";
 
 
 export default function MySettings(params) {
+  const { isLight, toggleTheme } = useIsLight();
+
+
   return (
     <>
         <h2>Settings</h2>
@@ -61,11 +65,20 @@ export default function MySettings(params) {
         <InputGroup.Text>Bio</InputGroup.Text>
         <Form.Control as="textarea" aria-label="With textarea" />
       </InputGroup>
+
+      <Form.Group className ="mb-3">
+        <Form.Check
+          type="switch"
+          id="theme-switch"
+          label="Dark Mode"
+          checked={!isLight}
+          onChange={toggleTheme}
+        />
+      </Form.Group>
+
       <Button style={{marginTop: "15px"}} variant="primary" type="submit">
         Save
       </Button>
-
-
     </>
   );
 }
