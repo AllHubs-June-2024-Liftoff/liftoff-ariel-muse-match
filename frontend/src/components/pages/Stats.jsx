@@ -120,6 +120,7 @@ function Stats() {
 					maxWidth: "900px",
 					margin: "15px",
 				}}
+        className="black-text"
 			>
 				{data.map((datum, idx) => {
 					const liked = datum.statistics.likes;

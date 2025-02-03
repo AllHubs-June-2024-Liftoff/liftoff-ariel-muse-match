@@ -83,24 +83,24 @@ export default function ViewPublicProfile() {
 				<Col xs={3}>
 					<Card style={{ marginTop: "50px", width: "18rem" }}>
 						<Card.Img variant="top" src="/muse.png" />
-						<Card.Body>
+						<Card.Body className="black-text">
 							<Card.Title>@{profile.username}</Card.Title>
-							<Card.Text>{profile.bio}</Card.Text>
+							<Card.Text >{profile.bio}</Card.Text>
 						</Card.Body>
-						<ListGroup className="list-group-flush">
+						<ListGroup className="black-text list-group-flush">
 							<ListGroup.Item>Best Milestone: {greatestLikeMilestone.type}</ListGroup.Item>
 							<ListGroup.Item>Milestone Value: {greatestLikeMilestone.achievement} likes</ListGroup.Item>
 						</ListGroup>
 					</Card>
 				</Col>
 				<Col>
-          <ListGroup style={{ marginTop: "50px"} }>
+          <ListGroup className="black-text" style={{ marginTop: "50px"} }>
             <h2 style={{textAlign:"center", marginBottom:"16px"}}>All Achievements</h2>
             {milestones.map((item, index) =>(
               <ListGroup.Item key={index}>
                 Type: {item.type} 
               <p>Achieved date: {item.achievedDate} </p>
-              Value: {item.achievement}
+              Likes: {item.achievement}
               </ListGroup.Item>
             ))}
           </ListGroup>
