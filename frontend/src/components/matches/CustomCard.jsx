@@ -74,10 +74,8 @@ export default function CustomCard(match) {
 					{match.placeOfOrigin || "Origins Not Found"}
 				</Card.Subtitle>
 				<Card.Text></Card.Text>
-				<ButtonGroup>
-					<Reflection matchId={match.matchId} reflection={match.reflection} />
-					<Dropper imageUrl={imageUrl} artistName={match.artistName} />
-				</ButtonGroup>
+				<Reflection matchId={match.matchId} reflection={match.reflection} />
+				<Dropper imageUrl={imageUrl} artistName={match.artistName} />
 			</Card.Body>
 		</Card>
 	);
