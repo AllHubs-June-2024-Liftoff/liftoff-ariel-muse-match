@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from "../auth/AuthContext";
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import CustomCard from './CustomCard.jsx';
-
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import CustomCard from "./CustomCard.jsx";
 
 export default function CardList() {
   const [matches, setMatches] = useState([]);

@@ -87,8 +87,8 @@ function DisplayArtworks() {
 			artType: artwork.artwork_type_title,
 			artistId: artwork.artist_id,
 			artistTitle: artwork.artist_title,
+			styleTitle: artwork.style_title,
 			artMovement: artwork.style_title,
-			imageId: artwork.image_id,
 			artYearFinished: artwork.date_end,
 		};
 		console.log(JSON.stringify(likedArtwork));
@@ -131,7 +131,6 @@ function DisplayArtworks() {
 			artistId: artwork.artist_id,
 			artistTitle: artwork.artist_title,
 			artMovement: artwork.style_title,
-			imageId: artwork.image_id,
 			artYearFinished: artwork.date_end,
 		};
 		const token = await getCsrfToken();
@@ -184,7 +183,9 @@ function DisplayArtworks() {
 					{artworks.map((artwork, index) => (
 						<div
 							key={artwork.id}
-							style={{ display: index === currentIndex ? "block" : "none" }}
+							style={{
+								display: index === currentIndex ? "block" : "none",
+							}}
 						>
 							<div className="tinderCardWrapper">
 								<TinderCard
@@ -201,7 +202,10 @@ function DisplayArtworks() {
 											className="artwork-image"
 											src={imageSources[artwork.id]} //Accessing the value at the artwork ID key in the imageSources object
 											alt={artwork.thumbnail?.alt_text}
-											style={{ maxWidth: "inherit", maxHeight: "inherit" }}
+											style={{
+												maxWidth: "inherit",
+												maxHeight: "inherit",
+											}}
 										/>
 										<h2>{artwork.title}</h2>
 										<p>{artwork.classification_title}</p>
