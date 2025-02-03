@@ -1,7 +1,157 @@
-#main-container {
-  margin-top: 30px;
-  
+/* common styles */
+/* #root {
+	width: 100vw;
+	min-height: 100vh;
+	overflow: hidden;
+} */
+
+/* #root > div {
+	display: flex;
+	flex-direction: column;
+} */
+
+/* .app {
+	overflow: hidden;
+} */
+
+/* .app > div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+} */
+
+h1 {
+	font-family: "Arial";
+	position: center;
+	color: #fff;
+	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+  justify-content: center;
+  display:flex;
 }
+
+h2 {
+	font-family: Georgia;
+	color: #fff;
+	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+}
+
+.swipe {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.card {
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  will-change: transform, opacity;
+}
+
+.cardContainer {
+	margin-top: 80px;
+	display: block;
+	justify-content: center;
+	align-items: center;
+	width: 90vw;
+	max-width: 400px;
+	height: auto;
+	margin-bottom: 20px;
+  margin:auto;
+}
+
+.custom-card {
+	text-align: center;
+	margin: auto;
+	position: center;
+	width: 80vw;
+	max-width: 260px;
+	height: 300px;
+	box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+	border-radius: 30px;
+	background-size: cover;
+	background-position: center;
+	background-size: auto;
+	background-color: white;
+}
+
+.custom-card img {
+	width: 200%;
+	height: auto;
+	object-fit: cover;
+	border-radius: 20px;
+}
+
+.custom-card p {
+	position: below;
+	text-align: center;
+	bottom: 0;
+	margin: 10px;
+	color: #333 !important;
+}
+
+.custom-card h2 {
+	color: #333 !important;
+}
+
+.cardContent {
+	width: 300px;
+	height: auto;
+}
+
+.custom-card h3 {
+	position: absolute;
+	bottom: 0;
+	margin: 10px;
+	color: #fff;
+}
+
+.buttons {
+	margin: 20px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+@media (max-width: 625px) {
+	.buttons {
+		flex-direction: column;
+	}
+}
+
+.buttons button {
+	flex-shrink: 0;
+	padding: 10px;
+	border-radius: 5px;
+	border: none;
+	color: #fff;
+	font-size: 18px;
+	background-color: #9198e5;
+	transition: 200ms;
+	margin: 10px;
+	font-weight: bolder;
+	width: 160px;
+	box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+}
+
+.buttons button:hover {
+	transform: scale(1.05);
+}
+
+.tinderCardWrapper {
+	height: 100%;
+	position: center;
+}
+
+img.artwork-image {
+	width: 100%;
+	height: auto;
+	object-fit: contain;
+	overflow: visible;
+	background-color: white;
+}
+
+#main-container {
+	margin-top: 30px;
+}
+
 
 #home-container {
   margin-top: 30px;
@@ -27,23 +177,70 @@
   margin-right: 7px;
 }
 
-.card {
-  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
-  will-change: transform, opacity;
-}
-
-.cardContainer {
-  display: block;
-  width: 500px;
-  height: 500px;
-  margin: auto; 
-}
-
 .nav-container.container {
   max-width: fit-content;
 }
 
-h1 {
-  justify-content: center;
-  display:flex;
+toggle-group {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.custom-link:hover {
+  color: #0d6efd;
+  text-decoration: underline;
+}
+
+/*below are the styles for light and dark mode*/
+
+/* light-theme styles */
+[isLight=true] {
+	background-color: #ffffff;
+	color: #000;
+}
+
+[isLight=true] h2 {
+	font-family: "Arial";
+	color: #000;
+	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+}
+
+[isLight=true] h1 {
+	font-family: "Arial";
+	color: #000;
+	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+}
+
+[isLight=true] p {
+	color: darkgrey;
+}
+
+/* dark-theme styles */
+[isLight=false] {
+	background-color: #292929;
+	color: #ffffff;
+}
+
+[isLight=false] h2 {
+	font-family: "Arial";
+	color: #fff;
+	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+}
+
+[isLight=false] h1 {
+	font-family: "Arial";
+	color: #fff;
+	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+}
+
+[isLight=false] p {
+	color: #fff;
+	text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
+}
+
+
+.black-text , .black-text p{
+  color:#000 !important;
 }

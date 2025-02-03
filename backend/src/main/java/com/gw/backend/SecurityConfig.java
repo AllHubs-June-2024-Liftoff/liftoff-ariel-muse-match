@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .cors(withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("login", "register", "csrf", "/auth/validate-session").permitAll()
+                        .requestMatchers("login", "register", "csrf", "/auth/validate-session", "/api/profile/{username}").permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().authenticated()
                 )

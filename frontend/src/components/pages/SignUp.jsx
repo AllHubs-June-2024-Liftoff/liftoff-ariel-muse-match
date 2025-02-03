@@ -28,12 +28,12 @@ export default function SignUp(params) {
     <Form onSubmit={handleRegister}>
       <Form.Group className="mb-3" controlId="formBasicDisplayName">
         <Form.Label>Username</Form.Label>
-        <Form.Control type="text" name="username" placeholder="Enter username" onChange={handleChange} />
+        <Form.Control required="true" type="text" name="username" placeholder="Enter username" onChange={handleChange} />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" name="email" placeholder="Enter email" onChange={handleChange}/>
+        <Form.Control required="true" type="email" name="email" placeholder="Enter email" onChange={handleChange}/>
         <Form.Text className="text-muted">
           We'll never share your email with anyone else.
         </Form.Text>
@@ -41,10 +41,7 @@ export default function SignUp(params) {
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" name="password" placeholder="Password" onChange={handleChange} />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="I have read and agree to the Terms and Conditions" />
+        <Form.Control required="true" type="password" name="password" placeholder="Password" onChange={handleChange} />
       </Form.Group>
       <Button variant="primary" type="submit">
         Submit
