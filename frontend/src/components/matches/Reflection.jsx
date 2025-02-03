@@ -46,7 +46,11 @@ export default function Reflection(match) {
 
 	return (
 		<>
-			<Button variant="primary" onClick={handleShow}>
+			<Button
+				style={{ marginBottom: "10px" }}
+				variant="primary"
+				onClick={handleShow}
+			>
 				Reflection
 			</Button>
 
