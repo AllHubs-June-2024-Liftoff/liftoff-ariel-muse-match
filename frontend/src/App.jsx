@@ -16,6 +16,8 @@ import Contact from "./components/pages/Contact";
 import Give from "./components/pages/Give";
 import Stats from "./components/pages/Stats";
 import Matches from "./components/pages/Matches";
+import ViewPublicProfile from "./components/pages/ViewPublicProfile.jsx";
+import NotFoundPage from "./components/pages/NotFoundPage.jsx"
 
 function App() {
 	return (
@@ -26,7 +28,7 @@ function App() {
 						<Routes>
 							<Route path="/" element={<Home />} />
 							<Route
-								path="my-profile"
+								path="/my-profile"
 								element={
 									<ProtectedRoute>
 										<UserProfile />
@@ -35,7 +37,7 @@ function App() {
 							/>
 							{/* <Route path='my-profile' element={<UserProfile/>}/> */}
 							<Route
-								path="settings"
+								path="/settings"
 								element={
 									<ProtectedRoute>
 										<MySettings />
@@ -44,7 +46,7 @@ function App() {
 							/>
 							{/* <Route path='settings' element={<MySettings/>}/> */}
 							<Route
-								path="stats"
+								path="/stats"
 								element={
 									<ProtectedRoute>
 										<Stats />
@@ -52,11 +54,20 @@ function App() {
 								}
 							/>
 							"
-							<Route path="sign-up" element={<SignUp />} />
-							<Route path="login" element={<Login />} />
-							<Route path="matches" element={<Matches />} />
-							<Route path="contacts" element={<Contact />} />
-							<Route path="give" element={<Give />} />
+							<Route path="/sign-up" element={<SignUp />} />
+							<Route path="/login" element={<Login />} />
+							<Route 
+                path="/matches"
+                element={
+                  <ProtectedRoute>
+                    <Matches />
+                  </ProtectedRoute>
+                  } 
+                />
+							<Route path="/contacts" element={<Contact />} />
+							<Route path="/give" element={<Give />} />
+              <Route path="/profile/:username" element={<ViewPublicProfile/>}/>
+              <Route path="*" element={<NotFoundPage />} />
 						</Routes>
 					</Layout>
 					</ThemeProvider>

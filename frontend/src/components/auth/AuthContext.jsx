@@ -11,6 +11,9 @@ export const  AuthProvider = ({children}) => {
   const [csrfToken, setCsrfToken] = useState();
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
+  const [isPublic, setIsPublic] = useState("");
+
   const [isLight, setIsLight] = useState(true);
 
   // useEffect(() => {
@@ -39,6 +42,8 @@ export const  AuthProvider = ({children}) => {
           setIsAuthenticated(data.isAuthenticated);
           setUserName(data.username);
           setEmail(data.email);
+          setBio(data.bio);
+          setIsPublic(data.isPublic);
           setIsLight(data.isLight); //PLACING FOR TESTING
           setLoading(false);
         }
@@ -90,9 +95,13 @@ export const  AuthProvider = ({children}) => {
       console.log(csrfToken)
 
       if (response.ok) {
-        setIsAuthenticated(true)
-        setIsLight(true);
-        navigate("/");
+        if (response.url == "http://localhost:8080/login?error") {
+          navigate("/login");
+          console.error(response.url);
+        } else{
+          setIsAuthenticated(true);
+          navigate("/");
+        }
       } else {
           console.error("Invalid username or password");
       }
@@ -153,7 +162,7 @@ export const  AuthProvider = ({children}) => {
 
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, loading, getCsrfToken, userName, email, logout, registerUser}}>
+    <AuthContext.Provider value={{ isAuthenticated, login, loading, getCsrfToken, userName, email, logout, registerUser, bio, isPublic}}>
       {!loading && children}
     </AuthContext.Provider>
   );

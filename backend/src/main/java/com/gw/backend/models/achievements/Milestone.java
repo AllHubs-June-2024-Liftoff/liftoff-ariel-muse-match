@@ -1,5 +1,6 @@
 package com.gw.backend.models.achievements;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.user.User;
 import jakarta.persistence.Column;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Entity
 public class Milestone extends AbstractIdentifiableModel {
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user", nullable = false)
     private User owner;

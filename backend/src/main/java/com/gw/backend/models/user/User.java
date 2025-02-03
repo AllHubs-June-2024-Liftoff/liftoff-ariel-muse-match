@@ -1,6 +1,8 @@
 package com.gw.backend.models.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gw.backend.models.abstraction.AbstractIdentifiableModel;
 import com.gw.backend.models.achievements.LikeStreak;
 import com.gw.backend.models.achievements.Milestone;
@@ -48,8 +50,13 @@ public class User extends AbstractIdentifiableModel {
     @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private LikeStreak likeStreak;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Milestone> milestones = new ArrayList<>();
+
+    private boolean isPublic = false;
+
+    private String bio;
 
 
     public User() {
@@ -156,5 +163,21 @@ public class User extends AbstractIdentifiableModel {
 
     public void setMilestones(List<Milestone> milestones) {
         this.milestones = milestones;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

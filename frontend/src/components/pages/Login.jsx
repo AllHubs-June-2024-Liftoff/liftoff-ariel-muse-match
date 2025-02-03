@@ -33,15 +33,14 @@ export default function Login(params) {
       <Form onSubmit={handleLogin}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" name="username" placeholder="Enter username" value={username} onChange={(handleChange)} />
+          <Form.Control required="true" type="text" name="username" placeholder="Enter username" value={username} onChange={(handleChange)} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" name="password" placeholder="Password" value={password} onChange={(handleChange)}/>
+          <Form.Control  required="true" type="password" name="password" placeholder="Password" value={password} onChange={(handleChange)}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit

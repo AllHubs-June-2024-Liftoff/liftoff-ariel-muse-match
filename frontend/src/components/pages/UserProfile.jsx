@@ -11,7 +11,7 @@ import Stats from "./Stats";
 
 
 export default function UserProfile(params) {
-	const { userName, getCsrfToken } = useAuth()
+	const { userName, bio, getCsrfToken } = useAuth()
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [greatestLikeMilestone, setgreatestLikeMilestone] = useState([]);
@@ -37,7 +37,7 @@ export default function UserProfile(params) {
           method: "GET",
           headers: {
 						"Content-Type": "application/json",
-						"X-CSRF-TOKEN": token,
+						"X-XSRF-TOKEN": token,
 					},
           credentials: "include"
         });
@@ -70,10 +70,10 @@ export default function UserProfile(params) {
 			<Row>
 				<Col xs={3}>
 					<Card style={{ marginTop: "50px", width: "18rem" }}>
-						<Card.Img variant="top" src="muse.png" />
+						<Card.Img variant="top" src="/muse.png" />
 						<Card.Body>
 							<Card.Title>@{userName}</Card.Title>
-							<Card.Text>This is my sample bio. Check me out!</Card.Text>
+							<Card.Text>{bio}</Card.Text>
 						</Card.Body>
 						<ListGroup className="list-group-flush">
 							<ListGroup.Item>Best Milestone: {milestoneName}</ListGroup.Item>
