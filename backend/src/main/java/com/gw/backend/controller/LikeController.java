@@ -95,7 +95,6 @@ public class LikeController {
             Match match = new Match(owner, artistId);
             matchRepository.save(match);
             matched = true;
-
         }
     }
 

@@ -21,21 +21,15 @@ function DisplayArtworks() {
 				const data = await fetchArtworks();
 				console.log(Array.isArray(data));
 				if (Array.isArray(data)) {
-					console.log("I'm in the if array statement");
-					//makes sure the data is an array before being able to map it and set it to the state
 					setArtworks(data); //This sets the artworks to the data from the fetchArtworks function
 					const sources = {}; //Key: artwork ID, Value: the returned URL from the getImage() function (the image source)
-					await Promise.all(
+					await Promise.all( 
 						data.map(async (artwork) => {
-							console.log("I'm in the map");
 							if (artwork.image_id) {
 								try {
-									console.log("I'm in the try block");
-
 									sources[artwork.id] = await getImage(artwork.image_id); //This is creating an object where every artwork Id is the key and the value is the image source (Link)
 									//{
 									//  123: "https://www.artic.edu/iiif/2/123/full/843,/0/default.jpg",} <---Creates this with each artwork ID
-									console.log("I just");
 								} catch (e) {
 									console.error(`Failed to fetch image for ${artwork.id}`, e); //If there is an error, the image source will be null
 									sources[artwork.id] = null;

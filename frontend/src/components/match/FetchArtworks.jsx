@@ -19,7 +19,6 @@ const fetchArtworks = async () => {
         console.log(data.data);
         if (!data.data) {
           //filtered data
-          console.log("!if", data.imageId)
           return data
         }
         //unfiltered data

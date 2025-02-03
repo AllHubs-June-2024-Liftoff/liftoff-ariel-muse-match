@@ -12,7 +12,7 @@ export default function CardList() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
 
-    const fetchMatches = async (q) => {
+    const fetchMatches = async () => {
       try {
         const response = await fetch(`http://localhost:8080/matches`, {
           method: "GET",

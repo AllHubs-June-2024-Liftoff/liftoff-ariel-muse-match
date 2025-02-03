@@ -70,18 +70,21 @@ export const ThemeProvider = ({ children }) => { //theme context is the parent
     if (!isAuthenticated) {
         return;
     }
+
     //set theme based on the user preference
-        document.body.setAttribute('isLight', isLight ? 'true' : 'false');
+    document.body.setAttribute('isLight', isLight ? 'true' : 'false');
 }, [isLight, isAuthenticated]);
 
     const toggleTheme = async () => {
         try {
+       const csrfToken = await getCsrfToken();
        const newTheme = !isLight;
        const response = await fetch('http://localhost:8080/api/theme/change', {
-        method: 'POST',
+        method: 'PUT',
+        credentials: 'include',
         headers: {
-            'credentials': 'include',
             'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': csrfToken,
         },
         body: JSON.stringify({ theme: newTheme }),
        });

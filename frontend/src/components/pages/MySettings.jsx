@@ -10,7 +10,7 @@ import { useIsLight } from "../Themes.jsx";
 
 
 export default function MySettings(params) {
-  const { isLight, toggleTheme } = useIsLight();
+  const { isLight, toggleTheme } = useIsLight();;
 
 
   return (

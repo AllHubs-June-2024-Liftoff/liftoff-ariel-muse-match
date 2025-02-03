@@ -21,10 +21,9 @@ import java.util.Optional;
             private UserRepository userRepository;
 
 
-            @PostMapping("/change")
+            @PutMapping("/change")
             public ResponseEntity<?> changeTheme(Authentication authentication, @RequestBody Map<String, Boolean> request) {
                 String username = authentication.getName();
-
                 Optional<User> userOptional = userRepository.findByUsername(username);
 
                 if (userOptional.isPresent()) {

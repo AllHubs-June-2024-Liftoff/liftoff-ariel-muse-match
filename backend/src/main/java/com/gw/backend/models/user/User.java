@@ -37,7 +37,7 @@ public class User extends AbstractIdentifiableModel {
     private HashMap matches;
 
     @Column(name = "theme_preference")
-    private Boolean isLight;
+    private Boolean isLight = true;
 
 
     public User() {

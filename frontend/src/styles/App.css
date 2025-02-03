@@ -70,6 +70,7 @@ h2 {
 	background-size: cover;
 	background-position: center;
 	background-size: auto;
+	background-color: white;
 }
 
 .custom-card img {
@@ -84,7 +85,11 @@ h2 {
 	text-align: center;
 	bottom: 0;
 	margin: 10px;
-	color: #fff;
+	color: #333 !important;
+}
+
+.custom-card h2 {
+	color: #333 !important;
 }
 
 .cardContent {
@@ -140,6 +145,7 @@ img.artwork-image {
 	height: auto;
 	object-fit: contain;
 	overflow: visible;
+	background-color: white;
 }
 
 #main-container {
@@ -184,7 +190,7 @@ toggle-group {
 
 /*below are the styles for light and dark mode*/
 
-/* isLight false */
+/* light-theme styles */
 [isLight=true] {
 	background-color: #ffffff;
 	color: #000;
@@ -209,7 +215,7 @@ toggle-group {
 /* dark-theme styles */
 [isLight=false] {
 	background-color: #292929;
-	color: #fff;
+	color: #ffffff;
 }
 
 [isLight=false] h2 {
