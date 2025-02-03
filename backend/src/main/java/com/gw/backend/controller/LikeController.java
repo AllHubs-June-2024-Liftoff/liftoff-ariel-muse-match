@@ -91,22 +91,21 @@ public class LikeController {
 				response.put("matched", matched);
 			}
 
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (Exception e) {
-			System.out.println(e);
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } catch (Exception e) {
+                System.out.println(e);
+                return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+    }
 
-	private void createMatch(User owner, String artistId) {
-		//Check if match exists already for that user/artist ID
-		if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
-			Match match = new Match(owner, artistId);
-			matchRepository.save(match);
-			matched = true;
-
-		}
-	}
+    private void createMatch(User owner, String artistId) {
+        //Check if match exists already for that user/artist ID
+        if (!matchRepository.existsByOwnerAndArtistId(owner, artistId)) {
+            Match match = new Match(owner, artistId);
+            matchRepository.save(match);
+            matched = true;
+        }
+    }
 
 	private List<String> checkForMatchingArtistIds(User owner) {
 		List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);

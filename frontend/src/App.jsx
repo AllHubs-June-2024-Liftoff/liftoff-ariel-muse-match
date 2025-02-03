@@ -20,8 +20,8 @@ import Matches from "./components/pages/Matches";
 function App() {
 	return (
 		<Router>
-			<ThemeProvider>
 				<AuthProvider>
+				<ThemeProvider>
 					<Layout>
 						<Routes>
 							<Route path="/" element={<Home />} />
@@ -59,8 +59,8 @@ function App() {
 							<Route path="give" element={<Give />} />
 						</Routes>
 					</Layout>
+					</ThemeProvider>
 				</AuthProvider>
-			</ThemeProvider>
 		</Router>
 	);
 }

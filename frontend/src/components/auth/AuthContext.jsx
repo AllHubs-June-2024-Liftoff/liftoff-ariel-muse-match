@@ -11,6 +11,7 @@ export const  AuthProvider = ({children}) => {
   const [csrfToken, setCsrfToken] = useState();
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [isLight, setIsLight] = useState(true);
 
   // useEffect(() => {
   //   const token = sessionStorage.getItem("token");
@@ -34,9 +35,11 @@ export const  AuthProvider = ({children}) => {
 
         if(response.ok) {
           const data = await response.json();
+          console.log(data);
           setIsAuthenticated(data.isAuthenticated);
           setUserName(data.username);
           setEmail(data.email);
+          setIsLight(data.isLight); //PLACING FOR TESTING
           setLoading(false);
         }
       } catch (error) {
@@ -88,6 +91,7 @@ export const  AuthProvider = ({children}) => {
 
       if (response.ok) {
         setIsAuthenticated(true)
+        setIsLight(true);
         navigate("/");
       } else {
           console.error("Invalid username or password");

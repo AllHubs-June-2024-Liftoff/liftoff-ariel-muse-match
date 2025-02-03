@@ -35,6 +35,7 @@ public class AuthController {
                 put("isAuthenticated", true);
                 put("username", user.getUsername());
                 put("email", user.getEmail());
+                put("isLight", user.getIsLight());
             }});
 
         } else {

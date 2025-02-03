@@ -42,6 +42,9 @@ public class User extends AbstractIdentifiableModel {
     @Column
     private HashMap matches;
 
+    @Column(name = "theme_preference")
+    private Boolean isLight = true;
+
     @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private LikeStreak likeStreak;
 
@@ -58,6 +61,7 @@ public class User extends AbstractIdentifiableModel {
         this.profilePicture = profilePicture;
         this.email = email;
         this.role = role;
+        this.isLight = true;
     }
 
     //Getters and Setters
@@ -121,6 +125,22 @@ public class User extends AbstractIdentifiableModel {
     public String getRole() { return role; }
 
     public void setRole(String role) { this.role = role;}
+
+    public HashMap getMatches() {
+        return matches;
+    }
+
+    public void setMatches(HashMap matches) {
+        this.matches = matches;
+    }
+
+    public Boolean getIsLight() {
+        return isLight;
+    }
+
+    public void setIsLight(Boolean isLight) {
+        this.isLight = isLight;
+    }
 
     public LikeStreak getStreak() {
         return likeStreak;

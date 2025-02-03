@@ -2,10 +2,7 @@ import React from "react";
 
 const fetchArtworks = async () => {
     try {
-        // const response = await fetch ("http://localhost:8080/api/match/all",{
-
-        // });
-
+       
         const response = await fetch("http://localhost:8080/api/match/all", {
           method: "GET",
           headers: {
@@ -18,11 +15,19 @@ const fetchArtworks = async () => {
             throw new Error(`There was an error fetching your data: Status: ${response.status}`)
         } 
         const data = await response.json();
-        return data;
+        //Check to see if response is filtered by liked_artworks
+        console.log(data.data);
+        if (!data.data) {
+          //filtered data
+          return data
+        }
+        //unfiltered data
+        console.log(data.data);
+        return data.data;
         } catch (error) {
             console.error("Error fetching artworks:", error);
             throw error;
-        }   
+        }
     }
 
     export default fetchArtworks;

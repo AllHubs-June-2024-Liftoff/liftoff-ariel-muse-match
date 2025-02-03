@@ -19,12 +19,11 @@ function DisplayArtworks() {
 		const loadArtwork = async () => {
 			try {
 				const data = await fetchArtworks();
-				console.log(data);
-				if (Array.isArray(data) && data.length > 0) {
-					//makes sure the data is an array before being able to map it and set it to the state
+				console.log(Array.isArray(data));
+				if (Array.isArray(data)) {
 					setArtworks(data); //This sets the artworks to the data from the fetchArtworks function
 					const sources = {}; //Key: artwork ID, Value: the returned URL from the getImage() function (the image source)
-					await Promise.all(
+					await Promise.all( 
 						data.map(async (artwork) => {
 							if (artwork.image_id) {
 								try {
