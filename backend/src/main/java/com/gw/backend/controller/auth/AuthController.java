@@ -37,6 +37,7 @@ public class AuthController {
                 put("email", user.getEmail());
                 put("bio", user.getBio());
                 put("isPublic", user.isPublic());
+                put("isLight", user.getIsLight());
             }});
 
         } else {

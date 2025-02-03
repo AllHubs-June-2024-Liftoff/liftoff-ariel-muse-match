@@ -1,6 +1,4 @@
 package com.gw.backend.controller.api.fetch;
-
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,11 +8,14 @@ import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.client.RestTemplate;
 
+import javax.naming.AuthenticationNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,9 +26,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class FetchInitialMatchSet {
     //any interactions with API regarding fetching artworks
-
     private final UserRepository userRepository;
     private final LikedArtworkRepository likedArtworkRepository;
+    private Authentication authentication;
 
     //Create Snapshot of User repository whenever users interact with Matching
     @Autowired
@@ -36,7 +37,10 @@ public class FetchInitialMatchSet {
         this.likedArtworkRepository = likedArtworkRepository;
     }
 
-    //Responds to front-end calls
+
+
+
+    //Responds to GET requests to /api/match/all
     @GetMapping("match/all")
     public ResponseEntity<Object> getArt() {
         Random random = new Random();
@@ -48,12 +52,18 @@ public class FetchInitialMatchSet {
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(apiUrl, String.class);
             String responseBody = response.getBody();
-
-            //Get the current user
-            User user = userRepository.findById(1L).orElseThrow( () -> new RuntimeException("User not found"));
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            User owner = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found: " + username));
 
             //Get the liked artwork IDs of the user
-            List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(user);
+            List<LikedArtwork> likedArtworks = likedArtworkRepository.findByOwner(owner);
+
+            //If no liked artworks, return all objects in response
+            if (likedArtworks.isEmpty()) {
+                return ResponseEntity.ok(responseBody);
+            }
+
             Set<String> likedArtworkIds = likedArtworks.stream()
                     .map(artwork -> String.valueOf(artwork.getArtistId())) //Transforms each LikedArtwork object to its artworkId value
                     .collect(Collectors.toSet()); //Convert artworkId values to a set

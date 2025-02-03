@@ -22,8 +22,8 @@ import NotFoundPage from "./components/pages/NotFoundPage.jsx"
 function App() {
 	return (
 		<Router>
-			<ThemeProvider>
 				<AuthProvider>
+				<ThemeProvider>
 					<Layout>
 						<Routes>
 							<Route path="/" element={<Home />} />
@@ -70,8 +70,8 @@ function App() {
               <Route path="*" element={<NotFoundPage />} />
 						</Routes>
 					</Layout>
+					</ThemeProvider>
 				</AuthProvider>
-			</ThemeProvider>
 		</Router>
 	);
 }

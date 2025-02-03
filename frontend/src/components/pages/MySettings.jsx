@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Form } from "react-bootstrap";
 import React from "react";
 import Container from 'react-bootstrap/Container';
@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from "react-bootstrap/Button";
 import { useAuth } from "../auth/AuthContext";
+import { useIsLight } from "../Themes.jsx";
 
 export default function MySettings(params) {
   const { getCsrfToken, isPublic } = useAuth() 
@@ -14,6 +15,8 @@ export default function MySettings(params) {
   const [isVisible, setIsVisible] = useState(isPublic);
   const [loading, setLoading] = useState(false);
   const [bioUpdated, setBioUpdated] = useState();
+  const { isLight, toggleTheme } = useIsLight();;
+
   
   
 
@@ -91,8 +94,6 @@ export default function MySettings(params) {
           </Form>
         </Row>
 
-
-
       <Form onSubmit={handleBioSubmit}>
         <Form.Label style={{marginTop:"10px"}} htmlFor="basic-url">{!bioUpdated ? "Edit your Bio": "Bio updated!"}</Form.Label>
         <InputGroup>
@@ -104,6 +105,16 @@ export default function MySettings(params) {
           Save
         </Button>
       </Form>
+
+      <Form.Group className ="mb-3">
+        <Form.Check
+          type="switch"
+          id="theme-switch"
+          label="Dark Mode"
+          checked={!isLight}
+          onChange={toggleTheme}
+        />
+      </Form.Group>
     </>
   );
 }

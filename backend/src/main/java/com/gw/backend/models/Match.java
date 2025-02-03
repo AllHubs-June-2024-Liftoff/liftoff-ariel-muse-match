@@ -16,6 +16,9 @@ public class Match extends AbstractIdentifiableModel {
     @Column(name = "artist_id") //There are some artworks that are not associated with an artist
     private String artistId;
 
+    @Column(name = "reflection", nullable = true, columnDefinition = "TEXT")
+    private String reflection;
+
     public Match() {
     }
 
@@ -42,11 +45,11 @@ public class Match extends AbstractIdentifiableModel {
         this.artistId = artistId;
     }
 
-    @Override
-    public String toString() {
-        return "Match{" +
-                "owner=" + owner +
-                ", artistId='" + artistId + '\'' +
-                '}';
+    public String getReflection() {
+        return reflection;
+    }
+
+    public void setReflection(String reflection) {
+        this.reflection = reflection;
     }
 }
