@@ -188,6 +188,11 @@ toggle-group {
 	margin-top: 20px;
 }
 
+.custom-link:hover {
+  color: #0d6efd;
+  text-decoration: underline;
+}
+
 /*below are the styles for light and dark mode*/
 
 /* light-theme styles */

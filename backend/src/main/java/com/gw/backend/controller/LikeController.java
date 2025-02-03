@@ -7,6 +7,7 @@ import com.gw.backend.models.user.User;
 import com.gw.backend.repository.LikedArtworkRepository;
 import com.gw.backend.repository.MatchRepository;
 import com.gw.backend.repository.user.UserRepository;
+import com.gw.backend.service.achievements.StreakService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -27,17 +29,20 @@ public class LikeController {
     private final LikedArtworkRepository likedArtworkRepository;
     private final MatchRepository matchRepository;
     private boolean matched = false;
+    private final StreakService streakService;
 
 
     @Autowired
-    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MatchRepository matchRepository) {
+    public LikeController(LikedArtworkRepository likedArtworkRepository, UserRepository userRepository, MatchRepository matchRepository,
+                          StreakService streakService) {
         this.likedArtworkRepository = likedArtworkRepository;
         this.userRepository = userRepository;
         this.matchRepository = matchRepository;
+        this.streakService = streakService;
     }
 
     @PutMapping("/save")
-    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, HttpSession session, Authentication authentication) {
+    public ResponseEntity<?> saveLike(@RequestBody ArtworkDto ArtworkDto, Errors errors, Authentication authentication) {
         if (errors.hasErrors()) {
             System.out.println("Got here: ");
 
@@ -65,9 +70,11 @@ public class LikeController {
         likedArtwork.setArtMovement(ArtworkDto.getArtMovement());
         likedArtwork.setImageId(ArtworkDto.getImageId());
         likedArtwork.setArtYearFinished(ArtworkDto.getArtYearFinished());
+        likedArtwork.setLikedAt(LocalDateTime.now());
 
             try {
                 likedArtworkRepository.save(likedArtwork);
+                streakService.updateStreakOnLike(owner);
 
                 List<String> matchingArtistIds = checkForMatchingArtistIds(owner);
 
